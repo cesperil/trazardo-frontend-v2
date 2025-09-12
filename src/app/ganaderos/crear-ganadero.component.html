@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Crear Nuevo Ganadero</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="crearGanadero()" #ganaderoForm="ngForm">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            class="form-control"
+            [(ngModel)]="ganadero.nombre"
+            name="nombre"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="apellidos" class="form-label">Apellidos</label>
+          <input
+            type="text"
+            id="apellidos"
+            class="form-control"
+            [(ngModel)]="ganadero.apellidos"
+            name="apellidos"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="nif" class="form-label">DNI</label>
+          <input
+            type="text"
+            id="nif"
+            class="form-control"
+            [(ngModel)]="ganadero.nif"
+            name="nif"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>

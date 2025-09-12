@@ -1,0 +1,32 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Gestión de Ganaderos</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>DNI</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ganadero of ganaderos">
+          <td>{{ ganadero.nombre }}</td>
+          <td>{{ ganadero.apellidos }}</td>
+          <td>{{ ganadero.nif }}</td>
+          <td class="text-end">
+            <button class="btn btn-primary btn-sm me-2" (click)="editarGanadero(ganadero.id)">
+              Editar
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success mt-3" (click)="crearGanadero()">Crear Nuevo Ganadero</button>
+    </div>
+  </div>
+</div>

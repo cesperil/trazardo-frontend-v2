@@ -1,0 +1,153 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Nuevo Control de Peso Vivo</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="tecnico" class="form-label">Técnico</label>
+            <select
+              id="tecnico"
+              class="form-select"
+              [(ngModel)]="controlPesoVivo.tecnico"
+              name="tecnico"
+            >
+              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">
+                {{ tecnico.nombre }} {{ tecnico.apellidos }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="finca" class="form-label">Explotación</label>
+            <select
+              id="finca"
+              class="form-select"
+              [(ngModel)]="controlPesoVivo.fincaId"
+              name="finca"
+            >
+              <option *ngFor="let finca of fincas" [value]="finca.id">
+                {{ finca.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input
+              type="date"
+              id="fecha"
+              class="form-control"
+              [(ngModel)]="controlPesoVivo.fecha"
+              name="fecha"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="fechaE5M" class="form-label">Fecha E5M</label>
+            <input
+              type="date"
+              id="fechaE5M"
+              class="form-control"
+              [(ngModel)]="controlPesoVivo.fechaE5M"
+              name="fechaE5M"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="numeroCerdos" class="form-label">Nº Cerdos</label>
+            <input
+              type="number"
+              id="numeroCerdos"
+              class="form-control"
+              [(ngModel)]="controlPesoVivo.numeroCerdos"
+              name="numeroCerdos"
+              min="0"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="pesoMedio" class="form-label">Peso Medio</label>
+            <input
+              type="number"
+              id="pesoMedio"
+              class="form-control"
+              [(ngModel)]="controlPesoVivo.pesoMedio"
+              name="pesoMedio"
+              min="0"
+              step="0.01"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>
+  <span
+    class="text-primary cursor-pointer"
+    style="color: black !important; "
+    role="button"
+    (click)="toggleCrotales()"
+  >
+    Listado de Crotales
+  </span>
+              </h5>
+              <div *ngIf="isCrotalesVisible">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Número</th>
+                    <th>Peso (kg)</th>
+                    <th>Acciones</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let crotal of crotales">
+                    <td>{{ crotal.id }}</td>
+                    <td>{{ crotal.numero }}</td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="crotal.peso"
+                        name="crotalPeso{{ crotal.id }}"
+                        min="0"
+                      />
+                    </td>
+                    <td>
+                      <button class="btn btn-primary btn-sm" (click)="saveCrotal(crotal)">
+                        Guardar
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+                <button class="btn btn-success mt-3" (click)="saveWeights()">Guardar Pesos</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="observaciones" class="form-label">Observaciones</label>
+          <textarea
+            id="observaciones"
+            class="form-control"
+            [(ngModel)]="controlPesoVivo.observaciones"
+            name="observaciones"
+            rows="6"
+          ></textarea>
+        </div>
+        <div class="text-center mt-4">
+          <button type="button" class="btn btn-primary me-2" (click)="guardar()">
+            Guardar
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Consulta de Lotes para la Finca {{ fincaNombre }}</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Lote</th>
+          <th>Crotal Desde</th>
+          <th>Crotal Hasta</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let lote of lotes">
+          <td>{{ lote.lote }}</td>
+          <td>{{ lote.crotalDesde }}</td>
+          <td>{{ lote.crotalHasta }}</td>
+          <td class="text-end">
+            <button class="btn btn-primary btn-sm me-2" (click)="goToLoteDetail(lote.id)">
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success mt-3" (click)="createLote()">Crear Nuevo Lote</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Gestión de Usuarios</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Técnico</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.username }}</td>
+          <td>{{ usuario.role }}</td>
+          <td>
+            <ng-container *ngIf="usuario.tecnico; else emptyCell">
+              {{ usuario.tecnico.nombre }} {{ usuario.tecnico.apellidos }}
+            </ng-container>
+            <ng-template #emptyCell>&nbsp;</ng-template>
+          </td>
+          <td class="text-end">
+            <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario.username)">
+              Editar
+            </button>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success mt-3" (click)="crearUsuario()">Crear Nuevo Usuario</button>
+    </div>
+  </div>
+</div>

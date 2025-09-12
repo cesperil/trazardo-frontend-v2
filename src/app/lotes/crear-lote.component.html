@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Crear Lote para la Finca {{ fincaId }}</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="saveLote()">
+        <div class="mb-3">
+          <label for="loteId" class="form-label">Identificador del Lote</label>
+          <input
+            type="text"
+            id="loteId"
+            class="form-control"
+            [(ngModel)]="loteId"
+            name="loteId"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex align-items-center">
+          <label for="crotalDesde" class="form-label me-2">Crotal desde</label>
+          <input
+            type="text"
+            id="crotalDesde"
+            class="form-control me-3"
+            [(ngModel)]="crotalDesde"
+            name="crotalDesde"
+            required
+          />
+          <label for="crotalHasta" class="form-label me-2">hasta</label>
+          <input
+            type="text"
+            id="crotalHasta"
+            class="form-control"
+            [(ngModel)]="crotalHasta"
+            name="crotalHasta"
+            required
+          />
+        </div>
+        <div class="mb-3 d-flex align-items-center">
+          <label for="localizacionCrotal" class="form-label">Localización Crotal</label>
+          <select id="localizacionCrotal" class="form-control" [(ngModel)]="localizacionCrotal" name="localizacionCrotal" required>
+            <option value="OREJAIZQ">Oreja izquierda</option>
+            <option value="OREJADER">Oreja derecha</option>
+            <option value="NO_DETERMINADA">No se indica</option>
+          </select>
+
+
+
+          <label for="raza" class="form-label">Raza</label>
+          <select id="raza" class="form-control" [(ngModel)]="raza" name="raza" required>
+            <option value="IBERICA100">100% Ibérico</option>
+            <option value="IBERICA75">75% Ibérico</option>
+            <option value="NO_DETERMINADA">No se indica</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button
+          type="button"
+          class="btn btn-secondary ms-2"
+          (click)="router.navigate(['/consulta-lotes'], { queryParams: { fincaId: fincaId } })"
+        >
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

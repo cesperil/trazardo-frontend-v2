@@ -1,0 +1,102 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Editar Entrada Montanera</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="guardar()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="lote" class="form-label">Lote</label>
+            <input type="text" id="lote" class="form-control" [(ngModel)]="entradaMontanera.lote" name="lote" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="tecnico" class="form-label">Técnico</label>
+            <select id="tecnico" class="form-control" [(ngModel)]="entradaMontanera.tecnico" name="tecnico" required>
+              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="representante" class="form-label">Representante</label>
+            <input type="text" id="representante" class="form-control" [(ngModel)]="entradaMontanera.representante" name="representante" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="finca" class="form-label">Explotación</label>
+            <select
+              id="finca"
+              class="form-select"
+              [(ngModel)]="entradaMontanera.fincaId"
+              name="finca"
+            >
+              <option *ngFor="let finca of fincas" [value]="finca.id">
+                {{ finca.nombre }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="titularExplotacion" class="form-label">Titular Explotación</label>
+            <input type="text" id="titularExplotacion" class="form-control" [(ngModel)]="entradaMontanera.titularExplotacion" name="titularExplotacion" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="numeroRegistroDO" class="form-label">Registro Explotación</label>
+            <input type="text" id="numeroRegistroDO" class="form-control" [(ngModel)]="entradaMontanera.numeroRegistroDO" name="numeroRegistroDO" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" id="fecha" class="form-control" [(ngModel)]="entradaMontanera.fecha" name="fecha" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="hora" class="form-label">Hora</label>
+            <input type="time" id="hora" class="form-control" [(ngModel)]="entradaMontanera.hora" name="hora" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="numCerdos" class="form-label">Número de Cerdos</label>
+            <input type="number" id="numCerdos" class="form-control" [(ngModel)]="entradaMontanera.numCerdos" name="numCerdos" min="0" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="raza">Raza</label>
+            <select id="raza" class="form-control" [(ngModel)]="entradaMontanera.raza" name="raza" required>
+              <option *ngFor="let raza of razaOptions" [value]="raza.value">
+                {{ raza.label }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="pesoMedio" class="form-label">Peso Medio</label>
+            <input type="number" id="pesoMedio" class="form-control" [(ngModel)]="entradaMontanera.pesoMedio" name="pesoMedio" min="0" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="crotalDesde" class="form-label">Crotal Desde</label>
+            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="entradaMontanera.crotalDesde" name="crotalDesde" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="crotalHasta" class="form-label">Crotal Hasta</label>
+            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="entradaMontanera.crotalHasta" name="crotalHasta" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="localizacionCrotal">Localizacion Crotal</label>
+            <select id="localizacionCrotal" class="form-control" [(ngModel)]="entradaMontanera.localizacionCrotal" name="localizacionCrotal" required>
+              <option *ngFor="let localizacionCrotal of localizacionCrotalOptions" [value]="localizacionCrotal.value">
+                {{ localizacionCrotal.label }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea id="observaciones" class="form-control" [(ngModel)]="entradaMontanera.observaciones" name="observaciones"></textarea>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="manifestacionCompareciente" class="form-label">Manifiesto Compareciente</label>
+            <textarea id="manifestacionCompareciente" class="form-control" [(ngModel)]="entradaMontanera.manifestacionCompareciente" name="manifestacionCompareciente"></textarea>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary me-2">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

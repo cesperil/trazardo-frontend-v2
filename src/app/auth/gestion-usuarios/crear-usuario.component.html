@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Crear Nuevo Usuario</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="crearUsuario()" #usuarioForm="ngForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            [(ngModel)]="usuario.username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [(ngModel)]="usuario.password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="rol" class="form-label">Rol</label>
+          <select
+            id="rol"
+            class="form-select"
+            [(ngModel)]="usuario.role"
+            name="role"
+            required
+          >
+            <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="tecnico" class="form-label">Técnico</label>
+          <select
+            id="tecnico"
+            class="form-select"
+            [(ngModel)]="usuario.tecnico"
+            name="tecnico"
+            required
+          >
+            <option *ngFor="let tecnico of tecnicos" [ngValue]="tecnico">
+              {{ tecnico.nombre }} {{ tecnico.apellidos }}
+            </option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear Usuario</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>

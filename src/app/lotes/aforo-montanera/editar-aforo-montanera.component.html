@@ -1,0 +1,256 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Editar Aforo Montanera</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="saveAforoMontanera()">
+
+        <div class="mb-3">
+          <label for="tecnico" class="form-label">Técnico</label>
+          <select
+            id="tecnico"
+            class="form-select"
+            [(ngModel)]="aforoMontanera.tecnicoId"
+            name="tecnicoId"
+            required
+          >
+            <option value="" disabled selected>Seleccione un técnico</option>
+            <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input
+              type="date"
+              id="fecha"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.fecha"
+              name="fecha"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="hora" class="form-label">Hora</label>
+            <input
+              type="time"
+              id="hora"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.hora"
+              name="hora"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="finca" class="form-label">Finca</label>
+          <select
+            id="finca"
+            class="form-select"
+            [(ngModel)]="aforoMontanera.fincaId"
+            name="fincaId"
+            required
+          >
+            <option value="" disabled selected>Seleccione una finca</option>
+            <option *ngFor="let finca of fincas" [value]="finca.id">{{ finca.nombre }}</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="personaPresente" class="form-label">Persona Presente</label>
+            <input
+              type="text"
+              id="personaPresente"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.personaPresente"
+              name="personaPresente"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="nif" class="form-label">NIF</label>
+            <input
+              type="text"
+              id="nif"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.nif"
+              name="nif"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="calidadDe" class="form-label">Calidad De</label>
+            <input
+              type="text"
+              id="calidadDe"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.calidadDe"
+              name="calidadDe"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="superficieParcela" class="form-label">Superficie Parcela</label>
+            <input
+              type="number"
+              id="superficieParcela"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.superficieParcela"
+              (ngModelChange)="updateCargaGanadera()"
+              name="superficieParcela"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="numPiesHa" class="form-label">Número de Pies por Hectárea</label>
+            <input
+              type="number"
+              id="numPiesHa"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.numPiesHa"
+              (ngModelChange)="updateCargaGanadera()"
+              name="numPiesHa"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="arbolesProductivos" class="form-label">Árboles Productivos</label>
+            <input
+              type="number"
+              id="arbolesProductivos"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.arbolesProductivos"
+              (ngModelChange)="updateCargaGanadera()"
+              name="arbolesProductivos"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="cargaGanaderaTotal" class="form-label">Carga Ganadera Total</label>
+            <input
+              type="number"
+              id="cargaGanaderaTotal"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.cargaGanaderaTotal"
+              name="cargaGanaderaTotal"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="cargaGanaderaModificada" class="form-label">Carga Ganadera Modificada</label>
+            <input
+              type="number"
+              id="cargaGanaderaModificada"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.cargaGanaderaModificada"
+              name="cargaGanaderaModificada"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="factorNumCercas" class="form-label">Factor Número de Cercas</label>
+            <input
+              type="text"
+              id="factorNumCercas"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorNumCercas"
+              name="factorNumCercas"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="factorMonteBajo" class="form-label">Factor Monte Bajo</label>
+            <input
+              type="text"
+              id="factorMonteBajo"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorMonteBajo"
+              name="factorMonteBajo"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="factorEspeciesSivestres" class="form-label">Factor Especies Silvestres</label>
+            <input
+              type="text"
+              id="factorEspeciesSivestres"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorEspeciesSivestres"
+              name="factorEspeciesSivestres"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="factorPoda" class="form-label">Factor Poda</label>
+            <input
+              type="text"
+              id="factorPoda"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorPoda"
+              name="factorPoda"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="factorAgua" class="form-label">Factor Agua</label>
+            <input
+              type="text"
+              id="factorAgua"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorAgua"
+              name="factorAgua"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="factorQuerqus" class="form-label">Factor Querqus</label>
+            <input
+              type="text"
+              id="factorQuerqus"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorQuerqus"
+              name="factorQuerqus"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="factorHierba" class="form-label">Factor Hierba</label>
+            <input
+              type="text"
+              id="factorHierba"
+              class="form-control"
+              [(ngModel)]="aforoMontanera.factorHierba"
+              name="factorHierba"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="observaciones" class="form-label">Observaciones</label>
+          <textarea
+            id="observaciones"
+            class="form-control"
+            [(ngModel)]="aforoMontanera.observaciones"
+            name="observaciones"
+            rows="6"
+          ></textarea>
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary me-2">Guardar</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

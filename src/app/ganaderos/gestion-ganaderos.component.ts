@@ -1,0 +1,63 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+
+
+
+@Component({
+  selector: 'app-gestion-ganaderos',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './gestion-ganaderos.component.html',
+
+})
+export class GestionGanaderosComponent implements OnInit {
+  ganaderos: any[] = [];
+
+  private apiUrl = environment.apiUrl;
+  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+
+  ngOnInit(): void {
+    this.obtenerGanaderos();
+  }
+
+  obtenerGanaderos(): void {
+    const url = `${this.apiUrl}/api/ganaderos`;
+    const token = this.localStorageService.getItem('authToken'); // Retrieve the token from localStorage
+
+    if (!token) {
+      console.error('Authentication token is missing');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Add the Bearer token
+    });
+
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.ganaderos = data;
+        console.log('Ganaderos fetched successfully:', data);
+      },
+      error: (err) => {
+        console.error('Error fetching ganaderos:', err);
+      },
+    });
+  }
+
+ editarGanadero(id: number): void {
+   this.router.navigate([`/editar-ganadero/${id}`]);
+ }
+
+  eliminarGanadero(id: number): void {
+    console.log('Eliminar ganadero con ID:', id);
+    // Lógica para eliminar ganadero
+  }
+
+  crearGanadero(): void {
+    this.router.navigate(['/crear-ganadero']);
+  }
+}
