@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@use "../node_modules/bootstrap/scss/bootstrap";
+$primary: #198754; // Cambia el color primario
+$secondary: #6c757d; // Cambia el color secundario
+$success: #28a745; // Cambia el color de éxito
+$info: #17a2b8; // Cambia el color de información
+$warning: #ffc107; // Cambia el color de advertencia
+$danger: #dc3545; // Cambia el color de error
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #dcf2b4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for card headers */
+.card-header {
+  background-color: #198754;
+  color: #fff; /* Ensure the text is readable */
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.btn {
+  background-color: #4e7967;
+  color: #fff; /* Ensure the text is readable */
+  border-radius: 5px;
+  border: none; /* Remove default border */
+}
+
+.btn:hover {
+  background-color: darken(#4e7967, 10%); /* Slightly darker shade on hover */
+}

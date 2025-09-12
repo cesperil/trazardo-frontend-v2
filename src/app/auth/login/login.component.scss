@@ -1,0 +1,105 @@
+.body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #dcf2b4; /* Color de fondo */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #dcf2b4;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.header img {
+  height: 150px;
+  margin-bottom: 0.5rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+
+
+.header p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem; /* Espacio entre la imagen y el formulario */
+  margin-top: 1rem;
+}
+
+
+.logo img {
+  height: 120px; /* Ajusta el tamaño de la imagen según sea necesario */
+}
+
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  background: #fff;
+  border-radius: 5px;
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+}
+.input-group .icon {
+  margin-right: 0.5rem;
+}
+.input-group input {
+  border: none;
+  flex: 1;
+  font-size: 1rem;
+  outline: none;
+  background: transparent;
+}
+.toggle {
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.login-button {
+  width: 100%;
+  background: #333;
+  color: white;
+  font-size: 1rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.login-button:hover {
+  background: #555;
+}

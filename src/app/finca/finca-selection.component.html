@@ -1,0 +1,37 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Seleccione la finca con la que desea trabajar</h3>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Ganadero</th>
+          <th>Hectáreas</th>
+          <th>Teléfono</th>
+          <th>Rega</th>
+          <th>Término Municipal</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let finca of fincas">
+          <td>{{ finca.nombre }}</td>
+          <td>{{ finca.ganadero }}</td>
+          <td>{{ finca.hectareas }}</td>
+          <td>{{ finca.telefono }}</td>
+          <td>{{ finca.rega }}</td>
+          <td>{{ finca.termino_municipal }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="goToConsultaLotes(finca.id, finca.nombre)">
+              Ir a Consulta Lotes
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
