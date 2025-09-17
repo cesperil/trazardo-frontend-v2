@@ -42,10 +42,11 @@ obtenerUsuarios(): void {
   });
 }
 
-  editarUsuario(id: number): void {
-    console.log('Editar usuario con ID:', id);
-    this.router.navigate([`/editar-usuario/${id}`]);
-
+  editarUsuario(id: number, tecnicoid: number): void {
+    console.log('Editar usuario con ID:', id, 'y Técnico ID:', tecnicoid);
+      this.router.navigate([`/editar-usuario/${id}`], {
+        queryParams: { tecnicoid: tecnicoid }
+      });
     // Lógica para editar usuario
   }
 

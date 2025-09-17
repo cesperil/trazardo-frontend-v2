@@ -178,4 +178,9 @@ createAforoMontanera(): void {
     console.error('No se puede redirigir porque el ID del lote no está disponible.');
   }
 }
+
+  goToFincas(): void {
+
+    this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.lote.finca, fincaNombre: this.lote.finca.nombre}}); // Ajusta la ruta según tu configuración
+  }
 }

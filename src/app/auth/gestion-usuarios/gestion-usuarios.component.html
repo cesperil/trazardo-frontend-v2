@@ -23,8 +23,8 @@
             </ng-container>
             <ng-template #emptyCell>&nbsp;</ng-template>
           </td>
-          <td class="text-end">
-            <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario.username)">
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario.username, usuario.tecnico?.id)">
               Editar
             </button>
 

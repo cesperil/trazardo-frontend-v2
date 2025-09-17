@@ -29,7 +29,7 @@ export class ConsultaLotesComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.fincaId = Number(params['fincaId']);
-      this.fincaNombre = params['fincaNombre'] || 'Sin Nombre';
+      this.fincaNombre = params['fincaNombre'] || '';
 
       if (this.fincaId) {
         this.fetchLotes();

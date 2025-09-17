@@ -2,8 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #198754;
-  padding: 0rem;
+ background: linear-gradient(90deg, #1F3E31, #254F3E);
+   color: #F0E1C0;
+   padding: 10px 20px;
+   width: 100%; /* Asegura que ocupe todo el ancho */
+    margin: 0; /* Elimina márgenes */
+    box-sizing: border-box; /* Incluye padding y bordes en el ancho total */
+  font-family: 'Inter', sans-serif;
+
 }
 
 .menu-logo {
@@ -12,7 +18,7 @@
 }
 
 .menu a {
-  color: white;
+  color: #F0E1C0;
   text-decoration: none;
   padding: 0.5rem 1rem;
 }
@@ -25,9 +31,15 @@
 .menu button {
   background: none;
   border: none;
-  color: white;
+  color: #F0E1C0; /* Mismo color que los enlaces */
   cursor: pointer;
   padding: 0.5rem 1rem;
+  font-family: 'Playfair Display', serif; /* Asegura la misma fuente */
+  text-decoration: none; /* Elimina subrayado */
+}
+
+.menu button:hover {
+  text-decoration: underline; /* Igual que los enlaces al pasar el cursor */
 }
 
 li{
@@ -67,3 +79,4 @@ li{
       text-decoration: underline;
     }
   }
+

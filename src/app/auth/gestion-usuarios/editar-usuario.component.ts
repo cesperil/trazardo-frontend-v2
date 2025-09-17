@@ -23,6 +23,13 @@ export class EditarUsuarioComponent implements OnInit {
     tecnicoId: null,
   };
 
+  tecnicoSeleccionado = {
+    id: null,
+    nombre: '',
+    apellidos: '',
+    };
+
+
   roles = ['Admin', 'Inspector'];
   tecnicos: any[] = [];
 
@@ -37,11 +44,16 @@ export class EditarUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.obtenerUsuario(id);
+    const tecnicoId = Number(this.route.snapshot.queryParams['tecnicoid']); // Extract tecnicoId from query params
+
     this.obtenerTecnicos();
+    this.obtenerUsuario(id, tecnicoId);
+
+    this.usuario.tecnico = this.route.snapshot.params['tecnicoid'];
+    console.log('Valor inicial de usuario.tecnico:', this.usuario.tecnico);
   }
 
-  obtenerUsuario(id: number): void {
+  obtenerUsuario(id: number, tecnicoId: number): void {
     const url = `${this.apiUrl}/api/users/${id}`;
     const token = this.localStorageService.getItem('authToken');
 
@@ -57,6 +69,12 @@ export class EditarUsuarioComponent implements OnInit {
     this.http.get(url, { headers }).subscribe({
       next: (data: any) => {
         this.usuario = data;
+        console.log('User fetched successfully:', data);
+        console.log('Valor de usuario.tecnico:', this.usuario.tecnico);
+
+        if (tecnicoId) {
+           this.usuario.tecnico = this.tecnicos.find((tecnico) => tecnico.id === tecnicoId) || null;
+        }
       },
       error: (err) => {
         console.error('Error fetching user:', err);

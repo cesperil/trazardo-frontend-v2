@@ -3,8 +3,8 @@
   padding: 0;
   width: 100vw;
   height: 100vh;
-  background: #dcf2b4; /* Color de fondo */
-  font-family: 'Segoe UI', sans-serif;
+  background: #E4F2C9; /* Color de fondo */
+  font-family: 'Inter', sans-serif;
 }
 
 .login-container {
@@ -14,8 +14,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #dcf2b4;
-  font-family: 'Segoe UI', sans-serif;
+  background: #E4F2C9;
+  font-family: 'Inter', sans-serif;
 }
 
 .header {
@@ -102,4 +102,9 @@
 }
 .login-button:hover {
   background: #555;
+}
+
+.logo-dehesa {
+  width: auto;
+  height: 250px; /* Mantiene la proporción de la imagen */
 }

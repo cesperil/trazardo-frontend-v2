@@ -1,22 +1,28 @@
 @use "../node_modules/bootstrap/scss/bootstrap";
-$primary: #198754; // Cambia el color primario
+$primary: #053E2D; // Cambia el color primario
 $secondary: #6c757d; // Cambia el color secundario
 $success: #28a745; // Cambia el color de éxito
 $info: #17a2b8; // Cambia el color de información
 $warning: #ffc107; // Cambia el color de advertencia
 $danger: #dc3545; // Cambia el color de error
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #dcf2b4;
+  font-family: 'Inter', sans-serif;
+  background-color: #E4F2C9;
     margin: 0;
     padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
 }
 
 /* Style for card headers */
 .card-header {
-  background-color: #198754;
-  color: #fff; /* Ensure the text is readable */
+  background-color: #053E2D;
+  color: #F0E1C0; /* Ensure the text is readable */
 }
 
 .card {
@@ -26,12 +32,12 @@ body {
 }
 
 .btn {
-  background-color: #4e7967;
-  color: #fff; /* Ensure the text is readable */
+  background-color: #053E2D;
+  color: #F0E1C0; /* Ensure the text is readable */
   border-radius: 5px;
   border: none; /* Remove default border */
 }
 
 .btn:hover {
-  background-color: darken(#4e7967, 10%); /* Slightly darker shade on hover */
+  background-color: darken(#053E2D, 10%); /* Slightly darker shade on hover */
 }
