@@ -1,30 +1,34 @@
 <div class="login-container">
-  <div class="header">
-    <img src="assets/trazardo_icono.png" alt="Logo Trazard" />
-  </div>
 
-  <div class="logo">
-    <img src="assets/logo-dehesa-extremadura.png" alt="Logo Dehesa" class="logo-dehesa"/>
-  </div>
 
-  <form (ngSubmit)="onLogin()">
-    <div class="input-group">
-      <span class="icon">👤</span>
-      <input id="username" [(ngModel)]="username" name="username" required />
+  <div class="login-box">
+    <div class="login-header">
+      <img src="assets/trazardo_icono.png" alt="Logo Trazardo" class="logo-trazardo" />
     </div>
-    <div class="input-group">
-      <span class="icon">🔒</span>
-      <input
-        id="password"
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        required
-      />
+
+    <div class="logo">
+      <img src="assets/logo-dehesa-extremadura.png" alt="Logo Dehesa" class="logo-dehesa" />
     </div>
-    <button type="submit" class="login-button">LOGIN</button>
-    <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-  </form>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input id="username" [(ngModel)]="username" name="username" required />
+      </div>
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+      <button type="submit" class="login-button">LOGIN</button>
+      <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+    </form>
+  </div>
 
 </div>
 
