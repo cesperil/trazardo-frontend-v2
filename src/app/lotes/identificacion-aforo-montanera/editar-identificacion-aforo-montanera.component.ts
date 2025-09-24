@@ -162,4 +162,81 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
     }
 
 
+
+descargarDocumento(): void {
+  const url = `${this.apiUrl}/api/documentos/generar-acta-identificacion-montanera-AIM`;
+  const token = this.localStorageService.getItem('authToken');
+
+  if (!token) {
+    console.error('Authentication token is missing');
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+
+  });
+
+
+    const tecnico = this.tecnicos.find(t => t.id == this.aforo.tecnico);
+    const nombreTecnico = tecnico ? `${tecnico.nombre} ${tecnico.apellidos}` : '';
+    console.log('Tecnico documento:', this.aforo.tecnico);
+    console.log('Array tecnicos documento:', this.tecnicos);
+
+    const finca = this.explotaciones.find(f => f.id == this.aforo.finca);
+    console.log('Finca documento:', finca);
+
+
+
+
+    console.log('AFORO  :', this.aforo);
+
+
+
+  const payload = {
+
+        '${NOMBRETECNICO}': nombreTecnico,
+        '${FECHADOCUMENTO}': new Date().toLocaleDateString(),
+        '${HORADOCUMENTO}': new Date().toLocaleTimeString(),
+        '${NOMBREREPRESENTANTE}': this.aforo.representante || '',
+        '${NOMBREEXPLOTACION}': this.explotaciones.find(f => f.id == this.aforo.finca)?.nombre || '',
+        '${LOCALIDADEXPLOTACION}': this.aforo.terminoMunicipal || '',
+        '${PROVINCIAEXPLOTACION}': this.aforo.provincia,
+        '${TITULAREXPLOTACION}': this.aforo.titularExplotacion || '',
+
+        '${NUMCERDOS}': this.aforo.numCerdos || '',
+        '${RAZACERDO}': this.aforo.raza || '',
+        '${PESOMEDIO}': this.aforo.pesoMedio || '',
+        '${CROTALDESDE}': this.aforo.crotalDesde || '',
+        '${CROTALHASTA}': this.aforo.crotalHasta || '',
+
+        '${MUESTRAPIENSO}': this.aforo.muestraPienso ? 'SI' : 'NO',
+        '${DECLARACIONCOMPARECIENTE}': this.aforo.declaracion || '',
+
+
+        '${TITULARDESEALISTADODO}': this.aforo.titularDeseaListadoDO ? 'SI' : 'NO',
+        '${TITULARAUTORIZACION}': this.aforo.titularAutorizacion ? 'SI' : 'NO',
+        '${COPIARESUMEN}': this.aforo.copiaResumen ? 'SI' : 'NO',
+        '${OTRASINDICACIONES}': this.aforo.otrasIndicaciones || '',
+
+
+  };
+
+  this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
+    next: (response) => {
+      console.log('Documento generado:', response);
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'documento.docx';
+      link.click();
+      console.log('Documento descargado exitosamente');
+    },
+    error: (err) => {
+      console.error('Error al generar el documento:', err);
+    },
+  });
+}
+
 }
