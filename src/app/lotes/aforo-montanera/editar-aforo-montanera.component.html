@@ -131,6 +131,43 @@
               name="arbolesProductivos"
             />
           </div>
+            <div class="col-md-6 mb-3">
+              <label for="coefArboreo" class="form-label">% Árboles productivos</label>
+              <input
+                type="number"
+                id="coefArboreo"
+                class="form-control"
+                [(ngModel)]="aforoMontanera.coefArboreo"
+                (ngModelChange)="updateCargaGanadera()"
+                name="coefArboreo"
+              />
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="arbolesProductivosHA" class="form-label">Árboles productivos HA</label>
+          <input
+            type="number"
+            id="arbolesProductivosHA"
+            class="form-control"
+            [(ngModel)]="aforoMontanera.arbolesProductivosHA"
+            (ngModelChange)="updateCargaGanadera()"
+            name="arbolesProductivosHA"
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="arbolesProductivosTotal" class="form-label">Total Árboles productivos</label>
+          <input
+            type="number"
+            id="arbolesProductivosTotal"
+            class="form-control"
+            [(ngModel)]="aforoMontanera.arbolesProductivosTotal"
+            (ngModelChange)="updateCargaGanadera()"
+            name="arbolesProductivosTotal"
+          />
+        </div>
+        </div>
+        <div class="row">
           <div class="col-md-6 mb-3">
             <label for="cargaGanaderaTotal" class="form-label">Carga Ganadera Total</label>
             <input
@@ -242,6 +279,8 @@
         </div>
         <div class="text-center mt-4">
           <button type="submit" class="btn btn-primary me-2">Guardar</button>
+
+          <button class="btn btn-primary me-2" (click)="descargarDocumento()">Descargar documento</button>
           <button
             type="button"
             class="btn btn-secondary"
