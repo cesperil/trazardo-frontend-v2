@@ -159,4 +159,87 @@ constructor(private http: HttpClient, private router: Router,
     }
 
 
+descargarDocumento(): void {
+  const url = `${this.apiUrl}/api/documentos/generar-acta-entrada-montanera-E5M`;
+  const token = this.localStorageService.getItem('authToken');
+
+  if (!token) {
+    console.error('Authentication token is missing');
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+
+  });
+
+    const tecnico = this.tecnicos.find(t => t.id == this.entradaMontanera.tecnico);
+    const nombreTecnico = tecnico ? `${tecnico.nombre} ${tecnico.apellidos}` : '';
+
+    console.log('Técnico documento:', tecnico);
+
+    const finca = this.fincas.find(f => f.id == this.entradaMontanera.explotacion);
+    console.log('Finca documento:', finca);
+
+
+
+
+
+    console.log('AFORO MONTANERA :', this.entradaMontanera);
+
+     const selectedRaza = this.razaOptions.find(option => option.value === this.entradaMontanera.raza);
+      this.entradaMontanera.raza = selectedRaza ? selectedRaza.label : this.entradaMontanera.raza;
+
+      // Map localizacionCrotal value to its label
+      const selectedLocalizacionCrotal = this.localizacionCrotalOptions.find(option => option.value === this.entradaMontanera.localizacionCrotal);
+      this.entradaMontanera.localizacionCrotal = selectedLocalizacionCrotal ? selectedLocalizacionCrotal.label : this.entradaMontanera.localizacionCrotal;
+
+
+
+  const payload = {
+        '${NOMBRETECNICO}': nombreTecnico,
+        '${FECHADOCUMENTO}': new Date().toLocaleDateString(),
+        '${HORADOCUMENTO}': new Date().toLocaleTimeString(),
+        '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id == this.entradaMontanera.explotacion)?.nombre || '',
+
+        '${LOCALIDADEXPLOTACION}': this.entradaMontanera.terminoMunicipal || '',
+        '${PROVINCIAEXPLOTACION}': this.entradaMontanera.provincia || '',
+        '${REGISTRODOEXPLOTACION}': this.entradaMontanera.numeroRegistroDO || '',
+        '${PROPIETARIOEXPLOTACION}': this.entradaMontanera.titularExplotacion || '',
+        '${NOMBREREPRESENTANTE}': this.entradaMontanera.representante || '',
+
+
+       '${NUMCERDOS}': this.entradaMontanera.numCerdos || '',
+       '${RAZACERDO}': this.entradaMontanera.raza || '',
+       '${PESOMEDIO}': this.entradaMontanera.pesoMedio || '',
+       '${CROTALDESDE}': this.entradaMontanera.crotalDesde || '',
+       '${CROTALHASTA}': this.entradaMontanera.crotalHasta || '',
+
+       '${LOCALIZACIONCROTAL}': this.entradaMontanera.localizacionCrotal || '',
+       '${OBSERVACIONES}': this.entradaMontanera.observaciones || '',
+       '${MANIFIESTOCOMPARECIENTE}': this.entradaMontanera.manifestacionCompareciente || '',
+
+  };
+
+  this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
+    next: (response) => {
+      console.log('Documento generado:', response);
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'documento.docx';
+      link.click();
+      console.log('Documento descargado exitosamente');
+    },
+    error: (err) => {
+      console.error('Error al generar el documento:', err);
+    },
+  });
+}
+
+
+
+
+
 }
