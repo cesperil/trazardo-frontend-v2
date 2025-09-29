@@ -148,5 +148,74 @@ export class EditarControlExplotacionComponent implements OnInit {
 
 
 
+descargarDocumento(): void {
+  const url = `${this.apiUrl}/api/documentos/generar-acta-control-explotacion-E0`;
+  const token = this.localStorageService.getItem('authToken');
+
+  if (!token) {
+    console.error('Authentication token is missing');
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+
+  });
+
+    const tecnico = this.tecnicos.find(t => t.id == this.controlExplotacion.tecnico);
+    const nombreTecnico = tecnico ? `${tecnico.nombre} ${tecnico.apellidos}` : '';
+
+    console.log('Técnico documento:', tecnico);
+
+    const finca = this.fincas.find(f => f.id == this.controlExplotacion.explotacion);
+    console.log('Finca documento:', finca);
+
+    console.log('CONTROL EXPLOTACION :', this.controlExplotacion);
+
+
+
+  const payload = {
+
+        '${NUMLOTE}': this.controlExplotacion.lote || '',
+        '${NOMBRETECNICO}': nombreTecnico,
+        '${FECHADOCUMENTO}': this.controlExplotacion.fecha || new Date().toLocaleDateString(),
+        '${HORADOCUMENTO}': this.controlExplotacion.horaInicioVisita || new Date().toLocaleTimeString(),
+        '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id == this.controlExplotacion.explotacion)?.nombre || '',
+
+        '${LOCALIDADEXPLOTACION}': this.controlExplotacion.terminoMunicipal || '',
+        '${PROVINCIAEXPLOTACION}': this.controlExplotacion.provincia || '',
+        '${REGISTRODOEXPLOTACION}': this.controlExplotacion.numeroRegistroDO || '',
+        '${PROPIETARIOEXPLOTACION}': this.controlExplotacion.titularExplotacion || '',
+        '${NOMBREREPRESENTANTE}': this.controlExplotacion.representante || '',
+
+
+       '${NUMCERDOS}': this.controlExplotacion.numCerdos || '',
+       '${CROTALDESDE}': this.controlExplotacion.crotalDesde || '',
+       '${CROTALHASTA}': this.controlExplotacion.crotalHasta || '',
+
+       '${ALIMENTACIONYMANEJO}': this.controlExplotacion.alimentacionManejo || '',
+       '${OTRASINDICACIONES}': this.controlExplotacion.otrasIndicaciones || '',
+       '${MANIFIESTOCOMPARECIENTE}': this.controlExplotacion.manifestacionCompareciente || '',
+       '${HORAFINVISITA}': this.controlExplotacion.horaFinVisita || '',
+
+  };
+
+  this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
+    next: (response) => {
+      console.log('Documento generado:', response);
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'documento.docx';
+      link.click();
+      console.log('Documento descargado exitosamente');
+    },
+    error: (err) => {
+      console.error('Error al generar el documento:', err);
+    },
+  });
+}
+
 
 }
