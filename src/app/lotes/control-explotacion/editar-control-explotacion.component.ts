@@ -174,13 +174,29 @@ descargarDocumento(): void {
     console.log('CONTROL EXPLOTACION :', this.controlExplotacion);
 
 
+const timeInicioVisita = this.controlExplotacion.horaInicioVisita; // "18:00:00"
+const dateTimeInicioVisitaString = `${new Date().toISOString().split('T')[0]}T${timeInicioVisita}`; // "YYYY-MM-DDT18:00:00"
+const formattedTimeInicioVisita = new Date(dateTimeInicioVisitaString).toLocaleTimeString('es-ES', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
+
+const timeFinVisita = this.controlExplotacion.horaFinVisita; // "18:00:00"
+const dateTimeFinVisitaString = `${new Date().toISOString().split('T')[0]}T${timeFinVisita}`; // "YYYY-MM-DDT18:00:00"
+const formattedTimeFinVisita = new Date(dateTimeFinVisitaString).toLocaleTimeString('es-ES', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
 
   const payload = {
 
         '${NUMLOTE}': this.controlExplotacion.lote || '',
         '${NOMBRETECNICO}': nombreTecnico,
-        '${FECHADOCUMENTO}': this.controlExplotacion.fecha || new Date().toLocaleDateString(),
-        '${HORADOCUMENTO}': this.controlExplotacion.horaInicioVisita || new Date().toLocaleTimeString(),
+        //'${FECHADOCUMENTO}': this.controlExplotacion.fecha || new Date().toLocaleDateString(),
+        '${FECHADOCUMENTO}': new Date(this.controlExplotacion.fecha).toLocaleDateString('es-ES'),
+        '${HORADOCUMENTO}': formattedTimeInicioVisita,
         '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id == this.controlExplotacion.explotacion)?.nombre || '',
 
         '${LOCALIDADEXPLOTACION}': this.controlExplotacion.terminoMunicipal || '',
@@ -197,7 +213,7 @@ descargarDocumento(): void {
        '${ALIMENTACIONYMANEJO}': this.controlExplotacion.alimentacionManejo || '',
        '${OTRASINDICACIONES}': this.controlExplotacion.otrasIndicaciones || '',
        '${MANIFIESTOCOMPARECIENTE}': this.controlExplotacion.manifestacionCompareciente || '',
-       '${HORAFINVISITA}': this.controlExplotacion.horaFinVisita || '',
+       '${HORAFINVISITA}': formattedTimeFinVisita,
 
   };
 
