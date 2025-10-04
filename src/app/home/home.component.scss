@@ -30,7 +30,17 @@
   height: calc(100vh - 4rem); // Adjust for menu height
 }
 
+
+
+
 .logo {
-  max-width: 200px;
-  height: auto;
+  max-width: 80%; /* Default for larger screens */
+  max-height: 100vh;
+  object-fit: contain;
 }
+
+  @media (max-width: 768px) {
+    .logo {
+      max-width: 60%; /* For mobile screens */
+    }
+  }

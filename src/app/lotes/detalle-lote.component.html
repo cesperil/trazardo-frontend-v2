@@ -4,140 +4,97 @@
       <h3>Detalle del Lote: {{ lote?.lote }}</h3>
     </div>
     <div class="card-body">
-      <h5>Información del Lote</h5>
-      <table class="table table-bordered">
-        <tr>
-          <th>Lote</th>
-          <td>{{ lote?.lote }}</td>
-        </tr>
-        <tr>
-          <th>Crotal Desde</th>
-          <td>{{ lote?.crotalDesde }}</td>
-        </tr>
-        <tr>
-          <th>Crotal Hasta</th>
-          <td>{{ lote?.crotalHasta }}</td>
-        </tr>
-        <tr>
-          <th>Localización Crotal</th>
-          <td>{{ lote?.localizacionCrotal | enumDisplay: 'localizacionCrotal' }}</td>
-        </tr>
-        <tr>
-          <th>Raza</th>
-          <td>{{ lote?.raza | enumDisplay: 'raza' }}</td>
-        </tr>
-        <tr>
-          <th>Aforo de Montanera</th>
-          <td>
-            <a *ngIf="lote?.aforoMontanera?.id > 0" [routerLink]="['/aforo-montanera/editar-aforo-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Editar Aforo de Montanera
-            </a>
-            <a *ngIf="!lote?.aforoMontanera || lote.aforoMontanera <= 0" [routerLink]="['/aforo-montanera/nuevo-aforo-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-            Crear Aforo de Montanera
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <th>Acta control de peso vivo</th>
-          <td>
-            <a *ngIf="lote?.actaControlPesoVivo?.id > 0" [routerLink]="['/control-peso-vivo/editar-control-peso-vivo']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Editar Acta de Control de Peso Vivo
-            </a>
-            <a *ngIf="!lote?.actaControlPesoVivo || lote.actaControlPesoVivo <= 0" [routerLink]="['/control-peso-vivo/nuevo-control-peso-vivo']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Crear Acta de Control de Peso Vivo
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <th>Acta identificación Montanera</th>
-          <td>
-            <a *ngIf="lote?.actaIdentificacionMontanera?.id > 0" [routerLink]="['/identificacion-aforo-montanera/editar-identificacion-aforo-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Editar Acta de Identificación de Montanera
-            </a>
-            <a *ngIf="!lote?.actaIdentificacionMontanera || lote.actaIdentificacionMontanera <= 0" [routerLink]="['/identificacion-aforo-montanera/nuevo-identificacion-aforo-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Crear Acta de Identificación de Montanera
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <th>Acta Entrada Montanera</th>
-          <td>
-            <a *ngIf="lote?.actaEntradaMontanera?.id > 0" [routerLink]="['/entrada-montanera/editar-entrada-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Editar Acta Entrada Montanera
-            </a>
-            <a *ngIf="!lote?.actaEntradaMontanera || lote.actaEntradaMontanera <= 0" [routerLink]="['/entrada-montanera/nuevo-entrada-montanera']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Crear Acta Entrada Montanera
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <th>Acta Control de la Explotacion 0</th>
-          <td>
-            <a *ngIf="lote?.actaControlExplotacion0?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Editar Acta Control de la Explotacion 0
-            </a>
-            <a *ngIf="!lote?.actaControlExplotacion0 || lote.actaControlExplotacion0 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-              Crear Acta Control de la Explotacion 0
-            </a>
-          </td>
-        </tr>
-      </table>
+      <!-- Información del lote -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Información del Lote</h5>
+          <p><strong>Lote:</strong> {{ lote?.lote }}</p>
+          <p><strong>Crotal Desde:</strong> {{ lote?.crotalDesde }}</p>
+          <p><strong>Crotal Hasta:</strong> {{ lote?.crotalHasta }}</p>
+          <p><strong>Localización Crotal:</strong> {{ lote?.localizacionCrotal | enumDisplay: 'localizacionCrotal' }}</p>
+          <p><strong>Raza:</strong> {{ lote?.raza | enumDisplay: 'raza' }}</p>
+        </div>
+      </div>
 
-      <div *ngIf="successMessage" class="alert alert-success" role="alert">
-        {{ successMessage }}
+      <!-- Acciones relacionadas -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Aforo de Montanera</h5>
+          <a *ngIf="lote?.aforoMontanera?.id > 0" [routerLink]="['/aforo-montanera/editar-aforo-montanera']" [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Aforo de Montanera
+          </a>
+          <a *ngIf="!lote?.aforoMontanera" [routerLink]="['/aforo-montanera/nuevo-aforo-montanera']" [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Aforo de Montanera
+          </a>
+          <!-- Repite para otras acciones -->
+        </div>
       </div>
-      <div class="container mt-3">
-        <button class="btn btn-primary mb-2" (click)="toggleCrotales()" style="display:none">
-          {{ isCrotalesCollapsed ? 'Mostrar' : 'Ocultar' }} Listado de Crotales
-        </button>
-        <div *ngIf="!isCrotalesCollapsed" class="card shadow">
-        <h5 class="mt-4">Listado de Crotales</h5>
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Número</th>
-          <th>Peso (kg)</th>
-          <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let crotal of crotales">
-          <td>{{ crotal.id }}</td>
-          <td>{{ crotal.numero }}</td>
-          <td>
-            <input
-              type="number"
-              class="form-control"
-              [(ngModel)]="crotal.peso"
-              min="0"
-            />
-          </td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="saveCrotal(crotal)">
-              Guardar
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <button class="btn btn-success mt-3" (click)="saveWeights()">Guardar Pesos</button>
-    </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Acta de control de peso vivo</h5>
+          <a *ngIf="lote?.actaControlPesoVivo?.id > 0" [routerLink]="['/control-peso-vivo/editar-control-peso-vivo']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Acta de Control de Peso Vivo
+          </a>
+          <a *ngIf="!lote?.actaControlPesoVivo || lote.actaControlPesoVivo <= 0" [routerLink]="['/control-peso-vivo/nuevo-control-peso-vivo']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Acta de Control de Peso Vivo
+          </a>
+          <!-- Repite para otras acciones -->
+        </div>
       </div>
-      <div class="container mt-3">
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">AActa identificación Montanera<</h5>
+          <a *ngIf="lote?.actaIdentificacionMontanera?.id > 0" [routerLink]="['/identificacion-aforo-montanera/editar-identificacion-aforo-montanera']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Acta de Identificación de Montanera
+          </a>
+          <a *ngIf="!lote?.actaIdentificacionMontanera || lote.actaIdentificacionMontanera <= 0" [routerLink]="['/identificacion-aforo-montanera/nuevo-identificacion-aforo-montanera']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Acta de Identificación de Montanera
+          </a>
+          <!-- Repite para otras acciones -->
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Acta Entrada Montanera</h5>
+          <a *ngIf="lote?.actaEntradaMontanera?.id > 0" [routerLink]="['/entrada-montanera/editar-entrada-montanera']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Acta Entrada Montanera
+          </a>
+          <a *ngIf="!lote?.actaEntradaMontanera || lote.actaEntradaMontanera <= 0" [routerLink]="['/entrada-montanera/nuevo-entrada-montanera']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Acta Entrada Montanera
+          </a>
+          <!-- Repite para otras acciones -->
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Acta Control de la Explotacion </h5>
+          <a *ngIf="lote?.actaControlExplotacion0?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Acta Control de la Explotacion 0
+          </a>
+          <a *ngIf="!lote?.actaControlExplotacion0 || lote.actaControlExplotacion0 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Acta Control de la Explotacion 0
+          </a>
+          <!-- Repite para otras acciones -->
+        </div>
+      </div>
+
+
+      <!-- Botón para regresar -->
+      <div class="text-center">
         <button class="btn btn-secondary" (click)="goToFincas()">Regresar a Selección de Fincas</button>
       </div>
     </div>
-
   </div>
 </div>
