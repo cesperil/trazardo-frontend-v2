@@ -26,7 +26,6 @@
           <a *ngIf="!lote?.aforoMontanera" [routerLink]="['/aforo-montanera/nuevo-aforo-montanera']" [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Crear Aforo de Montanera
           </a>
-          <!-- Repite para otras acciones -->
         </div>
       </div>
 
@@ -47,7 +46,7 @@
 
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">AActa identificación Montanera<</h5>
+          <h5 class="card-title">Acta identificación Montanera</h5>
           <a *ngIf="lote?.actaIdentificacionMontanera?.id > 0" [routerLink]="['/identificacion-aforo-montanera/editar-identificacion-aforo-montanera']"
              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Editar Acta de Identificación de Montanera

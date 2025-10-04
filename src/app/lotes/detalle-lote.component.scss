@@ -1,0 +1,19 @@
+.card-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Opcional: ajusta el espacio entre los elementos */
+}
+
+.card-title-container a {
+  margin-left: 1rem; /* Espaciado entre el <h5> y el <a> */
+}
+
+@media (max-width: 768px) {
+  .card-title-container {
+    display: block; /* Cambia a diseño vertical en pantallas pequeñas */
+  }
+
+  .card-title-container a {
+    margin-left: 0; /* Elimina el margen en diseño vertical */
+  }
+}
