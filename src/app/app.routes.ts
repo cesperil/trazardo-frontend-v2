@@ -27,7 +27,8 @@ import { NuevoEntradaMontaneraComponent } from './lotes/entrada-montanera/nuevo-
 import { EditarEntradaMontaneraComponent } from './lotes/entrada-montanera/editar-entrada-montanera.component';
 import { NuevoControlExplotacionComponent } from './lotes/control-explotacion/nuevo-control-explotacion.component';
 import { EditarControlExplotacionComponent } from './lotes/control-explotacion/editar-control-explotacion.component';
-
+import { GestionLotesAdminComponent } from './lotes/gestion-lotes-admin.component';
+import { EditarLoteComponent } from './lotes/editar-lote.component';
 
 
 export const routes: Routes = [
@@ -59,4 +60,9 @@ export const routes: Routes = [
     { path: 'entrada-montanera/nuevo-entrada-montanera', component: NuevoEntradaMontaneraComponent },
     { path: 'entrada-montanera/editar-entrada-montanera', component: EditarEntradaMontaneraComponent },
     { path: 'control-explotacion/nuevo-control-explotacion', component: NuevoControlExplotacionComponent},
-    { path: 'control-explotacion/editar-control-explotacion', component: EditarControlExplotacionComponent},] // Ruta para el login];
+    { path: 'control-explotacion/editar-control-explotacion', component: EditarControlExplotacionComponent},
+    { path: 'gestion-lotes-admin', component: GestionLotesAdminComponent},// Ruta para el login];
+    { path: 'editar-lote', component: EditarLoteComponent}// Ruta para el login];
+
+    ]
+

@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Editar Lote</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="saveLote()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="lote" class="form-label">Lote</label>
+            <input id="lote" class="form-control" [(ngModel)]="lote.lote" name="lote" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="tecnico" class="form-label">Técnico</label>
+            <select id="tecnico" class="form-select" [(ngModel)]="tecnicoId" name="tecnico" required>
+              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="explotacion" class="form-label">Explotación</label>
+            <select id="explotacion" class="form-select" [(ngModel)]="explotacionId" name="explotacion" required>
+              <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="anio" class="form-label">Año</label>
+            <input id="anio" type="number" class="form-control" [(ngModel)]="lote.anio" name="anio" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="crotalDesde" class="form-label">Crotal Desde</label>
+            <input id="crotalDesde" type="number" class="form-control" [(ngModel)]="lote.crotalDesde" name="crotalDesde" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="crotalHasta" class="form-label">Crotal Hasta</label>
+            <input id="crotalHasta" type="number" class="form-control" [(ngModel)]="lote.crotalHasta" name="crotalHasta" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="localizacionCrotal" class="form-label">Localización Crotal</label>
+            <select id="localizacionCrotal" class="form-select" [(ngModel)]="lote.localizacionCrotal" name="localizacionCrotal" required>
+              <option *ngFor="let option of localizacionCrotalOptions" [value]="option">
+                {{ option | enumDisplay: 'localizacionCrotal' }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="raza" class="form-label">Raza</label>
+            <select id="raza" class="form-select" [(ngModel)]="lote.raza" name="raza" required>
+              <option *ngFor="let option of razaOptions" [value]="option">
+                {{ option | enumDisplay: 'raza' }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary me-2">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="router.navigate(['/gestion-lotes-admin'])">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

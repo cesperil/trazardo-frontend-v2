@@ -119,6 +119,9 @@ fetchNuevoLote(fincaId: number, tecnicoId: string): void {
         tecnico: {
               id: Number(this.localStorageService.getItem('tecnicoID')),
         },
+        explotacion: {
+                    id: this.fincaId,
+        },
       };
 
       console.log('Sending request with headers:', headers);
