@@ -6,17 +6,6 @@
     <div class="card-body">
       <form (ngSubmit)="crearGanadero()" #ganaderoForm="ngForm">
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            class="form-control"
-            [(ngModel)]="ganadero.nombre"
-            name="nombre"
-            required
-          />
-        </div>
-        <div class="mb-3">
           <label for="apellidos" class="form-label">Apellidos</label>
           <input
             type="text"

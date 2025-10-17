@@ -6,18 +6,7 @@
     <div class="card-body">
       <form (ngSubmit)="editarGanadero()" #ganaderoForm="ngForm">
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            class="form-control"
-            [(ngModel)]="ganadero.nombre"
-            name="nombre"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="apellidos" class="form-label">Apellidos</label>
+          <label for="apellidos" class="form-label">Nombre</label>
           <input
             type="text"
             id="apellidos"

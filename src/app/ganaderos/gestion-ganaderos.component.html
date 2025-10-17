@@ -4,18 +4,26 @@
       <h3>Gestión de Ganaderos</h3>
     </div>
     <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <label for="apellidosFilter" class="form-label">Nombre</label>
+          <input type="text" id="apellidosFilter" class="form-control" [(ngModel)]="filters.apellidos" (input)="buscarGanaderos()" placeholder="Buscar por nombre" />
+        </div>
+        <div class="col-md-4">
+          <label for="nifFilter" class="form-label">NIF</label>
+          <input type="text" id="nifFilter" class="form-control" [(ngModel)]="filters.nif" (input)="buscarGanaderos()" placeholder="Buscar por nif" />
+        </div>
+      </div>
       <table class="table table-striped">
         <thead>
         <tr>
           <th>Nombre</th>
-          <th>Apellidos</th>
           <th>DNI</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let ganadero of ganaderos">
-          <td>{{ ganadero.nombre }}</td>
+        <tr *ngFor="let ganadero of filteredGanaderos">
           <td>{{ ganadero.apellidos }}</td>
           <td>{{ ganadero.nif }}</td>
           <td>
