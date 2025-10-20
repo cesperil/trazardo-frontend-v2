@@ -138,6 +138,7 @@ export class EditarControlPesoVivoComponent implements OnInit {
         setTimeout(() => {
           this.successMessage = null;
         }, 3000);
+              this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
       },
       error: (err) => {
         console.error('Error al guardar el control de peso vivo:', err);
