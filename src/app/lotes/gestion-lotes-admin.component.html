@@ -1,0 +1,56 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>Gestión de Lotes</h3>
+    </div>
+    <div class="card-body">
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <label for="tecnicoFilter" class="form-label">Técnico</label>
+      <select id="tecnicoFilter" class="form-select" [(ngModel)]="filters.tecnico" (change)="applyFilters()">
+        <option value="">Todos</option>
+        <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="yearFilter" class="form-label">Año</label>
+      <input type="number" id="yearFilter" class="form-control" [(ngModel)]="filters.anio" (input)="applyFilters()" placeholder="Ingrese el año" />
+    </div>
+    <div class="col-md-4">
+      <label for="explotacionFilter" class="form-label">Explotacion</label>
+      <select id="explotacionFilter" class="form-select" [(ngModel)]="filters.explotacion" (change)="applyFilters()">
+        <option value="">Todos</option>
+        <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Lote</th>
+      <th>Técnico</th>
+      <th>Explotacion</th>
+      <th>Año</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let lote of filteredLotes; let i = index">
+      <td>{{ lote.lote }}</td>
+      <td>{{ lote.tecnico?.nombre }} {{ lote.tecnico?.apellidos }}</td>
+      <td>{{ lote.explotacion?.nombre }}</td>
+      <td>{{ lote.anio }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm me-2" (click)="editarLote(lote)">Editar</button>
+        <button class="btn btn-secondary btn-sm" (click)="verDetalleLote(lote)">Detalle</button>
+      </td>
+    </tr>
+    <tr *ngIf="filteredLotes.length === 0">
+      <td colspan="5" class="text-center">No se encontraron resultados</td>
+    </tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</div>

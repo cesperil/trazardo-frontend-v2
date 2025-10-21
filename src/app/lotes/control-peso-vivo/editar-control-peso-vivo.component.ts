@@ -138,6 +138,7 @@ export class EditarControlPesoVivoComponent implements OnInit {
         setTimeout(() => {
           this.successMessage = null;
         }, 3000);
+              this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
       },
       error: (err) => {
         console.error('Error al guardar el control de peso vivo:', err);
@@ -271,5 +272,63 @@ fetchControlPesoVivo(loteId: number): void {
   });
 }
 
+
+
+
+descargarDocumento(): void {
+  const url = `${this.apiUrl}/api/documentos/generar-acta-control-peso-vivo-F06?idLote=${this.loteId}`;
+  const token = this.localStorageService.getItem('authToken');
+
+  if (!token) {
+    console.error('Authentication token is missing');
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+
+  });
+
+    const tecnico = this.tecnicos.find(t => t.id == this.controlPesoVivo.tecnico);
+    const nombreTecnico = tecnico ? `${tecnico.nombre} ${tecnico.apellidos}` : '';
+
+    console.log('Técnico documento:', tecnico);
+
+
+    const finca = this.fincas.find(f => f.id == this.controlPesoVivo.fincaId);
+    console.log('Control peso vivo:', this.controlPesoVivo);
+    console.log('Finca objeto:', this.controlPesoVivo.explotacion);
+    console.log('Finca documento:', finca);
+
+    console.log('CONTROL EXPLOTACION :', this.controlPesoVivo);
+
+
+
+  const payload = {
+        '${FECHADOCUMENTO}': new Date(this.controlPesoVivo.fecha).toLocaleDateString('es-ES'),
+        '${NOMBRETECNICO}': nombreTecnico,
+        '${NOMBREEXPLOTACION}': finca ? finca.nombre : '',
+        '${FECHAE5M}': new Date(this.controlPesoVivo.fechaE5M).toLocaleDateString('es-ES'),
+        '${NUMCERDOS}': this.controlPesoVivo.numeroCerdos || '',
+        '${PESOMEDIO}': this.controlPesoVivo.pesoMedio || '',
+        '${OBSERVACIONES}': this.controlPesoVivo.observaciones || '',
+  };
+
+  this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
+    next: (response) => {
+      console.log('Documento generado:', response);
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'documento.docx';
+      link.click();
+      console.log('Documento descargado exitosamente');
+    },
+    error: (err) => {
+      console.error('Error al generar el documento:', err);
+    },
+  });
+}
 
 }
