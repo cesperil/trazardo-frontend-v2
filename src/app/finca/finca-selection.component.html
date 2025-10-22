@@ -4,6 +4,22 @@
       <h3 class="text-center">Seleccione la finca con la que desea trabajar</h3>
     </div>
     <div class="card-body">
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <label for="nombreExplotacionFilter" class="form-label">Nombre Explotación</label>
+          <input type="text" id="nombreExplotacionFilter" class="form-control" [(ngModel)]="filters.nombreExplotacion" (input)="applyFilters()" placeholder="Buscar por nombre explotación" />
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+          <label for="nombreGanaderoFilter" class="form-label">Ganadero</label>
+          <input type="text" id="nombreGanaderoFilter" class="form-control" [(ngModel)]="filters.nombreGanadero" (input)="applyFilters()" placeholder="Buscar por ganadero" />
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+          <label for="terminoMunicipalFilter" class="form-label">Termino Municipal</label>
+          <input type="text" id="terminoMunicipalFilter" class="form-control" [(ngModel)]="filters.terminoMunicipal" (input)="applyFilters()" placeholder="Buscar por termino municipal" />
+        </div>
+      </div>
+
       <div class="table-responsive">
         <table class="table table-hover">
           <thead class="table-light">
@@ -18,7 +34,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let finca of fincas">
+          <tr *ngFor="let finca of filteredExplotaciones">
             <td>{{ finca.nombre }}</td>
             <td class="d-none d-md-table-cell">{{ finca.ganadero }}</td>
             <td class="d-none d-md-table-cell">{{ finca.hectareas }}</td>

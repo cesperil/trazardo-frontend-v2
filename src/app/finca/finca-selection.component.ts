@@ -30,6 +30,15 @@ export class FincaSelectionComponent {
 
   private apiUrl = environment.apiUrl;
 
+
+  filters = {
+      nombreExplotacion: '',
+      nombreGanadero: '',
+      terminoMunicipal: ''
+    };
+
+ filteredExplotaciones = [...this.fincas];
+
   constructor(private router: Router, private http: HttpClient, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {} // Inject the Router service
 
   ngOnInit(): void {
@@ -55,10 +64,28 @@ export class FincaSelectionComponent {
       next: (data) => {
         this.fincas = data;
         console.error('Fincas obtenidas:', data);
+        this.filteredExplotaciones = [...this.fincas];
       },
       error: (err) => {
         console.error('Error fetching fincas:', err);
       },
+    });
+  }
+
+
+applyFilters(): void {
+    this.filteredExplotaciones = this.fincas.filter(explotacion => {
+      const matchesNombre = this.filters.nombreExplotacion
+        ? explotacion.nombre.toLowerCase().includes(this.filters.nombreExplotacion.toLowerCase())
+        : true;
+      const matchesGanadero = this.filters.nombreGanadero
+        ? explotacion.ganadero.toLowerCase().includes(this.filters.nombreGanadero.toLowerCase())
+        : true;
+      const matchesTerminoMunicipal = this.filters.terminoMunicipal
+        ? explotacion.termino_municipal.toLowerCase().includes(this.filters.terminoMunicipal.toLowerCase())
+        : true;
+
+      return matchesNombre && matchesGanadero && matchesTerminoMunicipal;
     });
   }
 
