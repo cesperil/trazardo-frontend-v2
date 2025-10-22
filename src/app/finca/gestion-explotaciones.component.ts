@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -10,13 +11,21 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 @Component({
   selector: 'app-gestion-explotaciones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './gestion-explotaciones.component.html',
 })
 export class GestionExplotacionesComponent implements OnInit {
   explotaciones: any[] = [];
 
   private apiUrl = environment.apiUrl;
+
+  filters = {
+      nombreExplotacion: '',
+      nombreGanadero: '',
+      terminoMunicipal: ''
+    };
+
+    filteredExplotaciones = [...this.explotaciones];
 
   constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
 
@@ -40,7 +49,8 @@ export class GestionExplotacionesComponent implements OnInit {
                                     termino_municipal: string; }[]>(url, { headers }).subscribe({
         next: (data) => {
           this.explotaciones = data;
-          console.error('Fincas obtenidas:', data);
+          console.error('Fincas obtenidas:', this.explotaciones);
+          this.filteredExplotaciones = [...this.explotaciones];
         },
         error: (err) => {
           console.error('Error fetching fincas:', err);
@@ -48,6 +58,22 @@ export class GestionExplotacionesComponent implements OnInit {
       });
     }
 
+
+  applyFilters(): void {
+    this.filteredExplotaciones = this.explotaciones.filter(explotacion => {
+      const matchesNombre = this.filters.nombreExplotacion
+        ? explotacion.nombre.toLowerCase().includes(this.filters.nombreExplotacion.toLowerCase())
+        : true;
+      const matchesGanadero = this.filters.nombreGanadero
+        ? explotacion.ganadero.toLowerCase().includes(this.filters.nombreGanadero.toLowerCase())
+        : true;
+      const matchesTerminoMunicipal = this.filters.terminoMunicipal
+        ? explotacion.termino_municipal.toLowerCase().includes(this.filters.terminoMunicipal.toLowerCase())
+        : true;
+
+      return matchesNombre && matchesGanadero && matchesTerminoMunicipal;
+    });
+  }
 
 
 
