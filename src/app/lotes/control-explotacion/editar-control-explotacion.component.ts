@@ -21,6 +21,7 @@ export class EditarControlExplotacionComponent implements OnInit {
   lote: any = null; // Define the lote property
   fincas: any[] = [];
   loteId: number | null = null;
+  numActa: number | null = null;
 
   private apiUrl = environment.apiUrl;
 
@@ -54,6 +55,7 @@ export class EditarControlExplotacionComponent implements OnInit {
           this.controlExplotacion.fincaId = params['fincaId'] || null;
           this.loteId = params['loteId'] || null;
           this.controlExplotacion.loteId = params['loteId'] || null;
+          this.numActa = params['numActa'] || null;
     });
     this.fetchTecnicos();
     this.fetchFincas();
@@ -85,7 +87,7 @@ export class EditarControlExplotacionComponent implements OnInit {
  }
 
   guardar(): void {
-    const url = `${this.apiUrl}/api/acta-control-explotacion/create/${this.loteId}`;
+    const url = `${this.apiUrl}/api/acta-control-explotacion/create/${this.loteId}/${this.numActa}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -109,7 +111,7 @@ export class EditarControlExplotacionComponent implements OnInit {
 
 
   loadAllData(): void {
-    const url = `${this.apiUrl}/api/acta-control-explotacion/all-datos-acta-by-lote/${this.loteId}`;
+    const url = `${this.apiUrl}/api/acta-control-explotacion/all-datos-acta-by-lote/${this.loteId}/${this.numActa}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -214,6 +216,7 @@ const formattedTimeFinVisita = new Date(dateTimeFinVisitaString).toLocaleTimeStr
        '${OTRASINDICACIONES}': this.controlExplotacion.otrasIndicaciones || '',
        '${MANIFIESTOCOMPARECIENTE}': this.controlExplotacion.manifestacionCompareciente || '',
        '${HORAFINVISITA}': formattedTimeFinVisita,
+       '${NUMACTA}': this.numActa || '',
 
   };
 
