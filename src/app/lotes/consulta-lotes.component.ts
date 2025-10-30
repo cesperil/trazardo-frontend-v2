@@ -4,13 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-
+import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 
 
 @Component({
   selector: 'app-consulta-lotes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BreadcrumbComponent],
   templateUrl: './consulta-lotes.component.html',
   styleUrls: ['./consulta-lotes.component.scss'],
 })

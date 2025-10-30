@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 
 
 
@@ -13,9 +14,11 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 @Component({
   selector: 'app-finca-seleccion',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, BreadcrumbComponent],
   templateUrl: './finca-selection.component.html',
   styleUrls: ['./finca-selection.component.scss'],
+
+
 })
 export class FincaSelectionComponent {
     fincas: { id: number;
