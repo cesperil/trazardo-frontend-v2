@@ -1,5 +1,7 @@
 <nav class="menu">
-  <img src="assets/trazardo_icono.png" alt="Logo" class="menu-logo" />
+  <div class="menu-icon" (click)="onIconClick()">
+    <img src="assets/trazardo_icono.png" alt="Menu Icon" class="menu-logo">
+  </div>
   <li *ngIf="isAdmin"><a routerLink="/gestion-usuarios">Gestión de usuarios</a></li>
   <li *ngIf="isAdmin"><a routerLink="/gestion-tecnicos">Gestión de técnicos</a></li>
   <li *ngIf="isAdmin"><a routerLink="/gestion-explotaciones">Gestión de explotaciones</a></li>

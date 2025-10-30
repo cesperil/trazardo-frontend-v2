@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../services/auth.service'; // Service to get user role
 
 
 
@@ -27,5 +28,17 @@ export class MenuComponent {
   logout(): void {
     this.localStorageService.removeItem('authToken');
     this.router.navigate(['/login']);
+  }
+
+
+  onIconClick(): void {
+
+      const role = this.localStorageService.getItem('authRole'); // Fetch the user's role
+      console.log('Icon clicked. User role:', role);
+      if (role === 'Admin') {
+        this.router.navigate(['/home']); // Redirect to home for admin
+      } else if (role === 'Inspector') {
+        this.router.navigate(['/finca-selection']); // Redirect to finca-selection for inspector
+      }
   }
 }
