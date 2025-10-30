@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-root',
@@ -17,9 +19,13 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'trazardo-frontend';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private titleService: Title) {}
 
     get isLoginPage(): boolean {
       return this.router.url === '/login';
     }
+
+  ngOnInit(): void {
+      this.titleService.setTitle('Dehesa de Extremadura'); // Establece el título global
+  }
 }
