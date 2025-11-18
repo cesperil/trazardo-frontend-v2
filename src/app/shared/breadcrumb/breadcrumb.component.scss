@@ -1,0 +1,41 @@
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #E4F2C9;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+
+  li {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child)::after {
+      content: '/';
+      margin: 0 0.5rem;
+      color: #053E2D;
+      font-weight: 300;
+    }
+
+    a {
+      color: #053E2D;
+      text-decoration: none;
+      transition: color 0.15s ease-in-out;
+
+      &:hover {
+        color: #053E2D;
+        text-decoration: underline;
+      }
+    }
+
+    &.active {
+      color: #053E2D;
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+}

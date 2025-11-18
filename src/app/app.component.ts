@@ -2,6 +2,7 @@ import { Component , Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
+import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -10,9 +11,10 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MenuComponent, CommonModule, HttpClientModule],
+  imports: [RouterOutlet, MenuComponent, BreadcrumbComponent, CommonModule, HttpClientModule],
   template: `
     <app-menu *ngIf="!isLoginPage"></app-menu>
+    <app-breadcrumb *ngIf="!isLoginPage"></app-breadcrumb>
     <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.scss']
