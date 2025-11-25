@@ -7,6 +7,11 @@
   <li *ngIf="isAdmin"><a routerLink="/gestion-explotaciones">Gestión de explotaciones</a></li>
   <li *ngIf="isAdmin"><a routerLink="/gestion-ganaderos">Gestión de ganaderos</a></li>
   <li *ngIf="isAdmin"><a routerLink="/gestion-lotes-admin">Gestión de lotes</a></li>
-  <button (click)="logout()">Cerrar Sesión</button>
-
+  <button
+    class="logout-link"
+    type="button"
+    (click)="logout()"
+    aria-label="Cerrar sesión">
+    Cerrar sesión
+  </button>
 </nav>

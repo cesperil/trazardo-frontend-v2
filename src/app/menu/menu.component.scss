@@ -84,3 +84,31 @@ li{
     }
   }
 
+:root {
+  --nav-bg: #244026;        // verde header
+  --text-on-nav: #F5F7F5;   // blanco cálido
+  --text-muted-nav: #DFE6E1;
+  --focus: #C9A227;         // oro sutil para foco, no para relleno
+}
+
+.logout-link {
+  background: transparent;
+  color: var(--text-on-nav);
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+}
+.logout-link .icon { margin-right: 6px; opacity: .85; }
+.logout-link:hover { text-decoration: underline; }
+.logout-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+@media (hover:hover) {
+  .logout-link:hover { background: rgba(255,255,255,.06); border-radius: 8px; }
+}
+
+
