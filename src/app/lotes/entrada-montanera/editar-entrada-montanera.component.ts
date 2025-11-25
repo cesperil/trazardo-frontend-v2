@@ -196,11 +196,11 @@ descargarDocumento(): void {
       this.entradaMontanera.localizacionCrotal = selectedLocalizacionCrotal ? selectedLocalizacionCrotal.label : this.entradaMontanera.localizacionCrotal;
 
 
-
+console.log('Hora documento:', this.entradaMontanera.hora);
   const payload = {
         '${NOMBRETECNICO}': nombreTecnico,
-        '${FECHADOCUMENTO}': new Date().toLocaleDateString(),
-        '${HORADOCUMENTO}': new Date().toLocaleTimeString(),
+        '${FECHADOCUMENTO}': new Date(this.entradaMontanera.fecha).toLocaleDateString(),
+        '${HORADOCUMENTO}': this.entradaMontanera.hora ? new Date(`1970-01-01T${this.entradaMontanera.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }): '',
         '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id == this.entradaMontanera.explotacion)?.nombre || '',
 
         '${LOCALIDADEXPLOTACION}': this.entradaMontanera.terminoMunicipal || '',

@@ -197,8 +197,8 @@ descargarDocumento(): void {
   const payload = {
 
         '${NOMBRETECNICO}': nombreTecnico,
-        '${FECHADOCUMENTO}': new Date().toLocaleDateString(),
-        '${HORADOCUMENTO}': new Date().toLocaleTimeString(),
+        '${FECHADOCUMENTO}': new Date(this.aforo.fecha).toLocaleDateString(),
+        '${HORADOCUMENTO}': this.aforo.hora ? new Date(`1970-01-01T${this.aforo.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }): '',
         '${NOMBREREPRESENTANTE}': this.aforo.representante || '',
         '${NOMBREEXPLOTACION}': this.explotaciones.find(f => f.id == this.aforo.finca)?.nombre || '',
         '${LOCALIDADEXPLOTACION}': this.aforo.terminoMunicipal || '',

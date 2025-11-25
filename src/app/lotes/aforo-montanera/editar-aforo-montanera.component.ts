@@ -263,8 +263,8 @@ descargarDocumento(): void {
 
   const payload = {
         '${NOMBRETECNICO}': nombreTecnico,
-        '${FECHADOCUMENTO}': new Date().toLocaleDateString(),
-        '${HORADOCUMENTO}': new Date().toLocaleTimeString(),
+       '${FECHADOCUMENTO}': new Date(this.aforoMontanera.fecha).toLocaleDateString(),
+       '${HORADOCUMENTO}': this.aforoMontanera.hora ? new Date(`1970-01-01T${this.aforoMontanera.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }): '',
         '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.nombre || '',
         '${LOCALIDADEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.termino_municipal || '',
         '${PROVINCIAEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.provincia || '',
