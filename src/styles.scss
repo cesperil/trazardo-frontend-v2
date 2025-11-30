@@ -1,43 +1,112 @@
 @use "../node_modules/bootstrap/scss/bootstrap";
-$primary: #053E2D; // Cambia el color primario
-$secondary: #6c757d; // Cambia el color secundario
-$success: #28a745; // Cambia el color de éxito
-$info: #17a2b8; // Cambia el color de información
-$warning: #ffc107; // Cambia el color de advertencia
-$danger: #dc3545; // Cambia el color de error
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+// Variables de colores
+$primary: #053E2D; // Color primario
+$secondary: #6c757d; // Color secundario
+$success: #28a745; // Color de éxito
+$info: #17a2b8; // Color de información
+$warning: #ffc107; // Color de advertencia
+$danger: #dc3545; // Color de error
 
+// Estilos globales
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #E4F2C9;
-    margin: 0;
-    padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
+  background-color: #EDF4DF; /* Fondo suave */
+  margin: 0;
+  padding: 0;
+  color: #053E2D; /* Texto principal */
 }
 
-/* Style for card headers */
-.card-header {
-  background-color: #053E2D;
-  color: #F0E1C0; /* Ensure the text is readable */
+h1, h2, h4, h5, h6 {
+  font-weight: 600;
+  color: #053E2D;
+}
+h3 {
+  font-weight: 600;
+  color: #F0E1C0;
+}
+p, span, a {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #6c757d;
 }
 
-.card {
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+a {
+  text-decoration: none;
+  transition: color 0.3s ease;
 
+  &:hover {
+    color: darken(#053E2D, 10%);
+  }
 }
 
+// Botones
 .btn {
-  background-color: #053E2D;
-  color: #F0E1C0; /* Ensure the text is readable */
-  border-radius: 5px;
-  border: none; /* Remove default border */
+  background-color: $primary;
+  color: #F0E1C0; /* Texto legible */
+  border-radius: 8px;
+  border: none;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary, 10%);
+  }
 }
 
-.btn:hover {
-  background-color: darken(#053E2D, 10%); /* Slightly darker shade on hover */
+// Tarjetas
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.card-header {
+  background-color: $primary;
+  color: #F0E1C0;
+  font-weight: 500;
+}
+
+// Formularios
+input, select, textarea {
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: $primary;
+  }
+}
+
+// Tablas
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #E0E0E0;
+  }
+
+  th {
+    background-color: $primary;
+    color: #F0E1C0;
+    font-weight: 500;
+  }
+
+  tr:hover {
+    background-color: #F9F9F9;
+  }
+}
+header h3 {
+  color: #053E2D; /* Color oscuro que contrasta con el fondo */
+  font-size: 1.25rem; /* Ajusta el tamaño según sea necesario */
+  font-weight: 500; /* Peso de fuente */
+  margin: 0; /* Elimina márgenes si es necesario */
 }
