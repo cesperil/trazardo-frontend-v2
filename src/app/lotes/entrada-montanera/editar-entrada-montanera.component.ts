@@ -198,6 +198,8 @@ descargarDocumento(): void {
 
 console.log('Hora documento:', this.entradaMontanera.hora);
   const payload = {
+
+        '${NUMLOTE}': this.entradaMontanera.lote || '',
         '${NOMBRETECNICO}': nombreTecnico,
         '${FECHADOCUMENTO}': new Date(this.entradaMontanera.fecha).toLocaleDateString(),
         '${HORADOCUMENTO}': this.entradaMontanera.hora ? new Date(`1970-01-01T${this.entradaMontanera.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }): '',
