@@ -1,17 +1,41 @@
 <nav class="menu">
-  <div class="menu-icon" (click)="onIconClick()">
-    <img src="assets/trazardo_icono.png" alt="Menu Icon" class="menu-logo">
+  <div class="menu-left">
+    <div class="menu-icon" (click)="onIconClick()">
+      <img src="assets/trazardo_icono.png" alt="Trazardo Logo" class="menu-logo">
+    </div>
+
+    <!-- Hamburger Button (Mobile Only) -->
+    <button class="hamburger-btn" (click)="toggleMobileMenu()" aria-label="Toggle menu"
+      [class.active]="isMobileMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
-  <li *ngIf="isAdmin"><a routerLink="/gestion-usuarios">Gestión de usuarios</a></li>
-  <li *ngIf="isAdmin"><a routerLink="/gestion-tecnicos">Gestión de técnicos</a></li>
-  <li *ngIf="isAdmin"><a routerLink="/gestion-explotaciones">Gestión de explotaciones</a></li>
-  <li *ngIf="isAdmin"><a routerLink="/gestion-ganaderos">Gestión de ganaderos</a></li>
-  <li *ngIf="isAdmin"><a routerLink="/gestion-lotes-admin">Gestión de lotes</a></li>
-  <button
-    class="logout-link"
-    type="button"
-    (click)="logout()"
-    aria-label="Cerrar sesión">
-    Cerrar sesión
-  </button>
+
+  <div class="menu-links-container" [class.open]="isMobileMenuOpen">
+    <ul class="menu-links">
+      <li *ngIf="isAdmin"><a routerLink="/gestion-usuarios" routerLinkActive="active"
+          (click)="closeMobileMenu()">Usuarios</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/gestion-tecnicos" routerLinkActive="active"
+          (click)="closeMobileMenu()">Técnicos</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/gestion-explotaciones" routerLinkActive="active"
+          (click)="closeMobileMenu()">Explotaciones</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/gestion-ganaderos" routerLinkActive="active"
+          (click)="closeMobileMenu()">Ganaderos</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/gestion-lotes-admin" routerLinkActive="active"
+          (click)="closeMobileMenu()">Lotes</a></li>
+
+      <!-- Mobile only logout -->
+      <li class="mobile-only">
+        <button class="logout-link-mobile" type="button" (click)="logout()">Cerrar sesión</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="menu-right desktop-only">
+    <button class="logout-link" type="button" (click)="logout()" aria-label="Cerrar sesión">
+      Cerrar sesión
+    </button>
+  </div>
 </nav>

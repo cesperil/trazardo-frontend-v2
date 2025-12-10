@@ -1,4 +1,4 @@
-import { Component , Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
@@ -12,22 +12,18 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, MenuComponent, BreadcrumbComponent, CommonModule, HttpClientModule],
-  template: `
-    <app-menu *ngIf="!isLoginPage"></app-menu>
-    <app-breadcrumb *ngIf="!isLoginPage"></app-breadcrumb>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'trazardo-frontend';
-  constructor(private router: Router, private titleService: Title) {}
+  constructor(private router: Router, private titleService: Title) { }
 
-    get isLoginPage(): boolean {
-      return this.router.url === '/login';
-    }
+  get isLoginPage(): boolean {
+    return this.router.url === '/login';
+  }
 
   ngOnInit(): void {
-      this.titleService.setTitle('Dehesa de Extremadura'); // Establece el título global
+    this.titleService.setTitle('Dehesa de Extremadura'); // Establece el título global
   }
 }

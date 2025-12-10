@@ -1,112 +1,218 @@
 @use "../node_modules/bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-// Variables de colores
-$primary: #053E2D; // Color primario
-$secondary: #6c757d; // Color secundario
-$success: #28a745; // Color de éxito
-$info: #17a2b8; // Color de información
-$warning: #ffc107; // Color de advertencia
-$danger: #dc3545; // Color de error
+// :root Variables for Global Theme
+:root {
+  /* Primary Brand Colors */
+  --primary-color: #144335;      /* Deep Emerald Green - Trust, Nature */
+  --primary-hover: #0F3228;
+  --secondary-color: #8EB797;    /* Sage Green - Growth, Freshness */
+  
+  /* Accent Colors */
+  --accent-color: #D6A055;       /* Harvest Gold - Value, Quality */
+  --accent-hover: #C59045;
+  
+  /* Neutral / Background Scale */
+  --bg-body: #F7F9F7;            /* Soft Cultivated White */
+  --bg-surface: #FFFFFF;         /* Pure White */
+  --text-main: #1C2421;          /* Dark Green-Grey - High readable contrast */
+  --text-muted: #5C6B64;         /* Muted earthy grey */
+  --border-light: #E0E5E2;
+  
+  /* Status Colors */
+  --status-success: #2E7D32;
+  --status-warning: #ED6C02;
+  --status-error: #D32F2F;
+  --status-info: #0288D1;
 
-// Estilos globales
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(20, 67, 53, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(20, 67, 53, 0.1), 0 2px 4px -1px rgba(20, 67, 53, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(20, 67, 53, 0.1), 0 4px 6px -2px rgba(20, 67, 53, 0.05);
+
+  /* Spacing */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+// Global Reset & Typography
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #EDF4DF; /* Fondo suave */
+  background-color: var(--bg-body);
+  color: var(--text-main);
   margin: 0;
   padding: 0;
-  color: #053E2D; /* Texto principal */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h4, h5, h6 {
-  font-weight: 600;
-  color: #053E2D;
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
 }
-h3 {
-  font-weight: 600;
-  color: #F0E1C0;
-}
-p, span, a {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #6c757d;
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+p {
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
 
 a {
   text-decoration: none;
-  transition: color 0.3s ease;
-
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+  
   &:hover {
-    color: darken(#053E2D, 10%);
+    color: var(--secondary-color);
   }
 }
 
-// Botones
+// Core Component: Buttons
 .btn {
-  background-color: $primary;
-  color: #F0E1C0; /* Texto legible */
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
   border: none;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  
+  &-primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    
+    &:hover {
+      background-color: var(--primary-hover);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+  }
 
-  &:hover {
-    background-color: darken($primary, 10%);
+  &-secondary {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    
+    &:hover {
+      background-color: rgba(20, 67, 53, 0.05);
+    }
+  }
+
+  &-accent {
+    background-color: var(--accent-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--accent-hover);
+    }
   }
 }
 
-// Tarjetas
+// Core Component: Cards
 .card {
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &-header {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.75rem;
+    
+    h3 { margin: 0; font-size: 1.25rem; }
+  }
 }
 
-.card-header {
-  background-color: $primary;
-  color: #F0E1C0;
-  font-weight: 500;
-}
-
-// Formularios
+// Core Component: Forms & Inputs
 input, select, textarea {
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: inherit;
   font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: var(--bg-surface);
+  color: var(--text-main);
 
   &:focus {
-    border-color: $primary;
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(142, 183, 151, 0.2);
   }
 }
 
-// Tablas
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+// Core Component: Tables
+.table-container {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0;
-
-  th, td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #E0E0E0;
-  }
-
+  background-color: var(--bg-surface);
+  
   th {
-    background-color: $primary;
-    color: #F0E1C0;
-    font-weight: 500;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
+  
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-muted);
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  tr:hover td {
+    background-color: rgba(142, 183, 151, 0.05);
+  }
+}
 
-  tr:hover {
-    background-color: #F9F9F9;
-  }
-}
-header h3 {
-  color: #053E2D; /* Color oscuro que contrasta con el fondo */
-  font-size: 1.25rem; /* Ajusta el tamaño según sea necesario */
-  font-weight: 500; /* Peso de fuente */
-  margin: 0; /* Elimina márgenes si es necesario */
-}
+// Utilities
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.flex { display: flex; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }

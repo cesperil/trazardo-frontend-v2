@@ -19,10 +19,20 @@ export class MenuComponent {
   isAdmin: boolean = false; // Declare and initialize the property
 
 
-  constructor(private router: Router, @Inject(LocalStorageService)   private localStorageService: LocalStorageService) {
+  isMobileMenuOpen: boolean = false;
+
+  constructor(private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {
     const role = this.localStorageService.getItem('authRole');
     console.log('User role:', role);
     this.isAdmin = role === 'Admin';
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
   }
 
   logout(): void {
@@ -33,12 +43,13 @@ export class MenuComponent {
 
   onIconClick(): void {
 
-      const role = this.localStorageService.getItem('authRole'); // Fetch the user's role
-      console.log('Icon clicked. User role:', role);
-      if (role === 'Admin') {
-        this.router.navigate(['/home']); // Redirect to home for admin
-      } else if (role === 'Inspector') {
-        this.router.navigate(['/finca-selection']); // Redirect to finca-selection for inspector
-      }
+    const role = this.localStorageService.getItem('authRole'); // Fetch the user's role
+    console.log('Icon clicked. User role:', role);
+    if (role === 'Admin') {
+      this.router.navigate(['/home']); // Redirect to home for admin
+    } else if (role === 'Inspector') {
+      this.router.navigate(['/finca-selection']); // Redirect to finca-selection for inspector
+    }
+    this.closeMobileMenu();
   }
 }
