@@ -11,8 +11,11 @@
           <p><strong>Lote:</strong> {{ lote?.lote }}</p>
           <p><strong>Crotal Desde:</strong> {{ lote?.crotalDesde }}</p>
           <p><strong>Crotal Hasta:</strong> {{ lote?.crotalHasta }}</p>
-          <p><strong>Localización Crotal:</strong> {{ lote?.localizacionCrotal | enumDisplay: 'localizacionCrotal' }}</p>
+          <p><strong>Localización Crotal:</strong> {{ lote?.localizacionCrotal | enumDisplay: 'localizacionCrotal' }}
+          </p>
           <p><strong>Raza:</strong> {{ lote?.raza | enumDisplay: 'raza' }}</p>
+          <p><strong>Ganadero:</strong> {{ lote?.ganadero?.nombre + ' ' + lote?.ganadero?.apellidos }}</p>
+          <p><strong>Fecha Nacimiento:</strong> {{ lote?.fechaNacimiento | date : 'dd/MM/yyyy' }}</p>
         </div>
       </div>
 
@@ -20,10 +23,12 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Aforo de Montanera</h5>
-          <a *ngIf="lote?.aforoMontanera?.id > 0" [routerLink]="['/aforo-montanera/editar-aforo-montanera']" [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="lote?.aforoMontanera?.id > 0" [routerLink]="['/aforo-montanera/editar-aforo-montanera']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Editar Aforo de Montanera
           </a>
-          <a *ngIf="!lote?.aforoMontanera" [routerLink]="['/aforo-montanera/nuevo-aforo-montanera']" [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="!lote?.aforoMontanera" [routerLink]="['/aforo-montanera/nuevo-aforo-montanera']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Crear Aforo de Montanera
           </a>
         </div>
@@ -33,11 +38,12 @@
         <div class="card-body">
           <h5 class="card-title">Acta de control de peso vivo</h5>
           <a *ngIf="lote?.actaControlPesoVivo?.id > 0" [routerLink]="['/control-peso-vivo/editar-control-peso-vivo']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Editar Acta de Control de Peso Vivo
           </a>
-          <a *ngIf="!lote?.actaControlPesoVivo || lote.actaControlPesoVivo <= 0" [routerLink]="['/control-peso-vivo/nuevo-control-peso-vivo']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="!lote?.actaControlPesoVivo || lote.actaControlPesoVivo <= 0"
+            [routerLink]="['/control-peso-vivo/nuevo-control-peso-vivo']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Crear Acta de Control de Peso Vivo
           </a>
           <!-- Repite para otras acciones -->
@@ -47,12 +53,14 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Acta identificación Montanera</h5>
-          <a *ngIf="lote?.actaIdentificacionMontanera?.id > 0" [routerLink]="['/identificacion-aforo-montanera/editar-identificacion-aforo-montanera']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="lote?.actaIdentificacionMontanera?.id > 0"
+            [routerLink]="['/identificacion-aforo-montanera/editar-identificacion-aforo-montanera']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Editar Acta de Identificación de Montanera
           </a>
-          <a *ngIf="!lote?.actaIdentificacionMontanera || lote.actaIdentificacionMontanera <= 0" [routerLink]="['/identificacion-aforo-montanera/nuevo-identificacion-aforo-montanera']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="!lote?.actaIdentificacionMontanera || lote.actaIdentificacionMontanera <= 0"
+            [routerLink]="['/identificacion-aforo-montanera/nuevo-identificacion-aforo-montanera']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Crear Acta de Identificación de Montanera
           </a>
           <!-- Repite para otras acciones -->
@@ -63,11 +71,12 @@
         <div class="card-body">
           <h5 class="card-title">Acta Entrada Montanera</h5>
           <a *ngIf="lote?.actaEntradaMontanera?.id > 0" [routerLink]="['/entrada-montanera/editar-entrada-montanera']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Editar Acta Entrada Montanera
           </a>
-          <a *ngIf="!lote?.actaEntradaMontanera || lote.actaEntradaMontanera <= 0" [routerLink]="['/entrada-montanera/nuevo-entrada-montanera']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+          <a *ngIf="!lote?.actaEntradaMontanera || lote.actaEntradaMontanera <= 0"
+            [routerLink]="['/entrada-montanera/nuevo-entrada-montanera']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
             Crear Acta Entrada Montanera
           </a>
           <!-- Repite para otras acciones -->
@@ -77,125 +86,161 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Acta Control de la Explotacion </h5>
-          <a *ngIf="lote?.actaControlExplotacion0?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:0 }">
+          <a *ngIf="lote?.actaControlExplotacion0?.id > 0"
+            [routerLink]="['/control-explotacion/editar-control-explotacion']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:0 }">
             Editar Acta Control de la Explotacion 0
           </a>
-          <a *ngIf="!lote?.actaControlExplotacion0 || lote.actaControlExplotacion0 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:0 }">
+          <a *ngIf="!lote?.actaControlExplotacion0 || lote.actaControlExplotacion0 <= 0"
+            [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:0 }">
             Crear Acta Control de la Explotacion 0
           </a>
           <br>
           <ng-container *ngIf="lote?.actaControlExplotacion0?.id >0">
-            <a *ngIf="lote?.actaControlExplotacion1?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:1 }">
+            <a *ngIf="lote?.actaControlExplotacion1?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:1 }">
               Editar Acta Control de la Explotacion 1
             </a>
-            <a *ngIf="!lote?.actaControlExplotacion1 || lote.actaControlExplotacion1 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-               [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:1 }">
+            <a *ngIf="!lote?.actaControlExplotacion1 || lote.actaControlExplotacion1 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:1 }">
               Crear Acta Control de la Explotacion 1
             </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion1?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion2?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:2 }">
-            Editar Acta Control de la Explotacion 2
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion2 || lote.actaControlExplotacion2 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:2 }">
-            Crear Acta Control de la Explotacion 2
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion2?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:2 }">
+              Editar Acta Control de la Explotacion 2
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion2 || lote.actaControlExplotacion2 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:2 }">
+              Crear Acta Control de la Explotacion 2
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion2?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion3?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:3 }">
-            Editar Acta Control de la Explotacion 3
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion3 || lote.actaControlExplotacion3 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:3 }">
-            Crear Acta Control de la Explotacion 3
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion3?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:3 }">
+              Editar Acta Control de la Explotacion 3
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion3 || lote.actaControlExplotacion3 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:3 }">
+              Crear Acta Control de la Explotacion 3
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion3?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion4?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:4 }">
-            Editar Acta Control de la Explotacion 4
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion4 || lote.actaControlExplotacion4 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:4 }">
-            Crear Acta Control de la Explotacion 4
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion4?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:4 }">
+              Editar Acta Control de la Explotacion 4
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion4 || lote.actaControlExplotacion4 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:4 }">
+              Crear Acta Control de la Explotacion 4
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion4?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion5?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:5 }">
-            Editar Acta Control de la Explotacion 5
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion5 || lote.actaControlExplotacion5 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:5 }">
-            Crear Acta Control de la Explotacion 5
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion5?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:5 }">
+              Editar Acta Control de la Explotacion 5
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion5 || lote.actaControlExplotacion5 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:5 }">
+              Crear Acta Control de la Explotacion 5
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion5?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion6?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:6 }">
-            Editar Acta Control de la Explotacion 6
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion6 || lote.actaControlExplotacion6 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:6 }">
-            Crear Acta Control de la Explotacion 6
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion6?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:6 }">
+              Editar Acta Control de la Explotacion 6
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion6 || lote.actaControlExplotacion6 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:6 }">
+              Crear Acta Control de la Explotacion 6
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion6?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion7?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:7 }">
-            Editar Acta Control de la Explotacion 7
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion7 || lote.actaControlExplotacion7 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:7 }">
-            Crear Acta Control de la Explotacion 7
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion7?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:7 }">
+              Editar Acta Control de la Explotacion 7
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion7 || lote.actaControlExplotacion7 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:7 }">
+              Crear Acta Control de la Explotacion 7
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion7?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion8?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:8 }">
-            Editar Acta Control de la Explotacion 8
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion8 || lote.actaControlExplotacion8 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:8 }">
-            Crear Acta Control de la Explotacion 8
-          </a>
+            <a *ngIf="lote?.actaControlExplotacion8?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:8 }">
+              Editar Acta Control de la Explotacion 8
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion8 || lote.actaControlExplotacion8 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:8 }">
+              Crear Acta Control de la Explotacion 8
+            </a>
             <br>
           </ng-container>
 
           <ng-container *ngIf="lote?.actaControlExplotacion8?.id >0">
-          <a *ngIf="lote?.actaControlExplotacion9?.id > 0" [routerLink]="['/control-explotacion/editar-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:9 }">
-            Editar Acta Control de la Explotacion 9
-          </a>
-          <a *ngIf="!lote?.actaControlExplotacion9 || lote.actaControlExplotacion9 <= 0" [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
-             [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:9 }">
-            Crear Acta Control de la Explotacion 9
-          </a>
-            </ng-container>
+            <a *ngIf="lote?.actaControlExplotacion9?.id > 0"
+              [routerLink]="['/control-explotacion/editar-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:9 }">
+              Editar Acta Control de la Explotacion 9
+            </a>
+            <a *ngIf="!lote?.actaControlExplotacion9 || lote.actaControlExplotacion9 <= 0"
+              [routerLink]="['/control-explotacion/nuevo-control-explotacion']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id, numActa:9 }">
+              Crear Acta Control de la Explotacion 9
+            </a>
+          </ng-container>
           <!-- Repite para otras acciones -->
         </div>
       </div>
 
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Informe Inspección REA</h5>
+          <a *ngIf="lote?.informeInspeccionREA?.id > 0"
+            [routerLink]="['/informe-inspeccion-REA/editar-informe-inspeccion-REA']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Informe Inspección REA
+          </a>
+          <a *ngIf="!lote?.informeInspeccionREA || lote.informeInspeccionREA <= 0"
+            [routerLink]="['/informe-inspeccion-REA/nuevo-informe-inspeccion-REA']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Informe Inspección REA
+          </a>
+        </div>
+      </div>
 
       <!-- Botón para regresar -->
       <div class="text-center">

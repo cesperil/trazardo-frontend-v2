@@ -19,11 +19,18 @@ export class CrearGanaderoComponent {
     nombre: '',
     apellidos: '',
     nif: '',
+    localidad: '',
+    provincia: '',
+    direccion: '',
+    telefono: '',
+    correoElectronico: '',
+    ibanCtaBancaria: '',
+    titularCtraBancaria: '',
   };
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   crearGanadero(): void {
     const url = `${this.apiUrl}/api/ganaderos`;

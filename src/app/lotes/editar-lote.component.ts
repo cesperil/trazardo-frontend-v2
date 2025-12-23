@@ -10,8 +10,8 @@ import { EnumDisplayPipe } from '../enums/enum-display.pipe';
 
 @Component({
   selector: 'app-editar-lote',
-    standalone: true,
-      imports: [CommonModule, FormsModule, RouterModule, EnumDisplayPipe],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule, EnumDisplayPipe],
   templateUrl: './editar-lote.component.html',
   styleUrls: ['./editar-lote.component.scss']
 })
@@ -24,28 +24,32 @@ export class EditarLoteComponent implements OnInit {
     public router: Router,
     private http: HttpClient,
     @Inject(LocalStorageService) private localStorageService: LocalStorageService
-  ) {}
+  ) { }
 
   tecnicos: any[] = [];
   explotaciones: any[] = [];
+  ganaderos: any[] = [];
   loteId: number | null = null; // Replace with the actual lote ID
   tecnicoId: number | null = null;
   explotacionId: number | null = null;
+  ganaderoId: number | null = null;
 
   razaOptions = ['NO_DETERMINADA', 'IBERICA100', 'IBERICA75'];
   localizacionCrotalOptions = ['NO_DETERMINADA', 'OREJAIZQ', 'OREJADER'];
 
   ngOnInit(): void {
     this.loadLote(() => {
-        // Aquí puedes acceder a this.lote después de que se haya cargado
-        console.log('Lote cargado en ngOnInit:', this.lote);
+      // Aquí puedes acceder a this.lote después de que se haya cargado
+      console.log('Lote cargado en ngOnInit:', this.lote);
 
-        this.tecnicoId = this.lote.tecnico?.id || null;
-        this.explotacionId = this.lote.explotacion?.id || null;
+      this.tecnicoId = this.lote.tecnico?.id || null;
+      this.explotacionId = this.lote.explotacion?.id || null;
+      this.ganaderoId = this.lote.ganadero?.id || null;
 
-        this.fetchTecnicos();
-        this.fetchFincas();
-      });
+      this.fetchTecnicos();
+      this.fetchFincas();
+      this.fetchGanaderos();
+    });
 
 
   }
@@ -64,7 +68,7 @@ export class EditarLoteComponent implements OnInit {
           this.lote = data;
           console.log('Lote cargado2:', this.lote);
           if (callback) {
-              callback(); // Ejecuta el callback después de cargar el lote
+            callback(); // Ejecuta el callback después de cargar el lote
           }
         },
         error: (err) => {
@@ -74,26 +78,39 @@ export class EditarLoteComponent implements OnInit {
     }
   }
 
- fetchFincas(): void {
-      const url = `${this.apiUrl}/api/explotaciones`; // Replace with your API endpoint
-      const token = this.localStorageService.getItem('authToken');
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      this.http.get<any[]>(url,{ headers }).subscribe({
-        next: (data) => (this.explotaciones = data),
-        error: (err) => console.error('Error fetching fincas:', err),
-      });
-      console.log('Fincas cargadas:', this.explotaciones);
-    }
+  fetchFincas(): void {
+    const url = `${this.apiUrl}/api/explotaciones`; // Replace with your API endpoint
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => (this.explotaciones = data),
+      error: (err) => console.error('Error fetching fincas:', err),
+    });
+    console.log('Fincas cargadas:', this.explotaciones);
+  }
 
-    fetchTecnicos(): void {
-      const url = `${this.apiUrl}/api/tecnicos`; // Replace with your API endpoint
-      const token = this.localStorageService.getItem('authToken');
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      this.http.get<any[]>(url, { headers }).subscribe({
-        next: (data) => (this.tecnicos = data),
-        error: (err) => console.error('Error fetching técnicos:', err),
-      });
-    }
+  fetchTecnicos(): void {
+    const url = `${this.apiUrl}/api/tecnicos`; // Replace with your API endpoint
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => (this.tecnicos = data),
+      error: (err) => console.error('Error fetching técnicos:', err),
+    });
+  }
+
+  fetchGanaderos(): void {
+    const url = `${this.apiUrl}/api/ganaderos`;
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.ganaderos = data;
+      },
+      error: (err) => console.error('Error fetching ganaderos:', err),
+    });
+  }
 
 
   saveLote(): void {
@@ -105,6 +122,7 @@ export class EditarLoteComponent implements OnInit {
 
     this.lote.tecnico = this.tecnicoId ? { id: this.tecnicoId } : null;
     this.lote.explotacion = this.explotacionId ? { id: this.explotacionId } : null;
+    this.lote.ganadero = this.ganaderoId ? { id: this.ganaderoId } : null;
 
     this.http.put(url, this.lote, { headers }).subscribe({
       next: () => {

@@ -20,6 +20,13 @@ export class EditarGanaderoComponent implements OnInit {
     nombre: '',
     apellidos: '',
     nif: '',
+    localidad: '',
+    provincia: '',
+    direccion: '',
+    telefono: '',
+    correoElectronico: '',
+    ibanCtaBancaria: '',
+    titularCtraBancaria: '',
   };
 
   private apiUrl = environment.apiUrl;
@@ -29,8 +36,8 @@ export class EditarGanaderoComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-  @Inject(LocalStorageService)  private localStorageService: LocalStorageService
-  ) {}
+    @Inject(LocalStorageService) private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];

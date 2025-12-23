@@ -1,0 +1,194 @@
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header">
+            <h3>Editar Informe Inspección REA</h3>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="save()">
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombreExplotacion" class="form-label">Nombre Explotación</label>
+                        <input type="text" id="nombreExplotacion" class="form-control"
+                            [(ngModel)]="informe.nombreExplotacion" name="nombreExplotacion" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="numCertificado" class="form-label">Número Certificado</label>
+                        <input type="text" id="numCertificado" class="form-control" [(ngModel)]="informe.numCertificado"
+                            name="numCertificado" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="municipio" class="form-label">Municipio</label>
+                        <input type="text" id="municipio" class="form-control" [(ngModel)]="informe.municipio"
+                            name="municipio" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <input type="text" id="provincia" class="form-control" [(ngModel)]="informe.provincia"
+                            name="provincia" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="rega" class="form-label">REGA</label>
+                        <input type="text" id="rega" class="form-control" [(ngModel)]="informe.rega" name="rega"
+                            required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="infrazaEdad" class="form-label">Nº Inf. Raza /Edad:</label>
+                        <input type="text" id="infrazaEdad" class="form-control" [(ngModel)]="informe.infrazaEdad"
+                            name="infrazaEdad" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="codExplotacion" class="form-label">Codigo Explotacion</label>
+                        <input type="text" id="codExplotacion" class="form-control" [(ngModel)]="informe.codExplotacion"
+                            name="codExplotacion" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="entInspeccion" class="form-label">Entidad Inspeccion</label>
+                        <input type="text" id="entInspeccion" class="form-control" [(ngModel)]="informe.entInspeccion"
+                            name="entInspeccion" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombreGanadero" class="form-label">Nombre Ganadero</label>
+                        <input type="text" id="nombreGanadero" class="form-control" [(ngModel)]="informe.nombreGanadero"
+                            name="nombreGanadero" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="dniGanadero" class="form-label">DNI Ganadero</label>
+                        <input type="text" id="dniGanadero" class="form-control" [(ngModel)]="informe.dniGanadero"
+                            name="dniGanadero" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="fechaAIC" class="form-label">Fecha AIC</label>
+                        <input type="date" id="fechaAIC" class="form-control" [(ngModel)]="informe.fechaAIC"
+                            name="fechaAIC" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="fechaE5C" class="form-label">Fecha E5C</label>
+                        <input type="date" id="fechaE5C" class="form-control" [(ngModel)]="informe.fechaE5C"
+                            name="fechaE5C" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="fechaE0" class="form-label">Fecha E0</label>
+                        <input type="text" id="fechaE0" class="form-control" [(ngModel)]="informe.fechaE0"
+                            name="fechaE0" maxlength="200" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombreTecnico" class="form-label">Nombre Técnico</label>
+                        <input type="text" id="nombreTecnico" class="form-control" [(ngModel)]="informe.nombreTecnico"
+                            name="nombreTecnico" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="loteProcedencia" class="form-label">Lote Procedencia</label>
+                        <input type="text" id="loteProcedencia" class="form-control"
+                            [(ngModel)]="informe.loteProcedencia" name="loteProcedencia" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="identificacion" class="form-label">Identificación</label>
+                        <input type="text" id="identificacion" class="form-control" [(ngModel)]="informe.identificacion"
+                            name="identificacion" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="totalAnimales" class="form-label">Total Animales</label>
+                        <input type="number" id="totalAnimales" class="form-control" [(ngModel)]="informe.totalAnimales"
+                            name="totalAnimales" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="segregadosAnimales" class="form-label">Segregados Animales</label>
+                        <input type="number" id="segregadosAnimales" class="form-control"
+                            [(ngModel)]="informe.segregadosAnimales" name="segregadosAnimales" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="factorRacial" class="form-label">Factor Racial</label>
+                        <select id="factorRacial" class="form-control" [(ngModel)]="informe.factorRacial"
+                            name="factorRacial">
+                            <option *ngFor="let raza of razaOptions" [value]="raza.value">
+                                {{ raza.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="alimentacion" class="form-label">Alimentación</label>
+                        <input type="text" id="alimentacion" class="form-control" [(ngModel)]="informe.alimentacion"
+                            name="alimentacion" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="edad" class="form-label">Edad (Meses)</label>
+                        <input type="number" id="edad" class="form-control" [(ngModel)]="informe.edad" name="edad" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="observaciones" class="form-label">Observaciones</label>
+                    <textarea id="observaciones" class="form-control" [(ngModel)]="informe.observaciones"
+                        name="observaciones" rows="4"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaPrevSacrificio" class="form-label">Fecha Prevista Sacrificio</label>
+                        <input type="date" id="fechaPrevSacrificio" class="form-control"
+                            [(ngModel)]="informe.fechaPrevSacrificio" name="fechaPrevSacrificio" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="establecimientoSacrificio" class="form-label">Establecimiento Sacrificio</label>
+                        <input type="text" id="establecimientoSacrificio" class="form-control"
+                            [(ngModel)]="informe.establecimientoSacrificio" name="establecimientoSacrificio" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="empresaConsignataria" class="form-label">Empresa Consignataria</label>
+                    <input type="text" id="empresaConsignataria" class="form-control"
+                        [(ngModel)]="informe.empresaConsignataria" name="empresaConsignataria" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="lugarFirma" class="form-label">Lugar Firma</label>
+                        <input type="text" id="lugarFirma" class="form-control" [(ngModel)]="informe.lugarFirma"
+                            name="lugarFirma" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaFirma" class="form-label">Fecha Firma</label>
+                        <input type="date" id="fechaFirma" class="form-control" [(ngModel)]="informe.fechaFirma"
+                            name="fechaFirma" />
+                    </div>
+                </div>
+
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Guardar</button>
+                    <button class="btn btn-primary me-2" (click)="descargarDocumento()">Descargar documento</button>
+                    <button type="button" class="btn btn-secondary" (click)="cancelar()">
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

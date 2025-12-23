@@ -31,6 +31,9 @@ import { GestionLotesAdminComponent } from './lotes/gestion-lotes-admin.componen
 import { EditarLoteComponent } from './lotes/editar-lote.component';
 
 
+import { NuevoInformeInspeccionReaComponent } from './lotes/informe-inspeccion-REA/nuevo-informe-inspeccion-rea/nuevo-informe-inspeccion-rea';
+import { EditarInformeInspeccionReaComponent } from './lotes/informe-inspeccion-REA/editar-informe-inspeccion-rea/editar-informe-inspeccion-rea';
+
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirige a login por defecto
     { path: 'login', component: LoginComponent },
@@ -59,10 +62,11 @@ export const routes: Routes = [
     { path: 'identificacion-aforo-montanera/editar-identificacion-aforo-montanera', component: EditarIdentificacionAforoMontaneraComponent, data: { breadcrumb: 'Editar Identificación Aforo Montanera' } },
     { path: 'entrada-montanera/nuevo-entrada-montanera', component: NuevoEntradaMontaneraComponent, data: { breadcrumb: 'Nueva Entrada Montanera' } },
     { path: 'entrada-montanera/editar-entrada-montanera', component: EditarEntradaMontaneraComponent, data: { breadcrumb: 'Editar Entrada Montanera' } },
-    { path: 'control-explotacion/nuevo-control-explotacion', component: NuevoControlExplotacionComponent, data: { breadcrumb: 'Nuevo Control Explotación' }},
-    { path: 'control-explotacion/editar-control-explotacion', component: EditarControlExplotacionComponent, data: { breadcrumb: 'Editar Control Explotación' }},
-    { path: 'gestion-lotes-admin', component: GestionLotesAdminComponent, data: { breadcrumb: 'Gestión de Lotes' }},
-    { path: 'editar-lote', component: EditarLoteComponent, data: { breadcrumb: 'Editar Lote' }}
-
-    ]
+    { path: 'control-explotacion/nuevo-control-explotacion', component: NuevoControlExplotacionComponent, data: { breadcrumb: 'Nuevo Control Explotación' } },
+    { path: 'control-explotacion/editar-control-explotacion', component: EditarControlExplotacionComponent, data: { breadcrumb: 'Editar Control Explotación' } },
+    { path: 'gestion-lotes-admin', component: GestionLotesAdminComponent, data: { breadcrumb: 'Gestión de Lotes' } },
+    { path: 'editar-lote', component: EditarLoteComponent, data: { breadcrumb: 'Editar Lote' } },
+    { path: 'informe-inspeccion-REA/nuevo-informe-inspeccion-REA', component: NuevoInformeInspeccionReaComponent, data: { breadcrumb: 'Nuevo Informe Inspección REA' } },
+    { path: 'informe-inspeccion-REA/editar-informe-inspeccion-REA', component: EditarInformeInspeccionReaComponent, data: { breadcrumb: 'Editar Informe Inspección REA' } }
+]
 

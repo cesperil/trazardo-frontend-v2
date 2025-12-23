@@ -6,26 +6,62 @@
     <div class="card-body">
       <form (ngSubmit)="editarGanadero()" #ganaderoForm="ngForm">
         <div class="mb-3">
-          <label for="apellidos" class="form-label">Nombre</label>
-          <input
-            type="text"
-            id="apellidos"
-            class="form-control"
-            [(ngModel)]="ganadero.apellidos"
-            name="apellidos"
-            required
-          />
+          <label for="apellidos" class="form-label">Apellidos</label>
+          <input type="text" id="apellidos" class="form-control" [(ngModel)]="ganadero.apellidos" name="apellidos"
+            required />
         </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="ganadero.nombre" name="nombre" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="nif" class="form-label">DNI</label>
+            <input type="text" id="nif" class="form-control" [(ngModel)]="ganadero.nif" name="nif" maxlength="12"
+              required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="localidad" class="form-label">Localidad</label>
+            <input type="text" id="localidad" class="form-control" [(ngModel)]="ganadero.localidad" name="localidad" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="provincia" class="form-label">Provincia</label>
+            <input type="text" id="provincia" class="form-control" [(ngModel)]="ganadero.provincia" name="provincia" />
+          </div>
+        </div>
+
         <div class="mb-3">
-          <label for="nif" class="form-label">DNI</label>
-          <input
-            type="text"
-            id="nif"
-            class="form-control"
-            [(ngModel)]="ganadero.nif"
-            name="nif"
-            required
-          />
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" id="direccion" class="form-control" [(ngModel)]="ganadero.direccion" name="direccion" />
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" id="telefono" class="form-control" [(ngModel)]="ganadero.telefono" name="telefono" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="correoElectronico" class="form-label">Correo Electrónico</label>
+            <input type="email" id="correoElectronico" class="form-control" [(ngModel)]="ganadero.correoElectronico"
+              name="correoElectronico" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="ibanCtaBancaria" class="form-label">IBAN Cuenta Bancaria</label>
+            <input type="text" id="ibanCtaBancaria" class="form-control" [(ngModel)]="ganadero.ibanCtaBancaria"
+              name="ibanCtaBancaria" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="titularCtraBancaria" class="form-label">Titular Cuenta Bancaria</label>
+            <input type="text" id="titularCtraBancaria" class="form-control" [(ngModel)]="ganadero.titularCtraBancaria"
+              name="titularCtraBancaria" />
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>

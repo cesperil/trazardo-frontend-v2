@@ -9,14 +9,7 @@
         <div class="row mb-4">
           <div class="col-md-12">
             <label for="loteId" class="form-label">Identificador del Lote</label>
-            <input
-              type="text"
-              id="loteId"
-              class="form-control"
-              [(ngModel)]="loteId"
-              name="loteId"
-              required
-            />
+            <input type="text" id="loteId" class="form-control" [(ngModel)]="loteId" name="loteId" required />
           </div>
         </div>
 
@@ -24,25 +17,13 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <label for="crotalDesde" class="form-label">Crotal desde</label>
-            <input
-              type="text"
-              id="crotalDesde"
-              class="form-control"
-              [(ngModel)]="crotalDesde"
-              name="crotalDesde"
-              required
-            />
+            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="crotalDesde" name="crotalDesde"
+              required />
           </div>
           <div class="col-md-6">
             <label for="crotalHasta" class="form-label">Crotal hasta</label>
-            <input
-              type="text"
-              id="crotalHasta"
-              class="form-control"
-              [(ngModel)]="crotalHasta"
-              name="crotalHasta"
-              required
-            />
+            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="crotalHasta" name="crotalHasta"
+              required />
           </div>
         </div>
 
@@ -50,13 +31,8 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <label for="localizacionCrotal" class="form-label">Localización Crotal</label>
-            <select
-              id="localizacionCrotal"
-              class="form-control"
-              [(ngModel)]="localizacionCrotal"
-              name="localizacionCrotal"
-              required
-            >
+            <select id="localizacionCrotal" class="form-control" [(ngModel)]="localizacionCrotal"
+              name="localizacionCrotal" required>
               <option value="OREJAIZQ">Oreja izquierda</option>
               <option value="OREJADER">Oreja derecha</option>
               <option value="NO_DETERMINADA">No se indica</option>
@@ -64,13 +40,7 @@
           </div>
           <div class="col-md-6">
             <label for="raza" class="form-label">Raza</label>
-            <select
-              id="raza"
-              class="form-control"
-              [(ngModel)]="raza"
-              name="raza"
-              required
-            >
+            <select id="raza" class="form-control" [(ngModel)]="raza" name="raza" required>
               <option value="IBERICA100">100% Ibérico</option>
               <option value="IBERICA75">75% Ibérico</option>
               <option value="NO_DETERMINADA">No se indica</option>
@@ -78,15 +48,30 @@
           </div>
         </div>
 
+        <!-- Ganadero & Fecha Nacimiento -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label for="ganadero" class="form-label">Ganadero</label>
+            <select id="ganadero" class="form-select" [(ngModel)]="ganaderoId" name="ganadero">
+              <option [ngValue]="null">Seleccione un ganadero</option>
+              <option *ngFor="let ganadero of ganaderos" [value]="ganadero.id">
+                {{ ganadero.nombre }} {{ ganadero.apellidos }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" id="fechaNacimiento" class="form-control" [(ngModel)]="fechaNacimiento"
+              name="fechaNacimiento" />
+          </div>
+        </div>
+
         <!-- Buttons -->
         <div class="row">
           <div class="col-md-12 d-flex">
             <button type="submit" class="btn btn-success">Guardar</button>
-            <button
-              type="button"
-              class="btn btn-secondary ms-2"
-              (click)="router.navigate(['/consulta-lotes'], { queryParams: { fincaId: fincaId } })"
-            >
+            <button type="button" class="btn btn-secondary ms-2"
+              (click)="router.navigate(['/consulta-lotes'], { queryParams: { fincaId: fincaId } })">
               Cancelar
             </button>
           </div>
