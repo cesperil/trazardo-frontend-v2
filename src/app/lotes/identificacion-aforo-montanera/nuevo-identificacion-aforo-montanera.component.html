@@ -9,30 +9,36 @@
           <div class="col-md-6 mb-3">
             <label for="tecnico">Técnico</label>
             <select id="tecnico" class="form-control" [(ngModel)]="aforo.tecnico" name="tecnico" required>
-              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
+              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}
+              </option>
             </select>
           </div>
           <div class="col-md-6 mb-3">
             <label for="representante">Representante</label>
-            <input type="text" id="representante" class="form-control" [(ngModel)]="aforo.representante" name="representante" required />
+            <input type="text" id="representante" class="form-control" [(ngModel)]="aforo.representante"
+              name="representante" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="explotacion">Explotación</label>
             <select id="explotacion" class="form-control" [(ngModel)]="aforo.finca" name="explotacion" required>
-              <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}</option>
+              <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}
+              </option>
             </select>
           </div>
           <div class="col-md-6 mb-3">
             <label for="terminoMunicipal">Término Municipal</label>
-            <input type="text" id="terminoMunicipal" class="form-control" [(ngModel)]="aforo.terminoMunicipal" name="terminoMunicipal" required />
+            <input type="text" id="terminoMunicipal" class="form-control" [(ngModel)]="aforo.terminoMunicipal"
+              name="terminoMunicipal" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="provincia">Provincia</label>
-            <input type="text" id="provincia" class="form-control" [(ngModel)]="aforo.provincia" name="provincia" required />
+            <input type="text" id="provincia" class="form-control" [(ngModel)]="aforo.provincia" name="provincia"
+              required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="titularExplotacion">Titular Explotación</label>
-            <input type="text" id="titularExplotacion" class="form-control" [(ngModel)]="aforo.titularExplotacion" name="titularExplotacion" required />
+            <input type="text" id="titularExplotacion" class="form-control" [(ngModel)]="aforo.titularExplotacion"
+              name="titularExplotacion" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="fecha">Fecha</label>
@@ -44,7 +50,8 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="numCerdos">Número de Cerdos</label>
-            <input type="number" id="numCerdos" class="form-control" [(ngModel)]="aforo.numCerdos" name="numCerdos" min="0" required />
+            <input type="number" id="numCerdos" class="form-control" [(ngModel)]="aforo.numCerdos" name="numCerdos"
+              min="0" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="raza">Raza</label>
@@ -56,50 +63,77 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="pesoMedio">Peso Medio</label>
-            <input type="number" id="pesoMedio" class="form-control" [(ngModel)]="aforo.pesoMedio" name="pesoMedio" min="0" step="0.01" required />
+            <input type="number" id="pesoMedio" class="form-control" [(ngModel)]="aforo.pesoMedio" name="pesoMedio"
+              min="0" step="0.01" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="crotalDesde">Crotal Desde</label>
-            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="aforo.crotalDesde" name="crotalDesde" required />
+            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="aforo.crotalDesde" name="crotalDesde"
+              required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="crotalHasta">Crotal Hasta</label>
-            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="aforo.crotalHasta" name="crotalHasta" required />
+            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="aforo.crotalHasta" name="crotalHasta"
+              required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" class="form-control" [(ngModel)]="aforo.edad" name="edad" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="marcaTipoAlimento">Marca Tipo Alimento</label>
+            <input type="text" id="marcaTipoAlimento" class="form-control" [(ngModel)]="aforo.marcaTipoAlimento"
+              name="marcaTipoAlimento" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="entidadInspeccion">Entidad Inspección</label>
+            <input type="text" id="entidadInspeccion" class="form-control" [(ngModel)]="aforo.entidadInspeccion"
+              name="entidadInspeccion" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="numCertificado">Número Certificado</label>
+            <input type="text" id="numCertificado" class="form-control" [(ngModel)]="aforo.numCertificado"
+              name="numCertificado" />
           </div>
           <div class="col-md-6 mb-3 d-flex justify-content-between align-items-center">
             <label for="muestraPienso" class="form-label mb-0">El veedor que suscribe toma muestra de pienso:</label>
             <input type="checkbox" id="muestraPienso" [(ngModel)]="aforo.muestraPienso" name="muestraPienso" />
           </div>
-          <div class="col-md-12 mb-3">
-            <label for="declaracion">El Compareciente Declara</label>
-            <textarea id="declaracion" class="form-control" [(ngModel)]="aforo.declaracion" name="declaracion"></textarea>
+
+
+          <div class="col-md-6 mb-3 d-flex justify-content-between align-items-center">
+            <label for="titularDeseaListadoDO" class="form-label mb-0">El titular desea que el no de animales y la
+              explotación aparezcan en el listado que distribuye la Denominación de Origen</label>
+            <input type="checkbox" id="titularDeseaListadoDO" [(ngModel)]="aforo.titularDeseaListadoDO"
+              name="titularDeseaListadoDO" />
           </div>
 
           <div class="col-md-6 mb-3 d-flex justify-content-between align-items-center">
-            <label for="titularDeseaListadoDO" class="form-label mb-0">El titular desea que el no de animales y la explotación aparezcan en el listado que distribuye la Denominación de Origen</label>
-            <input type="checkbox" id="titularDeseaListadoDO" [(ngModel)]="aforo.titularDeseaListadoDO" name="titularDeseaListadoDO" />
+            <label for="titularAutorizacion" class="form-label mb-0">El titular autoriza a que el Departamento de
+              Inspección de la Denominación de Origen facilite copia de Certificado de alimentación a industria
+              destinataria del lote</label>
+            <input type="checkbox" id="titularAutorizacion" [(ngModel)]="aforo.titularAutorizacion"
+              name="titularAutorizacion" />
           </div>
 
           <div class="col-md-6 mb-3 d-flex justify-content-between align-items-center">
-            <label for="titularAutorizacion" class="form-label mb-0">El titular autoriza a que el Departamento de Inspección de la Denominación de Origen facilite copia de Certificado de alimentación a industria destinataria del lote</label>
-            <input type="checkbox" id="titularAutorizacion" [(ngModel)]="aforo.titularAutorizacion" name="titularAutorizacion" />
-          </div>
-
-          <div class="col-md-6 mb-3 d-flex justify-content-between align-items-center">
-            <label for="copiaResumen" class="form-label mb-0">He recibido copia del resumen de los acuerdos para el desarrollo de la Campaña 2024/2025</label>
+            <label for="copiaResumen" class="form-label mb-0">He recibido copia del resumen de los acuerdos para el
+              desarrollo de la Campaña 2024/2025</label>
             <input type="checkbox" id="copiaResumen" [(ngModel)]="aforo.copiaResumen" name="copiaResumen" />
           </div>
           <div class="col-md-12 mb-3">
             <label for="otrasIndicaciones">Otras Indicaciones</label>
-            <textarea id="otrasIndicaciones" class="form-control" [(ngModel)]="aforo.otrasIndicaciones" name="otrasIndicaciones"></textarea>
+            <textarea id="otrasIndicaciones" class="form-control" [(ngModel)]="aforo.otrasIndicaciones"
+              name="otrasIndicaciones"></textarea>
           </div>
         </div>
         <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary me-2" >Guardar</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelar()">
-          Cancelar
-        </button>
-      </div>
+          <button type="submit" class="btn btn-primary me-2">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   </div>

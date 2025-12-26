@@ -29,6 +29,11 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
     pesoMedio: 0,
     crotalDesde: '',
     crotalHasta: '',
+    edad: null,
+    marcaTipoAlimento: '',
+    calidadAlimento: '',
+    entidadInspeccion: '',
+    numCertificado: '',
     muestraPienso: false,
     titularAutorizacion: false,
     copiaResumen: false,
@@ -42,23 +47,23 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
   loteId: number | null = null; // Replace with the actual lote ID
 
   razaOptions = [
-      { value: 'IBERICA100', label: '100% Ibérico' },
-      { value: 'IBERICA75', label: '75% Ibérico' },
-      { value: 'NO_DETERMINADA', label: 'No se indica' },
-    ];
+    { value: 'IBERICA100', label: '100% Ibérico' },
+    { value: 'IBERICA75', label: '75% Ibérico' },
+    { value: 'NO_DETERMINADA', label: 'No se indica' },
+  ];
 
   private apiUrl = environment.apiUrl;
 
 
   constructor(private http: HttpClient, private router: Router,
-    private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+    private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
 
     this.route.queryParams.subscribe((params) => {
-          this.aforo.tecnico = params['tecnicoId'] || null;
-          this.aforo.finca = params['fincaId'] || null;
-          this.aforo.loteId = params['loteId'] || null;
+      this.aforo.tecnico = params['tecnicoId'] || null;
+      this.aforo.finca = params['fincaId'] || null;
+      this.aforo.loteId = params['loteId'] || null;
     });
 
     this.loteId = this.aforo.loteId;
@@ -95,6 +100,11 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
         this.aforo.pesoMedio = data.pesoMedio || 0;
         this.aforo.crotalDesde = data.numCrotalDesde || '';
         this.aforo.crotalHasta = data.numCrotalHasta || '';
+        this.aforo.edad = data.edad || null;
+        this.aforo.marcaTipoAlimento = data.marcaTipoAlimento || '';
+        this.aforo.calidadAlimento = data.calidadAlimento || '';
+        this.aforo.entidadInspeccion = data.entidadInspeccion || '';
+        this.aforo.numCertificado = data.numCertificado || '';
         this.aforo.muestraPienso = data.muestraPienso || false;
         this.aforo.titularAutorizacion = data.titularAutorizacion || false;
         this.aforo.copiaResumen = data.copiaResumen || false;
@@ -115,8 +125,8 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-            console.log('Técnicos cargados:', data); // Verifica los datos obtenidos
-            this.tecnicos = data;
+        console.log('Técnicos cargados:', data); // Verifica los datos obtenidos
+        this.tecnicos = data;
       },
       error: (err) => console.error('Error loading técnicos:', err),
     });
@@ -128,10 +138,10 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http.get<any[]>(url, { headers }).subscribe({
-       next: (data) => {
-            console.log('Explotaciones cargadas:', data); // Verifica los datos obtenidos
-            this.explotaciones = data;
-       },
+      next: (data) => {
+        console.log('Explotaciones cargadas:', data); // Verifica los datos obtenidos
+        this.explotaciones = data;
+      },
       error: (err) => console.error('Error loading explotaciones:', err),
     });
   }
@@ -155,8 +165,8 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
     });
   }
 
- cancelar(): void {
-        this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
+  cancelar(): void {
+    this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
   }
 
 }
