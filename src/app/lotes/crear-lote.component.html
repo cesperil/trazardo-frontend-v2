@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card shadow">
     <div class="card-header">
-      <h3>Crear Lote para la Finca {{ fincaId }}</h3>
+      <h3>Crear Lote <span *ngIf="fincaNombre">para la Finca {{ fincaNombre }}</span></h3>
     </div>
     <div class="card-body">
       <form (ngSubmit)="saveLote()">
@@ -10,6 +10,29 @@
           <div class="col-md-12">
             <label for="loteId" class="form-label">Identificador del Lote</label>
             <input type="text" id="loteId" class="form-control" [(ngModel)]="loteId" name="loteId" required />
+          </div>
+        </div>
+
+        <div class="row mb-4" *ngIf="isAdmin">
+          <div class="col-md-6">
+            <label for="tecnico" class="form-label">Técnico</label>
+            <select id="tecnico" class="form-select" [(ngModel)]="selectedTecnicoId" name="tecnico"
+              (change)="onSelectionChange()">
+              <option [ngValue]="null">Seleccione un técnico</option>
+              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">
+                {{ tecnico.nombre }} {{ tecnico.apellidos }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="explotacion" class="form-label">Explotación (Finca)</label>
+            <select id="explotacion" class="form-select" [(ngModel)]="selectedFincaId" name="explotacion"
+              (change)="onSelectionChange()">
+              <option [ngValue]="null">Seleccione una finca</option>
+              <option *ngFor="let fin of explotaciones" [value]="fin.id">
+                {{ fin.nombre }}
+              </option>
+            </select>
           </div>
         </div>
 
@@ -70,8 +93,7 @@
         <div class="row">
           <div class="col-md-12 d-flex">
             <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-secondary ms-2"
-              (click)="router.navigate(['/consulta-lotes'], { queryParams: { fincaId: fincaId } })">
+            <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">
               Cancelar
             </button>
           </div>

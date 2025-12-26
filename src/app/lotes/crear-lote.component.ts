@@ -30,30 +30,67 @@ export class CrearLoteComponent {
 
 
   tecnicoId: string = '';
+  isAdmin: boolean = false;
+  tecnicos: any[] = [];
+  explotaciones: any[] = [];
+  selectedTecnicoId: number | null = null;
+  selectedFincaId: number | null = null;
+  fincaNombre: string = '';
 
   constructor(public router: Router, public route: ActivatedRoute,
     private http: HttpClient, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {
     this.route.queryParams.subscribe(params => {
-      this.fincaId = Number(params['fincaId']);
+      this.fincaId = params['fincaId'] ? Number(params['fincaId']) : null;
+      if (this.fincaId) {
+        this.selectedFincaId = this.fincaId;
+      }
     });
   }
 
   ngOnInit(): void {
+    const role = this.localStorageService.getItem('authRole');
+    this.isAdmin = role === 'Admin' || role === 'Administrador';
+
+    if (this.isAdmin) {
+      this.fetchTecnicos();
+      this.fetchFincas();
+    }
+
     // Obtén el ID de la finca desde los parámetros de la URL
     this.route.queryParams.subscribe((params) => {
-      this.fincaId = params['fincaId'] ? Number(params['fincaId']) : null;
+      const paramFincaId = params['fincaId'] ? Number(params['fincaId']) : null;
+      if (paramFincaId) {
+        this.fincaId = paramFincaId;
+        this.selectedFincaId = paramFincaId;
+      }
 
       if (this.fincaId) {
         const tecnicoId = this.localStorageService.getItem('tecnicoID');
-        if (tecnicoId) {
+        if (tecnicoId && !this.isAdmin) {
           this.fetchNuevoLote(this.fincaId, tecnicoId);
-        } else {
-          console.error('Error: tecnicoId not found in localStorage');
+        } else if (tecnicoId) {
+          // Admin
         }
 
       }
     });
     this.fetchGanaderos();
+  }
+
+  onSelectionChange(): void {
+    console.log('Selected finca:', this.selectedFincaId);
+    if (this.selectedFincaId) {
+      this.fincaId = this.selectedFincaId;
+      const selected = this.explotaciones.find(f => f.id === this.selectedFincaId);
+      if (selected) {
+        console.log('Selected finca:', selected);
+        this.fincaNombre = selected.nombre;
+      }
+    }
+
+    if (this.isAdmin && this.selectedFincaId && this.selectedTecnicoId) {
+      this.fetchNuevoLote(this.selectedFincaId, this.selectedTecnicoId.toString());
+    }
   }
 
 
@@ -89,6 +126,40 @@ export class CrearLoteComponent {
     });
   }
 
+  fetchTecnicos(): void {
+    const url = `${this.apiUrl}/api/tecnicos`;
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.tecnicos = data;
+        console.log('Tecnicos fetched:', data);
+      },
+      error: (err) => console.error('Error fetching tecnicos:', err),
+    });
+  }
+
+  fetchFincas(): void {
+    const url = `${this.apiUrl}/api/explotaciones`;
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.explotaciones = data;
+        console.log('Fincas (explotaciones) fetched:', data);
+
+        if (this.fincaId) {
+          const selected = this.explotaciones.find(f => f.id === this.fincaId);
+          if (selected) {
+            this.fincaNombre = selected.nombre;
+          }
+        }
+      },
+      error: (err) => console.error('Error fetching fincas:', err),
+    });
+  }
+
   fetchLotesPorFinca(fincaId: number): void {
     const url = `${this.apiUrl}/lotes/por-finca/${fincaId}`;
     const token = this.localStorageService.getItem('authToken'); // Recupera el token de localStorage
@@ -109,6 +180,15 @@ export class CrearLoteComponent {
 
   saveLote(): void {
 
+    if (!this.selectedFincaId && !this.fincaId) {
+      console.error('Finca is required');
+      return;
+    }
+
+    // Update local fincaId just in case
+    if (this.selectedFincaId) this.fincaId = this.selectedFincaId;
+
+
     if (!this.fincaId || !this.crotalDesde || !this.crotalHasta) {
       console.error('All fields are required');
       return;
@@ -128,6 +208,13 @@ export class CrearLoteComponent {
       'Content-Type': 'application/json', // Specify JSON content type
     });
 
+    let tecnicoData;
+    if (this.isAdmin && this.selectedTecnicoId) {
+      tecnicoData = { id: this.selectedTecnicoId };
+    } else {
+      tecnicoData = { id: Number(this.localStorageService.getItem('tecnicoID')) };
+    }
+
     const loteData = {
       lote: this.loteId,
       anio: new Date().getFullYear(),
@@ -136,9 +223,7 @@ export class CrearLoteComponent {
       crotalHasta: this.crotalHasta,
       localizacionCrotal: this.localizacionCrotal,
       raza: this.raza,
-      tecnico: {
-        id: Number(this.localStorageService.getItem('tecnicoID')),
-      },
+      tecnico: tecnicoData,
       explotacion: {
         id: this.fincaId,
       },
@@ -151,13 +236,25 @@ export class CrearLoteComponent {
     this.http.post(url, loteData, { headers }).subscribe({
       next: (response) => {
         console.log('Lote created successfully:', response);
-        this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.fincaId } });
+        if (this.isAdmin) {
+          this.router.navigate(['/gestion-lotes-admin']);
+        } else {
+          this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.fincaId } });
+        }
       },
       error: (err) => {
         console.error('Error creating lote:', err);
       },
     });
 
+  }
+
+  cancel(): void {
+    if (this.isAdmin) {
+      this.router.navigate(['/gestion-lotes-admin']);
+    } else {
+      this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.fincaId } });
+    }
   }
 }
 
