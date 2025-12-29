@@ -1,15 +1,16 @@
 .body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #E8F5E9, #C8E6C9); /* Fondo degradado */
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  /* Fondo degradado */
   font-family: 'Inter', sans-serif;
 }
 
 .login-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,9 +18,11 @@
 }
 
 .login-box {
-  background-color: #ffffff; /* Fondo blanco para contraste */
+  background-color: #ffffff;
+  /* Fondo blanco para contraste */
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  /* Sombra suave */
   max-width: 400px;
   width: 100%;
   padding: 2rem;
@@ -38,7 +41,8 @@
 }
 
 .logo img {
-  height: 100px; /* Ajusta el tamaño según sea necesario */
+  height: 100px;
+  /* Ajusta el tamaño según sea necesario */
 }
 
 .input-group {
@@ -79,7 +83,8 @@
 }
 
 .login-button:hover {
-  background: #045A24; /* Color más oscuro al pasar el cursor */
+  background: #045A24;
+  /* Color más oscuro al pasar el cursor */
 }
 
 .options {
