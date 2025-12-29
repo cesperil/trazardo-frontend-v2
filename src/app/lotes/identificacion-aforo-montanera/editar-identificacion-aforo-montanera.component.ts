@@ -223,6 +223,11 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
 
       '${MUESTRAPIENSO}': this.aforo.muestraPienso ? 'SI' : 'NO',
       '${DECLARACIONCOMPARECIENTE}': this.aforo.declaracion || '',
+      '${EDAD}': this.aforo.edad || '',
+      '${MARCATIPOALIMENTO}': this.aforo.marcaTipoAlimento || '',
+      '${CALIDADALIMENTO}': this.aforo.calidadAlimento || '',
+      '${ENTIDADINSPECCION}': this.aforo.entidadInspeccion || '',
+      '${NUMCERTIFICADO}': this.aforo.numCertificado || '',
 
 
       '${TITULARDESEALISTADODO}': this.aforo.titularDeseaListadoDO ? 'SI' : 'NO',
