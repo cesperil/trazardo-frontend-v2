@@ -173,7 +173,7 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
       "${TOTALANIMALES}": this.informe.totalAnimales?.toString() || '',
       "${SEGREGADOSANIMALES}": this.informe.segregadosAnimales?.toString() || '',
       "${FACTORRACIAL}": this.getFactorRacialLabel(this.informe.factorRacial),
-      "${ALIMENTACION}": this.informe.alimentacion || '',
+      "${ALIMENTACION}": this.informe.factorRacial === 'IBERICA100' ? 'BELLOTA' : (this.informe.alimentacion || ''),
       "${EDAD}": this.informe.edad?.toString() || '',
       "${OBSERVACIONES}": this.informe.observaciones || '',
       "${FECHAPREVSACRIFICIO}": this.formatDateForPayload(this.informe.fechaPrevSacrificio),
