@@ -4,21 +4,28 @@
 // :root Variables for Global Theme
 :root {
   /* Primary Brand Colors */
-  --primary-color: #144335;      /* Deep Emerald Green - Trust, Nature */
+  --primary-color: #144335;
+  /* Deep Emerald Green - Trust, Nature */
   --primary-hover: #0F3228;
-  --secondary-color: #8EB797;    /* Sage Green - Growth, Freshness */
-  
+  --secondary-color: #8EB797;
+  /* Sage Green - Growth, Freshness */
+
   /* Accent Colors */
-  --accent-color: #D6A055;       /* Harvest Gold - Value, Quality */
+  --accent-color: #D6A055;
+  /* Harvest Gold - Value, Quality */
   --accent-hover: #C59045;
-  
+
   /* Neutral / Background Scale */
-  --bg-body: #F7F9F7;            /* Soft Cultivated White */
-  --bg-surface: #FFFFFF;         /* Pure White */
-  --text-main: #1C2421;          /* Dark Green-Grey - High readable contrast */
-  --text-muted: #5C6B64;         /* Muted earthy grey */
+  --bg-body: #F7F9F7;
+  /* Soft Cultivated White */
+  --bg-surface: #FFFFFF;
+  /* Pure White */
+  --text-main: #1C2421;
+  /* Dark Green-Grey - High readable contrast */
+  --text-muted: #5C6B64;
+  /* Muted earthy grey */
   --border-light: #E0E5E2;
-  
+
   /* Status Colors */
   --status-success: #2E7D32;
   --status-warning: #ED6C02;
@@ -47,16 +54,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 
-h1 { font-size: 2rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.5rem; }
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
 p {
   line-height: 1.6;
   color: var(--text-muted);
@@ -67,7 +88,7 @@ a {
   text-decoration: none;
   color: var(--primary-color);
   transition: color 0.2s ease;
-  
+
   &:hover {
     color: var(--secondary-color);
   }
@@ -84,12 +105,12 @@ a {
   transition: all 0.2s ease;
   border: none;
   cursor: pointer;
-  
+
   &-primary {
     background-color: var(--primary-color);
     color: white;
     box-shadow: var(--shadow-sm);
-    
+
     &:hover {
       background-color: var(--primary-hover);
       box-shadow: var(--shadow-md);
@@ -101,7 +122,7 @@ a {
     background-color: transparent;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
-    
+
     &:hover {
       background-color: rgba(20, 67, 53, 0.05);
     }
@@ -110,7 +131,7 @@ a {
   &-accent {
     background-color: var(--accent-color);
     color: white;
-    
+
     &:hover {
       background-color: var(--accent-hover);
     }
@@ -125,7 +146,7 @@ a {
   border: 1px solid var(--border-light);
   padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+
   &:hover {
     box-shadow: var(--shadow-lg);
   }
@@ -134,13 +155,18 @@ a {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--border-light);
     padding-bottom: 0.75rem;
-    
-    h3 { margin: 0; font-size: 1.25rem; }
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
   }
 }
 
 // Core Component: Forms & Inputs
-input, select, textarea {
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border-light);
@@ -176,7 +202,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   background-color: var(--bg-surface);
-  
+
   th {
     background-color: var(--primary-color);
     color: white;
@@ -187,32 +213,67 @@ table {
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  
+
   td {
     padding: 1rem;
     border-bottom: 1px solid var(--border-light);
     color: var(--text-muted);
   }
-  
+
   tr:last-child td {
     border-bottom: none;
   }
-  
+
   tr:hover td {
     background-color: rgba(142, 183, 151, 0.05);
   }
 }
 
 // Utilities
-.text-center { text-align: center; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.flex { display: flex; }
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.mt-3 {
+  margin-top: 1.5rem;
+}
+
+.mt-4 {
+  margin-top: 2rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.gap-1 {
+  gap: 0.5rem;
+}
+
+.gap-2 {
+  gap: 1rem;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}

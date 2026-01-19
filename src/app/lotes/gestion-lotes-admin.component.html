@@ -36,7 +36,7 @@
             <th>Técnico</th>
             <th>Explotacion</th>
             <th>Año</th>
-            <th>Acciones</th>
+            <th class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -46,8 +46,10 @@
             <td>{{ lote.explotacion?.nombre }}</td>
             <td>{{ lote.anio }}</td>
             <td>
-              <button class="btn btn-primary btn-sm me-2" (click)="editarLote(lote)">Editar</button>
-              <button class="btn btn-secondary btn-sm" (click)="verDetalleLote(lote)">Detalle</button>
+              <div class="d-flex gap-2 justify-content-center">
+                <button class="btn btn-primary btn-sm" (click)="editarLote(lote)">Editar</button>
+                <button class="btn btn-secondary btn-sm" (click)="verDetalleLote(lote)">Detalle</button>
+              </div>
             </td>
           </tr>
           <tr *ngIf="filteredLotes.length === 0">
