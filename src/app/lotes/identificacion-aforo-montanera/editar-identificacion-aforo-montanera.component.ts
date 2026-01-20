@@ -216,7 +216,7 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
       '${TITULAREXPLOTACION}': this.aforo.titularExplotacion || '',
 
       '${NUMCERDOS}': this.aforo.numCerdos || '',
-      '${RAZACERDO}': this.aforo.raza || '',
+      '${RAZACERDO}': this.razaOptions.find(r => r.value === this.aforo.raza)?.label || '',
       '${PESOMEDIO}': this.aforo.pesoMedio || '',
       '${CROTALDESDE}': this.aforo.crotalDesde || '',
       '${CROTALHASTA}': this.aforo.crotalHasta || '',
