@@ -34,8 +34,8 @@ export class GestionLotesAdminComponent implements OnInit {
   }
 
 
- fetchData(): void {
-    const urlLotes = `${this.apiUrl}/api/lotes`;
+  fetchData(): void {
+    const urlLotes = `${this.apiUrl}/api/lotes/listado`;
     const urlTecnicos = `${this.apiUrl}/api/tecnicos`;
     const urlExplotaciones = `${this.apiUrl}/api/explotaciones`;
     const token = this.localStorageService.getItem('authToken');
@@ -55,16 +55,16 @@ export class GestionLotesAdminComponent implements OnInit {
         this.filteredLotes = data;
       },
       error: (err) => {
-        console.error('Error fetching técnicos:', err);
+        console.error('Error fetching lotes:', err);
       },
     });
 
-  this.http.get<any[]>(urlExplotaciones, { headers }).subscribe({
+    this.http.get<any[]>(urlExplotaciones, { headers }).subscribe({
         next: (data) => {
           this.explotaciones = data;
         },
         error: (err) => {
-          console.error('Error fetching técnicos:', err);
+          console.error('Error fetching explotaciones:', err);
         },
       });
 
@@ -79,12 +79,11 @@ export class GestionLotesAdminComponent implements OnInit {
   }
 
   applyFilters(): void {
-
     console.log('Applying filters:', this.filters);
 
     this.filteredLotes = this.lotes.filter(lote => {
-      const matchesTecnico = this.filters.tecnico ? lote.tecnico?.id == this.filters.tecnico : true;
-      const matchesExplotacion = this.filters.explotacion ? lote.explotacion?.id == this.filters.explotacion : true;
+      const matchesTecnico = this.filters.tecnico ? lote.tecnicoId == this.filters.tecnico : true;
+      const matchesExplotacion = this.filters.explotacion ? lote.explotacionId == this.filters.explotacion : true;
       const matchesAnio = this.filters.anio ? lote.anio === +this.filters.anio : true;
       return matchesTecnico && matchesExplotacion && matchesAnio;
     });

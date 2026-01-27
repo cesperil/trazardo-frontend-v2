@@ -29,64 +29,47 @@ export class DetalleLoteComponent implements OnInit {
   private apiUrl = environment.apiUrl;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router, @Inject(LocalStorageService)  private localStorageService: LocalStorageService) {}
+    private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
 
   ngOnInit(): void {
     const loteId = this.route.snapshot.queryParamMap.get('loteId');
     if (loteId) {
-      this.fetchLoteDetails(Number(loteId));
-      this.fetchCrotales(Number(loteId));
+      this.fetchLoteDetalle(Number(loteId));
       //this.fetchAforoMontanera(Number(loteId));
     }
   }
 
-
-fetchAforoMontanera(loteId: number): void {
-
-  const url = `${this.apiUrl}/api/aforo-montanera/by-lote/${loteId}`;
-  const token = this.localStorageService.getItem('authToken');
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-
-  this.http.get<any>(url, { headers }).subscribe({
-    next: (data) => {
-      this.aforoMontanera = data;
-      console.log('Aforo de Montanera data:', data);
-    },
-    error: (err) => {
-      console.error('Error fetching Aforo de Montanera data:', err);
-    },
-  });
-}
-
-  fetchLoteDetails(loteId: number): void {
-
-    const url = `${this.apiUrl}/api/lotes/${loteId}`;
+  fetchLoteDetalle(loteId: number): void {
+    const url = `${this.apiUrl}/api/lotes/detalle-completo/${loteId}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http.get<any>(url, { headers }).subscribe({
       next: (data) => {
-         this.lote = data;
-         console.log('Datos de lote:', this.lote);
+        this.lote = data.lote;
+        this.crotales = data.crotales;
+        console.log('Lote Detalle fetched successfully:', data);
       },
       error: (err) => {
-        console.error('Error fetching lote details:', err);
+        console.error('Error fetching lote detalle:', err);
       },
     });
   }
 
-  fetchCrotales(loteId: number): void {
-    const url = `${this.apiUrl}/api/crotales/by-lote/${loteId}`;
+  fetchAforoMontanera(loteId: number): void {
+
+    const url = `${this.apiUrl}/api/aforo-montanera/by-lote/${loteId}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.get<{ id: number; numero: string; peso: number }[]>(url, { headers }).subscribe({
+    this.http.get<any>(url, { headers }).subscribe({
       next: (data) => {
-        this.crotales = data;
+        this.aforoMontanera = data;
+        console.log('Aforo de Montanera data:', data);
       },
       error: (err) => {
-        console.error('Error fetching crotales:', err);
+        console.error('Error fetching Aforo de Montanera data:', err);
       },
     });
   }
@@ -101,7 +84,7 @@ fetchAforoMontanera(loteId: number): void {
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-      // Construct the payload
+    // Construct the payload
     const payload = this.crotales.map(crotal => ({
       id: crotal.id,
       peso: crotal.peso,
@@ -110,11 +93,11 @@ fetchAforoMontanera(loteId: number): void {
 
     this.http.put(url, payload, { headers }).subscribe({
       next: () => {
-              this.successMessage = `Crotales actualizado correctamente`;
-                    setTimeout(() => {
-                      this.successMessage = null;
-                    }, 3000);
-            },
+        this.successMessage = `Crotales actualizado correctamente`;
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 3000);
+      },
       error: (err) => {
         console.error('Error updating weights:', err);
       },
@@ -135,9 +118,9 @@ fetchAforoMontanera(loteId: number): void {
     this.http.put(url, payload, { headers }).subscribe({
       next: () => {
         this.successMessage = `Crotal ${crotal.numero} actualizado correctamente`;
-              setTimeout(() => {
-                this.successMessage = null;
-              }, 3000);
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 3000);
       },
       error: (err) => {
         console.error(`Error al actualizar el peso del crotal ${crotal.id}:`, err);
@@ -146,41 +129,41 @@ fetchAforoMontanera(loteId: number): void {
   }
 
 
- toggleCrotales(): void {
+  toggleCrotales(): void {
     this.isCrotalesCollapsed = !this.isCrotalesCollapsed;
   }
 
 
- saveAforoMontanera(): void {
-   if (this.aforoMontanera) {
-     const url = `${this.apiUrl}/api/aforo-montanera/${this.aforoMontanera.id}`;
-     const token = this.localStorageService.getItem('authToken');
-     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  saveAforoMontanera(): void {
+    if (this.aforoMontanera) {
+      const url = `${this.apiUrl}/api/aforo-montanera/${this.aforoMontanera.id}`;
+      const token = this.localStorageService.getItem('authToken');
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-     this.http.put(url, this.aforoMontanera, { headers }).subscribe({
-       next: () => {
-         console.log('Aforo de Montanera saved successfully:', this.aforoMontanera);
-       },
-       error: (err) => {
-         console.error('Error saving Aforo de Montanera:', err);
-       },
-     });
-   } else {
-     console.error('No Aforo de Montanera data to save.');
-   }
- }
-
-createAforoMontanera(): void {
-  if (this.lote?.id) {
-    // Redirige a la nueva pantalla con el ID del lote como parámetro
-    this.router.navigate(['/aforo-montanera/nuevo-aforo-montanera'], { queryParams: { loteId: this.lote.id } });
-  } else {
-    console.error('No se puede redirigir porque el ID del lote no está disponible.');
+      this.http.put(url, this.aforoMontanera, { headers }).subscribe({
+        next: () => {
+          console.log('Aforo de Montanera saved successfully:', this.aforoMontanera);
+        },
+        error: (err) => {
+          console.error('Error saving Aforo de Montanera:', err);
+        },
+      });
+    } else {
+      console.error('No Aforo de Montanera data to save.');
+    }
   }
-}
+
+  createAforoMontanera(): void {
+    if (this.lote?.id) {
+      // Redirige a la nueva pantalla con el ID del lote como parámetro
+      this.router.navigate(['/aforo-montanera/nuevo-aforo-montanera'], { queryParams: { loteId: this.lote.id } });
+    } else {
+      console.error('No se puede redirigir porque el ID del lote no está disponible.');
+    }
+  }
 
   goToFincas(): void {
 
-    this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.lote.finca, fincaNombre: this.lote.finca.nombre}}); // Ajusta la ruta según tu configuración
+    this.router.navigate(['/consulta-lotes'], { queryParams: { fincaId: this.lote.finca, fincaNombre: this.lote.finca.nombre } }); // Ajusta la ruta según tu configuración
   }
 }

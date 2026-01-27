@@ -42,8 +42,8 @@
         <tbody>
           <tr *ngFor="let lote of filteredLotes; let i = index">
             <td>{{ lote.lote }}</td>
-            <td>{{ lote.tecnico?.nombre }} {{ lote.tecnico?.apellidos }}</td>
-            <td>{{ lote.explotacion?.nombre }}</td>
+            <td>{{ lote.nombreTecnico }}</td>
+            <td>{{ lote.nombreExplotacion }}</td>
             <td>{{ lote.anio }}</td>
             <td>
               <div class="d-flex gap-2 justify-content-center">
