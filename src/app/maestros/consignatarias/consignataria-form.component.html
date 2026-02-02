@@ -1,0 +1,76 @@
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header">
+            <h3>{{ isEditMode ? 'Editar' : 'Nueva' }} Empresa Consignataria</h3>
+        </div>
+        <div class="card-body">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+
+            <form (ngSubmit)="onSubmit()" #form="ngForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre *</label>
+                        <input type="text" id="nombre" class="form-control" [(ngModel)]="consignataria.nombre"
+                            name="nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cif" class="form-label">CIF</label>
+                        <input type="text" id="cif" class="form-control" [(ngModel)]="consignataria.cif" name="cif">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" id="direccion" class="form-control" [(ngModel)]="consignataria.direccion"
+                            name="direccion">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <input type="text" id="localidad" class="form-control" [(ngModel)]="consignataria.localidad"
+                            name="localidad">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <input type="text" id="provincia" class="form-control" [(ngModel)]="consignataria.provincia"
+                            name="provincia">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="codigoPostal" class="form-label">Código Postal</label>
+                        <input type="text" id="codigoPostal" class="form-control"
+                            [(ngModel)]="consignataria.codigoPostal" name="codigoPostal">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" id="telefono" class="form-control" [(ngModel)]="consignataria.telefono"
+                            name="telefono">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="emailContacto" class="form-label">Email Contacto</label>
+                        <input type="email" id="emailContacto" class="form-control"
+                            [(ngModel)]="consignataria.emailContacto" name="emailContacto">
+                    </div>
+                </div>
+
+                <div class="mb-3 form-check" *ngIf="isEditMode">
+                    <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="consignataria.activo"
+                        name="activo">
+                    <label class="form-check-label" for="activo">Activa</label>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a routerLink="/maestros/consignatarias" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

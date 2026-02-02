@@ -23,6 +23,10 @@
           (click)="closeMobileMenu()">Explotaciones</a></li>
       <li *ngIf="isAdmin"><a routerLink="/gestion-ganaderos" routerLinkActive="active"
           (click)="closeMobileMenu()">Ganaderos</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/maestros/establecimientos" routerLinkActive="active"
+          (click)="closeMobileMenu()">Establecimientos</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/maestros/consignatarias" routerLinkActive="active"
+          (click)="closeMobileMenu()">Consignatarias</a></li>
       <li *ngIf="isAdmin"><a routerLink="/gestion-lotes-admin" routerLinkActive="active"
           (click)="closeMobileMenu()">Lotes</a></li>
 

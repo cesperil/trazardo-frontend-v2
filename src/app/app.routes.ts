@@ -33,6 +33,10 @@ import { EditarLoteComponent } from './lotes/editar-lote.component';
 
 import { NuevoInformeInspeccionReaComponent } from './lotes/informe-inspeccion-REA/nuevo-informe-inspeccion-rea/nuevo-informe-inspeccion-rea';
 import { EditarInformeInspeccionReaComponent } from './lotes/informe-inspeccion-REA/editar-informe-inspeccion-rea/editar-informe-inspeccion-rea';
+import { EstablecimientoListComponent } from './maestros/establecimientos/establecimiento-list.component';
+import { EstablecimientoFormComponent } from './maestros/establecimientos/establecimiento-form.component';
+import { ConsignatariaListComponent } from './maestros/consignatarias/consignataria-list.component';
+import { ConsignatariaFormComponent } from './maestros/consignatarias/consignataria-form.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirige a login por defecto
@@ -67,6 +71,13 @@ export const routes: Routes = [
     { path: 'gestion-lotes-admin', component: GestionLotesAdminComponent, data: { breadcrumb: 'Gestión de Lotes' } },
     { path: 'editar-lote', component: EditarLoteComponent, data: { breadcrumb: 'Editar Lote' } },
     { path: 'informe-inspeccion-REA/nuevo-informe-inspeccion-REA', component: NuevoInformeInspeccionReaComponent, data: { breadcrumb: 'Nuevo Informe Inspección REA' } },
-    { path: 'informe-inspeccion-REA/editar-informe-inspeccion-REA', component: EditarInformeInspeccionReaComponent, data: { breadcrumb: 'Editar Informe Inspección REA' } }
+    { path: 'informe-inspeccion-REA/editar-informe-inspeccion-REA', component: EditarInformeInspeccionReaComponent, data: { breadcrumb: 'Editar Informe Inspección REA' } },
+    // Maestros
+    { path: 'maestros/establecimientos', component: EstablecimientoListComponent, data: { breadcrumb: 'Establecimientos de Sacrificio' } },
+    { path: 'maestros/establecimientos/crear', component: EstablecimientoFormComponent, data: { breadcrumb: 'Nuevo Establecimiento' } },
+    { path: 'maestros/establecimientos/editar/:id', component: EstablecimientoFormComponent, data: { breadcrumb: 'Editar Establecimiento' } },
+    { path: 'maestros/consignatarias', component: ConsignatariaListComponent, data: { breadcrumb: 'Empresas Consignatarias' } },
+    { path: 'maestros/consignatarias/crear', component: ConsignatariaFormComponent, data: { breadcrumb: 'Nueva Consignataria' } },
+    { path: 'maestros/consignatarias/editar/:id', component: ConsignatariaFormComponent, data: { breadcrumb: 'Editar Consignataria' } }
 ]
 
