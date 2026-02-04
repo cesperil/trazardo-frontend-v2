@@ -20,11 +20,45 @@ export class MenuComponent {
 
 
   isMobileMenuOpen: boolean = false;
+  isDropdownOpen: boolean = false;
 
   constructor(private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {
     const role = this.localStorageService.getItem('authRole');
     console.log('User role:', role);
     this.isAdmin = role === 'Admin';
+  }
+
+  // Dropdown Logic
+  openDropdown(): void {
+    if (window.innerWidth > 1024) { // Only hover on desktop
+      this.isDropdownOpen = true;
+    }
+  }
+
+  closeDropdown(): void {
+    if (window.innerWidth > 1024) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  toggleDropdown(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault(); // Prevent navigation if it's a link
+    }
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  isDropdownActive(): boolean {
+    const activeRoutes = [
+      '/gestion-usuarios',
+      '/gestion-tecnicos',
+      '/gestion-explotaciones',
+      '/gestion-ganaderos',
+      '/maestros/establecimientos',
+      '/maestros/consignatarias'
+    ];
+    return activeRoutes.some(route => this.router.isActive(route, false));
   }
 
   toggleMobileMenu(): void {

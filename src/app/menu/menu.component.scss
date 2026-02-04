@@ -114,7 +114,8 @@
     gap: 0;
   }
 
-  li a {
+  li a,
+  .dropdown-trigger {
     color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     padding: 0.5rem 1rem;
@@ -124,6 +125,12 @@
     transition: all 0.2s ease;
     display: block;
     /* Full width on mobile */
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
@@ -133,8 +140,68 @@
     &.active {
       background-color: var(--secondary-color);
       color: white;
-      /* Ensure text remains readable on secondary color */
       font-weight: 600;
+    }
+  }
+
+  /* Dropdown Styles */
+  .dropdown-wrapper {
+    position: relative;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+  }
+
+  .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--primary-color);
+    /* Same as menu bg */
+    min-width: 200px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    z-index: 1001;
+    margin-top: 0.25rem;
+
+    a {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    &.show {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      position: static;
+      box-shadow: none;
+      padding-left: 1.5rem;
+      /* Indent for hierarchy */
+      background: transparent;
+      margin-top: 0;
+
+      &.show {
+        display: block;
+      }
     }
   }
 

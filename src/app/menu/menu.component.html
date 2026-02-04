@@ -15,20 +15,28 @@
 
   <div class="menu-links-container" [class.open]="isMobileMenuOpen">
     <ul class="menu-links">
-      <li *ngIf="isAdmin"><a routerLink="/gestion-usuarios" routerLinkActive="active"
-          (click)="closeMobileMenu()">Usuarios</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/gestion-tecnicos" routerLinkActive="active"
-          (click)="closeMobileMenu()">Técnicos</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/gestion-explotaciones" routerLinkActive="active"
-          (click)="closeMobileMenu()">Explotaciones</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/gestion-ganaderos" routerLinkActive="active"
-          (click)="closeMobileMenu()">Ganaderos</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/maestros/establecimientos" routerLinkActive="active"
-          (click)="closeMobileMenu()">Establecimientos</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/maestros/consignatarias" routerLinkActive="active"
-          (click)="closeMobileMenu()">Consignatarias</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/gestion-lotes-admin" routerLinkActive="active"
-          (click)="closeMobileMenu()">Lotes</a></li>
+      <!-- Dropdown Administración -->
+      <li *ngIf="isAdmin" class="dropdown-wrapper" (mouseenter)="openDropdown()" (mouseleave)="closeDropdown()">
+        <button class="dropdown-trigger" (click)="toggleDropdown($event)" [class.active]="isDropdownActive()">
+          Administración
+          <span class="arrow">▼</span>
+        </button>
+
+        <div class="dropdown-content" [class.show]="isDropdownOpen">
+          <a routerLink="/gestion-usuarios" routerLinkActive="active" (click)="closeMobileMenu()">Usuarios</a>
+          <a routerLink="/gestion-tecnicos" routerLinkActive="active" (click)="closeMobileMenu()">Técnicos</a>
+          <a routerLink="/gestion-explotaciones" routerLinkActive="active" (click)="closeMobileMenu()">Explotaciones</a>
+          <a routerLink="/gestion-ganaderos" routerLinkActive="active" (click)="closeMobileMenu()">Ganaderos</a>
+          <a routerLink="/maestros/establecimientos" routerLinkActive="active"
+            (click)="closeMobileMenu()">Establecimientos</a>
+          <a routerLink="/maestros/consignatarias" routerLinkActive="active"
+            (click)="closeMobileMenu()">Consignatarias</a>
+        </div>
+      </li>
+
+      <li *ngIf="isAdmin" class="link-wrapper">
+        <a routerLink="/gestion-lotes-admin" routerLinkActive="active" (click)="closeMobileMenu()">Lotes</a>
+      </li>
 
       <!-- Mobile only logout -->
       <li class="mobile-only">
