@@ -157,14 +157,22 @@
                     <div class="col-md-6 mb-3">
                         <label for="establecimientoSacrificio" class="form-label">Establecimiento Sacrificio</label>
                         <input type="text" id="establecimientoSacrificio" class="form-control"
-                            [(ngModel)]="informe.establecimientoSacrificio" name="establecimientoSacrificio" />
+                            [(ngModel)]="informe.establecimientoSacrificio" name="establecimientoSacrificio"
+                            list="establecimientosList" />
+                        <datalist id="establecimientosList">
+                            <option *ngFor="let est of establecimientos" [value]="est.nombre"></option>
+                        </datalist>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="empresaConsignataria" class="form-label">Empresa Consignataria</label>
                     <input type="text" id="empresaConsignataria" class="form-control"
-                        [(ngModel)]="informe.empresaConsignataria" name="empresaConsignataria" />
+                        [(ngModel)]="informe.empresaConsignataria" name="empresaConsignataria"
+                        list="consignatariasList" />
+                    <datalist id="consignatariasList">
+                        <option *ngFor="let cons of consignatarias" [value]="cons.nombre"></option>
+                    </datalist>
                 </div>
 
                 <div class="row">

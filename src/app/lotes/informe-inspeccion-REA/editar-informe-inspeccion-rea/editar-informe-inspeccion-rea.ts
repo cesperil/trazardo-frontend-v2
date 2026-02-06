@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { MaestrosService } from 'src/app/services/maestros.service';
 
 @Component({
   selector: 'app-editar-informe-inspeccion-rea',
@@ -54,20 +55,37 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
     { value: 'NO_DETERMINADA', label: 'No se indica' },
   ];
 
+  establecimientos: any[] = [];
+  consignatarias: any[] = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(LocalStorageService) private localStorageService: LocalStorageService
+    @Inject(LocalStorageService) private localStorageService: LocalStorageService,
+    private maestrosService: MaestrosService
   ) { }
 
   ngOnInit(): void {
     this.loteId = Number(this.route.snapshot.queryParamMap.get('loteId'));
     this.tecnicoId = Number(this.route.snapshot.queryParamMap.get('tecnicoId'));
 
+    this.loadMaestros();
+
     if (this.loteId) {
       this.fetchInitialData();
     }
+  }
+
+  loadMaestros(): void {
+    this.maestrosService.getEstablecimientosActivos().subscribe({
+      next: (data) => this.establecimientos = data,
+      error: (e) => console.error('Error loading establecimientos', e)
+    });
+    this.maestrosService.getConsignatariasActivas().subscribe({
+      next: (data) => this.consignatarias = data,
+      error: (e) => console.error('Error loading consignatarias', e)
+    });
   }
 
   fetchInitialData(): void {

@@ -65,4 +65,14 @@ export class MaestrosService {
     deleteConsignataria(id: number): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/api/maestros/consignatarias/${id}`, { headers: this.getHeaders() });
     }
+
+    // --- Métodos para Selectores (Solo Activos) ---
+
+    getEstablecimientosActivos(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/api/maestros/establecimientos/activos`, { headers: this.getHeaders() });
+    }
+
+    getConsignatariasActivas(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/api/maestros/consignatarias/activos`, { headers: this.getHeaders() });
+    }
 }
