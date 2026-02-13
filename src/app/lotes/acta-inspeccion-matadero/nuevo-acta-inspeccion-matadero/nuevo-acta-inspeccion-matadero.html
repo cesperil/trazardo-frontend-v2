@@ -1,0 +1,266 @@
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3>Nueva Acta de Inspección en Matadero</h3>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="save()" #actaForm="ngForm">
+
+                <!-- DATOS GENERALES (Sin título) -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="numeroInspeccion" class="form-label">Número Inspección</label>
+                        <input type="text" class="form-control" id="numeroInspeccion"
+                            [(ngModel)]="acta.numeroInspeccion" name="numeroInspeccion" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="tecnicoMatadero" class="form-label">Técnico Matadero</label>
+                        <input type="text" class="form-control" id="tecnicoMatadero" [(ngModel)]="acta.tecnicoMatadero"
+                            name="tecnicoMatadero">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="representanteConsignataria" class="form-label">Representante Consignataria</label>
+                        <input type="text" class="form-control" id="representanteConsignataria"
+                            [(ngModel)]="acta.representanteConsignataria" name="representanteConsignataria">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="empresaConsignataria" class="form-label">Empresa Consignataria</label>
+                        <input type="text" class="form-control" id="empresaConsignataria"
+                            [(ngModel)]="acta.empresaConsignataria" name="empresaConsignataria"
+                            list="consignatariasList">
+                        <datalist id="consignatariasList">
+                            <option *ngFor="let c of consignatarias" [value]="c.nombre">{{c.nombre}}</option>
+                        </datalist>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ganadero" class="form-label">Ganadero</label>
+                        <input type="text" class="form-control" id="ganadero" [(ngModel)]="acta.ganadero"
+                            name="ganadero">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="explotacion" class="form-label">Explotación</label>
+                        <input type="text" class="form-control" id="explotacion" [(ngModel)]="acta.explotacion"
+                            name="explotacion">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="numRegistroDo" class="form-label">Nº Registro D.O.</label>
+                        <input type="text" class="form-control" id="numRegistroDo" [(ngModel)]="acta.numRegistroDo"
+                            name="numRegistroDo">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="numCerdos" class="form-label">Nº Cerdos</label>
+                        <input type="number" class="form-control" id="numCerdos" [(ngModel)]="acta.numCerdos"
+                            name="numCerdos">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="raza" class="form-label">Raza</label>
+                        <select class="form-select" id="raza" [(ngModel)]="acta.raza" name="raza">
+                            <option *ngFor="let option of razaOptions" [value]="option.value">{{ option.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="tipoAlimentacion" class="form-label">Tipo Alimentación</label>
+                        <select class="form-select" id="tipoAlimentacion" [(ngModel)]="acta.tipoAlimentacion"
+                            name="tipoAlimentacion">
+                            <option *ngFor="let option of alimentacionOptions" [value]="option.value">{{ option.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="numLote" class="form-label">Nº Lote</label>
+                        <input type="text" class="form-control" id="numLote" [(ngModel)]="acta.numLote" name="numLote">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="guiaOrdenSanidadPecuaria" class="form-label">Guía Orden Sanidad Pecuaria</label>
+                        <input type="text" class="form-control" id="guiaOrdenSanidadPecuaria"
+                            [(ngModel)]="acta.guiaOrdenSanidadPecuaria" name="guiaOrdenSanidadPecuaria">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="nombreMatadero" class="form-label">Nombre Matadero</label>
+                        <input type="text" class="form-control" id="nombreMatadero" [(ngModel)]="acta.nombreMatadero"
+                            name="nombreMatadero" list="mataderosList">
+                        <datalist id="mataderosList">
+                            <option *ngFor="let m of establecimientos" [value]="m.nombre">{{m.nombre}}</option>
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row border-bottom pb-4 mb-4">
+                    <div class="col-md-6 mb-3">
+                        <label for="localidadMatadero" class="form-label">Localidad Matadero</label>
+                        <input type="text" class="form-control" id="localidadMatadero"
+                            [(ngModel)]="acta.localidadMatadero" name="localidadMatadero">
+                    </div>
+                </div>
+
+                <!-- RANGOS JAMONES DYNAMIC -->
+                <div class="row border-bottom pb-4 mb-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label h5">Jamones</label>
+                            <div class="d-flex align-items-center">
+                                <label for="numeroJamones" class="me-2">Total Jamones:</label>
+                                <input type="number" id="numeroJamones" class="form-control" style="width: 100px;"
+                                    [(ngModel)]="acta.numeroJamones" name="numeroJamones">
+                            </div>
+                        </div>
+                        <div class="row align-items-end mb-2" *ngFor="let range of jamonesRanges; let i = index">
+                            <div class="col-md-1 text-center pt-2"><strong>{{ i + 1 }}</strong></div>
+                            <div class="col-md-4">
+                                <label *ngIf="i===0" class="form-label text-muted small">Desde</label>
+                                <input type="number" class="form-control" [(ngModel)]="range.desde"
+                                    [name]="'jamonesDesde'+i" placeholder="Desde">
+                            </div>
+                            <div class="col-md-4">
+                                <label *ngIf="i===0" class="form-label text-muted small">Hasta</label>
+                                <input type="number" class="form-control" [(ngModel)]="range.hasta"
+                                    [name]="'jamonesHasta'+i" placeholder="Hasta">
+                            </div>
+                            <div class="col-md-2" *ngIf="i === jamonesRanges.length - 1 && jamonesRanges.length < 4">
+                                <label *ngIf="i===0" class="invisible form-label">Accion</label>
+                                <!-- Spacer for alignment on first row if needed, but button is only on last -->
+                                <button type="button" class="btn btn-outline-success w-100" (click)="addJamonesRange()">
+                                    <i class="bi bi-plus-lg"></i> Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RANGOS PALETAS DYNAMIC -->
+                <div class="row border-bottom pb-4 mb-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label h5">Paletas</label>
+                            <div class="d-flex align-items-center">
+                                <label for="numeroPaletas" class="me-2">Total Paletas:</label>
+                                <input type="number" id="numeroPaletas" class="form-control" style="width: 100px;"
+                                    [(ngModel)]="acta.numeroPaletas" name="numeroPaletas">
+                            </div>
+                        </div>
+                        <div class="row align-items-end mb-2" *ngFor="let range of paletasRanges; let i = index">
+                            <div class="col-md-1 text-center pt-2"><strong>{{ i + 1 }}</strong></div>
+                            <div class="col-md-4">
+                                <label *ngIf="i===0" class="form-label text-muted small">Desde</label>
+                                <input type="number" class="form-control" [(ngModel)]="range.desde"
+                                    [name]="'paletasDesde'+i" placeholder="Desde">
+                            </div>
+                            <div class="col-md-4">
+                                <label *ngIf="i===0" class="form-label text-muted small">Hasta</label>
+                                <input type="number" class="form-control" [(ngModel)]="range.hasta"
+                                    [name]="'paletasHasta'+i" placeholder="Hasta">
+                            </div>
+                            <div class="col-md-2" *ngIf="i === paletasRanges.length - 1 && paletasRanges.length < 5">
+                                <label *ngIf="i===0" class="invisible form-label">Accion</label>
+                                <button type="button" class="btn btn-outline-success w-100" (click)="addPaletasRange()">
+                                    <i class="bi bi-plus-lg"></i> Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESOS Y OTROS DATOS (Sin título) -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="pesoVivo" class="form-label">Peso Vivo (kg)</label>
+                        <input type="number" step="0.01" class="form-control" id="pesoVivo" [(ngModel)]="acta.pesoVivo"
+                            name="pesoVivo">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="pesoMedioCanal" class="form-label">Peso Medio Canal (kg)</label>
+                        <input type="number" step="0.01" class="form-control" id="pesoMedioCanal"
+                            [(ngModel)]="acta.pesoMedioCanal" name="pesoMedioCanal">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="canalesNoPrecintados" class="form-label">Canales No Precintados</label>
+                        <input type="number" class="form-control" id="canalesNoPrecintados"
+                            [(ngModel)]="acta.canalesNoPrecintados" name="canalesNoPrecintados">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="motivo" class="form-label">Motivo</label>
+                        <input type="text" class="form-control" id="motivo" [(ngModel)]="acta.motivo" name="motivo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="operadorElaborador" class="form-label">Operador Elaborador</label>
+                        <input type="text" class="form-control" id="operadorElaborador"
+                            [(ngModel)]="acta.operadorElaborador" name="operadorElaborador">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="propietarioPiezas" class="form-label">Propietario Piezas</label>
+                        <input type="text" class="form-control" id="propietarioPiezas"
+                            [(ngModel)]="acta.propietarioPiezas" name="propietarioPiezas">
+                    </div>
+                </div>
+                <div class="row border-bottom pb-4 mb-4">
+                    <div class="col-md-12 mb-3">
+                        <label for="observaciones" class="form-label">Observaciones</label>
+                        <textarea class="form-control" id="observaciones" rows="3" [(ngModel)]="acta.observaciones"
+                            name="observaciones"></textarea>
+                    </div>
+                </div>
+
+                <!-- COMPROBACIONES (Sin título) -->
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="balancePrecinto"
+                        [(ngModel)]="acta.balancePrecinto" name="balancePrecinto">
+                    <label class="form-check-label" for="balancePrecinto">Balance Precinto</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="noConfomidadNoAplica"
+                        [(ngModel)]="acta.noConfomidadNoAplica" name="noConfomidadNoAplica">
+                    <label class="form-check-label" for="noConfomidadNoAplica">No Conformidad: No Aplica</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="noConfomidadNoConformidad"
+                        [(ngModel)]="acta.noConfomidadNoConformidad" name="noConfomidadNoConformidad">
+                    <label class="form-check-label" for="noConfomidadNoConformidad">No Conformidad: Existe No
+                        Conformidad</label>
+                </div>
+                <div class="mb-3 border-bottom pb-4 mb-4" *ngIf="acta.noConfomidadNoConformidad">
+                    <label for="txNoConformidad" class="form-label">Detalle No Conformidad</label>
+                    <textarea class="form-control" id="txNoConformidad" rows="2" [(ngModel)]="acta.txNoConformidad"
+                        name="txNoConformidad"></textarea>
+                </div>
+
+                <!-- FIRMA (Sin título) -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="lugarFirma" class="form-label">Lugar Firma</label>
+                        <input type="text" class="form-control" id="lugarFirma" [(ngModel)]="acta.lugarFirma"
+                            name="lugarFirma">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaFirma" class="form-label">Fecha Firma</label>
+                        <input type="date" class="form-control" id="fechaFirma" [(ngModel)]="acta.fechaFirma"
+                            name="fechaFirma">
+                    </div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary me-2" (click)="cancelar()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!actaForm.valid">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

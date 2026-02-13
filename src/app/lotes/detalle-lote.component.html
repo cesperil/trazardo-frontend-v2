@@ -243,6 +243,23 @@
       </div>
 
       <!-- Botón para regresar -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Acta Inspección Matadero</h5>
+          <a *ngIf="lote?.actaInspeccionMatadero?.id > 0"
+            [routerLink]="['/acta-inspeccion-matadero/editar-acta-inspeccion-matadero']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Editar Acta Inspección Matadero
+          </a>
+          <a *ngIf="!lote?.actaInspeccionMatadero || lote.actaInspeccionMatadero <= 0"
+            [routerLink]="['/acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero']"
+            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
+            Crear Acta Inspección Matadero
+          </a>
+        </div>
+      </div>
+
+      <!-- Botón para regresar -->
       <div class="text-center">
         <button class="btn btn-secondary" (click)="goToFincas()">Regresar a Selección de Fincas</button>
       </div>

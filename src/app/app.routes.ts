@@ -37,6 +37,8 @@ import { EstablecimientoListComponent } from './maestros/establecimientos/establ
 import { EstablecimientoFormComponent } from './maestros/establecimientos/establecimiento-form.component';
 import { ConsignatariaListComponent } from './maestros/consignatarias/consignataria-list.component';
 import { ConsignatariaFormComponent } from './maestros/consignatarias/consignataria-form.component';
+import { NuevaActaInspeccionMataderoComponent } from './lotes/acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero';
+import { EditarActaInspeccionMataderoComponent } from './lotes/acta-inspeccion-matadero/editar-acta-inspeccion-matadero/editar-acta-inspeccion-matadero';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirige a login por defecto
@@ -78,6 +80,8 @@ export const routes: Routes = [
     { path: 'maestros/establecimientos/editar/:id', component: EstablecimientoFormComponent, data: { breadcrumb: 'Editar Establecimiento' } },
     { path: 'maestros/consignatarias', component: ConsignatariaListComponent, data: { breadcrumb: 'Empresas Consignatarias' } },
     { path: 'maestros/consignatarias/crear', component: ConsignatariaFormComponent, data: { breadcrumb: 'Nueva Consignataria' } },
-    { path: 'maestros/consignatarias/editar/:id', component: ConsignatariaFormComponent, data: { breadcrumb: 'Editar Consignataria' } }
+    { path: 'maestros/consignatarias/editar/:id', component: ConsignatariaFormComponent, data: { breadcrumb: 'Editar Consignataria' } },
+    { path: 'acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero', component: NuevaActaInspeccionMataderoComponent, data: { breadcrumb: 'Nueva Acta Inspección Matadero' } },
+    { path: 'acta-inspeccion-matadero/editar-acta-inspeccion-matadero', component: EditarActaInspeccionMataderoComponent, data: { breadcrumb: 'Editar Acta Inspección Matadero' } }
 ]
 
