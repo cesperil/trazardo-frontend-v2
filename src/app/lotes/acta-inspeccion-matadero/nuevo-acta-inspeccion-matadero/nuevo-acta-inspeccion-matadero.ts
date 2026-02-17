@@ -48,21 +48,22 @@ export class NuevaActaInspeccionMataderoComponent implements OnInit {
         propietarioPiezas: '',
         numeroJamones: null,
         numeroPaletas: null,
-        balancePrecinto: null, // y/n (boolean or string? User said y/n. Let's use boolean for checkbox or string for radio. Boolean is simpler)
+        balancePrecinto: null,
         noConfomidadNoAplica: false,
         noConfomidadNoConformidad: false,
         txNoConformidad: '',
         lugarFirma: '',
-        fechaFirma: new Date().toISOString().split('T')[0] // Default to today
+        fechaFirma: new Date().toISOString().split('T')[0]
     };
 
     loteId: number | null = null;
+    informeId: number | null = null;
     private apiUrl = environment.apiUrl;
 
     razaOptions = [
         { value: 'IBERICA100', label: '100% Ibérico' },
         { value: 'IBERICA75', label: '75% Ibérico' },
-        { value: 'IBERICA50', label: '50% Ibérico' }, // Added generic options
+        { value: 'IBERICA50', label: '50% Ibérico' },
         { value: 'NO_DETERMINADA', label: 'No se indica' },
     ];
 
@@ -88,12 +89,12 @@ export class NuevaActaInspeccionMataderoComponent implements OnInit {
 
     ngOnInit(): void {
         this.loteId = Number(this.route.snapshot.queryParamMap.get('loteId'));
-        this.loadMaestros(); // Fixed method call
+        this.informeId = Number(this.route.snapshot.queryParamMap.get('informeId'));
+        this.loadMaestros();
         this.fetchDatosIniciales();
     }
 
     loadMaestros(): void {
-        // ... (existing code for loading maestros)
         this.maestrosService.getEstablecimientosActivos().subscribe({
             next: (data) => this.establecimientos = data,
             error: (e) => console.error('Error loading establecimientos', e)
@@ -105,11 +106,13 @@ export class NuevaActaInspeccionMataderoComponent implements OnInit {
     }
 
     fetchDatosIniciales(): void {
-        if (!this.loteId) return;
-        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/datos-iniciales/${this.loteId}`;
-        const token = this.localStorageService.getItem('authToken'); // Ensure token is used if auth is required
+        if (!this.informeId) {
+            console.error('Informe ID is missing');
+            return;
+        }
+        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/datos-iniciales/${this.informeId}?loteId=${this.loteId}`;
+        const token = this.localStorageService.getItem('authToken');
 
-        // Add headers if needed
         const headers = new HttpHeaders({
             'Authorization': `Bearer ${token}`
         });
@@ -177,8 +180,8 @@ export class NuevaActaInspeccionMataderoComponent implements OnInit {
     }
 
     save(): void {
-        if (!this.loteId) {
-            console.error('Lote ID is missing');
+        if (!this.informeId) {
+            console.error('Informe ID is missing');
             return;
         }
 
@@ -195,7 +198,7 @@ export class NuevaActaInspeccionMataderoComponent implements OnInit {
             this.acta[`paletasHasta${i}`] = range.hasta;
         });
 
-        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/create/${this.loteId}`;
+        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/create/${this.informeId}?loteId=${this.loteId}`;
         const token = this.localStorageService.getItem('authToken');
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 

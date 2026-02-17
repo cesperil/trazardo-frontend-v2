@@ -47,6 +47,7 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
 
   loteId: number | null = null;
   tecnicoId: number | null = null;
+  informeId: number | null = null;
   private apiUrl = environment.apiUrl;
 
   razaOptions = [
@@ -69,11 +70,14 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
   ngOnInit(): void {
     this.loteId = Number(this.route.snapshot.queryParamMap.get('loteId'));
     this.tecnicoId = Number(this.route.snapshot.queryParamMap.get('tecnicoId'));
+    this.informeId = Number(this.route.snapshot.queryParamMap.get('id'));
 
     this.loadMaestros();
 
-    if (this.loteId) {
+    if (this.informeId) {
       this.fetchInitialData();
+    } else {
+      console.error('Informe ID is missing');
     }
   }
 
@@ -89,9 +93,7 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
   }
 
   fetchInitialData(): void {
-    // Fallback: If tecnicoId is missing, try using loteId as the second parameter based on the example /2/2
-    const secondParam = this.tecnicoId || this.loteId;
-    const url = `${this.apiUrl}/api/informe-inspeccion-rea/all-datos-informe-by-lote/${this.loteId}`;
+    const url = `${this.apiUrl}/api/informe-inspeccion-rea/datos-informe-rea-by-id/${this.informeId}?loteId=${this.loteId}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
@@ -130,24 +132,23 @@ export class EditarInformeInspeccionReaComponent implements OnInit {
   }
 
   save(): void {
-    if (!this.loteId) {
-      console.error('Lote ID is missing');
+    if (!this.informeId) {
+      console.error('Informe ID is missing');
       return;
     }
 
-    // Ideally this would be an update endpoint, but defaulting to create logic as per task scope
-    // If an update endpoint is available, switch to PUT /api/informe-inspeccion-rea/update/{id}
-    const url = `${this.apiUrl}/api/informe-inspeccion-rea/create/${this.loteId}`;
+    const url = `${this.apiUrl}/api/informe-inspeccion-rea/${this.informeId}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.post(url, this.informe, { headers }).subscribe({
+    this.informe.lote = { id: this.loteId };
+    this.http.put(url, this.informe, { headers }).subscribe({
       next: () => {
-        console.log('Informe saved successfully');
+        console.log('Informe updated successfully');
         this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
       },
       error: (err) => {
-        console.error('Error saving Informe:', err);
+        console.error('Error updating Informe:', err);
       },
     });
   }

@@ -228,34 +228,71 @@
 
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">Informe Inspección REA</h5>
-          <a *ngIf="lote?.informeInspeccionREA?.id > 0"
-            [routerLink]="['/informe-inspeccion-REA/editar-informe-inspeccion-REA']"
-            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-            Editar Informe Inspección REA
-          </a>
-          <a *ngIf="!lote?.informeInspeccionREA || lote.informeInspeccionREA <= 0"
-            [routerLink]="['/informe-inspeccion-REA/nuevo-informe-inspeccion-REA']"
-            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-            Crear Informe Inspección REA
-          </a>
-        </div>
-      </div>
+          <h5 class="card-title">Prceso de Sacrificio (REA + I5)</h5>
 
-      <!-- Botón para regresar -->
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Acta Inspección Matadero</h5>
-          <a *ngIf="lote?.actaInspeccionMatadero?.id > 0"
-            [routerLink]="['/acta-inspeccion-matadero/editar-acta-inspeccion-matadero']"
-            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-            Editar Acta Inspección Matadero
-          </a>
-          <a *ngIf="!lote?.actaInspeccionMatadero || lote.actaInspeccionMatadero <= 0"
-            [routerLink]="['/acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero']"
-            [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }">
-            Crear Acta Inspección Matadero
-          </a>
+          <div *ngIf="!lote?.procesosInspeccion || lote?.procesosInspeccion?.length === 0" class="alert alert-info">
+            No hay procesos de sacrificio registrado para este lote.
+          </div>
+
+          <div *ngFor="let proceso of lote?.procesosInspeccion; let i = index" class="mb-3 p-3 border rounded">
+            <h6 class="border-bottom pb-2">Proceso de Sacrificio {{ i + 1 }}</h6>
+
+            <div class="row">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Informe REA:</strong></p>
+                <div *ngIf="proceso.informeInspeccionREA">
+                  <span class="badge bg-success mb-2">Fecha Sacrificio ({{
+                    proceso.informeInspeccionREA.fechaPrevSacrificio |
+                    date:'dd/MM/yyyy' }})</span>
+                  <br>
+                  <a [routerLink]="['/informe-inspeccion-REA/editar-informe-inspeccion-REA']"
+                    [queryParams]="{ id: proceso.informeInspeccionREA.id, loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }"
+                    class="btn btn-sm btn-outline-primary">
+                    Editar REA
+                  </a>
+                </div>
+                <div *ngIf="!proceso.informeInspeccionREA">
+                  <span class="badge bg-warning text-dark">Pendiente</span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Acta Inspección Matadero:</strong></p>
+                <div *ngIf="proceso.actaInspeccionMatadero">
+                  <span class="badge bg-success mb-2">Creada ({{ proceso.actaInspeccionMatadero.fechaFirma |
+                    date:'dd/MM/yyyy' }})</span>
+                  <br>
+                  <!-- Pass info via routes. The controller now expects by-informe logic or direct ID logic.
+                        Existing edit logic uses ID. New logic uses informeId to create. -->
+                  <a [routerLink]="['/acta-inspeccion-matadero/editar-acta-inspeccion-matadero']"
+                    [queryParams]="{ id: proceso.actaInspeccionMatadero.id, loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }"
+                    class="btn btn-sm btn-outline-secondary">
+                    Editar Acta I5
+                  </a>
+                </div>
+                <div *ngIf="!proceso.actaInspeccionMatadero">
+                  <span class="badge bg-secondary mb-2">Pendiente</span>
+                  <br>
+                  <a *ngIf="proceso.informeInspeccionREA"
+                    [routerLink]="['/acta-inspeccion-matadero/nuevo-acta-inspeccion-matadero']"
+                    [queryParams]="{ informeId: proceso.informeInspeccionREA.id, loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }"
+                    class="btn btn-sm btn-success">
+                    Crear Acta I5
+                  </a>
+                  <small *ngIf="!proceso.informeInspeccionREA" class="text-muted">Requiere Informe REA primero</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <a [routerLink]="['/informe-inspeccion-REA/nuevo-informe-inspeccion-REA']"
+              [queryParams]="{ loteId: lote?.id, fincaId: lote?.finca, tecnicoId: lote?.tecnico?.id }"
+              class="btn btn-primary">
+              <i class="bi bi-plus-circle"></i> Iniciar Nuevo Proceso de Sacrificio (Informe REA)
+            </a>
+          </div>
+
         </div>
       </div>
 

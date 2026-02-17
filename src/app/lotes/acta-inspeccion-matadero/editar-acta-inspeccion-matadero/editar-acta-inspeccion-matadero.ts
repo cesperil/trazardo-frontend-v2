@@ -56,6 +56,7 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
         fechaFirma: null
     };
 
+    actaId: number | null = null;
     loteId: number | null = null;
     private apiUrl = environment.apiUrl;
 
@@ -87,10 +88,13 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
 
     ngOnInit(): void {
         this.loteId = Number(this.route.snapshot.queryParamMap.get('loteId'));
+        this.actaId = Number(this.route.snapshot.queryParamMap.get('id')); // Get ID from query param 'id'
         this.loadMaestros();
 
-        if (this.loteId) {
+        if (this.actaId) {
             this.fetchData();
+        } else {
+            console.error('Acta ID missing in query params');
         }
     }
 
@@ -106,7 +110,7 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
     }
 
     fetchData(): void {
-        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/by-lote/${this.loteId}`;
+        const url = `${this.apiUrl}/api/acta-inspeccion-matadero/${this.actaId}`;
         const token = this.localStorageService.getItem('authToken');
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
@@ -118,9 +122,6 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
             },
             error: (err) => {
                 console.error('Error fetching acta data:', err);
-                if (err.status === 404) {
-                    console.log('No acta found, user should probably create one.');
-                }
             }
         });
     }
