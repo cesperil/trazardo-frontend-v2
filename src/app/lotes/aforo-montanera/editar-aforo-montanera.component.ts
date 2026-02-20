@@ -44,7 +44,7 @@ export class EditarAforoMontaneraComponent {
 
 
   constructor(private http: HttpClient, private router: Router,
-    private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+    private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.loteId = Number(this.route.snapshot.queryParamMap.get('loteId'));
@@ -85,7 +85,7 @@ export class EditarAforoMontaneraComponent {
           fincaId: data.explotacion?.id,
           tecnicoId: data.tecnico?.id,
         };
-       console.log('Aforo Montanera loaded:', this.aforoMontanera);
+        console.log('Aforo Montanera loaded:', this.aforoMontanera);
       },
       error: (err) => console.error('Error fetching Aforo Montanera:', err),
     });
@@ -115,33 +115,33 @@ export class EditarAforoMontaneraComponent {
     this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
   }
 
-updateCargaGanadera(): void {
-  const { numPiesHa, arbolesProductivos, superficieParcela, coefArboreo } = this.aforoMontanera;
+  updateCargaGanadera(): void {
+    const { numPiesHa, arbolesProductivos, superficieParcela, coefArboreo } = this.aforoMontanera;
 
-  this.aforoMontanera.cargaGanaderaTotal = this.calculateCargaGanadera(
-    numPiesHa,
-    arbolesProductivos,
-    superficieParcela,
-    coefArboreo
-  );
+    this.aforoMontanera.cargaGanaderaTotal = this.calculateCargaGanadera(
+      numPiesHa,
+      arbolesProductivos,
+      superficieParcela,
+      coefArboreo
+    );
 
-  this.aforoMontanera.coefArboreo = this.calculateCoefArboreo(
-    numPiesHa,
-    arbolesProductivos,
-    superficieParcela
-  );
+    this.aforoMontanera.coefArboreo = this.calculateCoefArboreo(
+      numPiesHa,
+      arbolesProductivos,
+      superficieParcela
+    );
 
-  this.aforoMontanera.arbolesProductivosHA = this.calculateArbolesProductivosHA(
+    this.aforoMontanera.arbolesProductivosHA = this.calculateArbolesProductivosHA(
       numPiesHa,
       this.aforoMontanera.coefArboreo
     );
 
 
-  this.aforoMontanera.arbolesProductivosTotal = this.calculateArbolesProductivosTotal(
-        this.aforoMontanera.arbolesProductivosHA,
-        superficieParcela
-      );
-}
+    this.aforoMontanera.arbolesProductivosTotal = this.calculateArbolesProductivosTotal(
+      this.aforoMontanera.arbolesProductivosHA,
+      superficieParcela
+    );
+  }
 
   getValorReferencia(superficieParcela: number): number {
     if (superficieParcela <= 100) {
@@ -157,63 +157,47 @@ updateCargaGanadera(): void {
     }
   }
 
-getValoresReferencia(superficieParcela: number, arbolesProductivos: number): String[] {
-  const valoresReferencia: String[] = [];
-  const valorReferencia = this.getValorReferencia(superficieParcela);
+  getValoresReferencia(superficieParcela: number, arbolesProductivos: number): String[] {
+    const valoresReferencia: String[] = [];
+    const valorReferencia = this.getValorReferencia(superficieParcela);
 
-  valoresReferencia.push("-"); // ARBOLEST1
-  valoresReferencia.push("-"); // ARBOLEST2
-  valoresReferencia.push("-"); // ARBOLEST3
-  valoresReferencia.push("-"); // ARBOLEST4
-  valoresReferencia.push("-"); // ARBOLEST5
+    valoresReferencia.push("-"); // ARBOLEST1
+    valoresReferencia.push("-"); // ARBOLEST2
+    valoresReferencia.push("-"); // ARBOLEST3
+    valoresReferencia.push("-"); // ARBOLEST4
+    valoresReferencia.push("-"); // ARBOLEST5
 
-  if (superficieParcela <= 100) {
-        valoresReferencia[0] = arbolesProductivos.toString();
-      } else if (superficieParcela <= 250) {
-        valoresReferencia[1] = arbolesProductivos.toString();
-      } else if (superficieParcela <= 500) {
-        valoresReferencia[2] = arbolesProductivos.toString();
-      } else if (superficieParcela <= 750) {
-        valoresReferencia[3] = arbolesProductivos.toString();
-      } else {
-        valoresReferencia[4] = arbolesProductivos.toString();
+    if (superficieParcela <= 100) {
+      valoresReferencia[0] = arbolesProductivos.toString();
+    } else if (superficieParcela <= 250) {
+      valoresReferencia[1] = arbolesProductivos.toString();
+    } else if (superficieParcela <= 500) {
+      valoresReferencia[2] = arbolesProductivos.toString();
+    } else if (superficieParcela <= 750) {
+      valoresReferencia[3] = arbolesProductivos.toString();
+    } else {
+      valoresReferencia[4] = arbolesProductivos.toString();
+    }
+
+    // Example logic for generating reference values
+
+
+    return valoresReferencia;
   }
-
-  // Example logic for generating reference values
-
-
-  return valoresReferencia;
-}
 
   calculateArbolesProductivosHA(numPiesHa: number, coefArboreo: number): number {
 
-       return Math.floor(numPiesHa*coefArboreo);
+    return Math.floor(numPiesHa * coefArboreo);
   }
 
   calculateArbolesProductivosTotal(arbolesProductivosHA: number, superficieParcela: number): number {
 
-         return Math.floor(arbolesProductivosHA*superficieParcela);
+    return Math.floor(arbolesProductivosHA * superficieParcela);
   }
 
 
 
   calculateCoefArboreo(numPiesHa: number, arbolesProductivos: number, superficieParcela: number): number {
-
-      const valorReferencia = this.getValorReferencia(superficieParcela);
-
-
-      if (numPiesHa <= 0 || arbolesProductivos <= 0 || superficieParcela <= 0) {
-        return 0;
-      }
-
-      console.log('Calculed valorReferencia:', valorReferencia);
-      console.log('Calculed porcentaje:', arbolesProductivos / valorReferencia);
-      let porcentaje = arbolesProductivos / valorReferencia;
-      return Math.floor(porcentaje * 100) / 100;
-  }
-
-
-  calculateCargaGanadera(numPiesHa: number, arbolesProductivos: number, superficieParcela: number, coefArboreo:number): number {
 
     const valorReferencia = this.getValorReferencia(superficieParcela);
 
@@ -224,28 +208,44 @@ getValoresReferencia(superficieParcela: number, arbolesProductivos: number): Str
 
     console.log('Calculed valorReferencia:', valorReferencia);
     console.log('Calculed porcentaje:', arbolesProductivos / valorReferencia);
-     let porcentaje = arbolesProductivos / valorReferencia;
-      porcentaje = Math.floor(porcentaje * 100) / 100;
+    let porcentaje = arbolesProductivos / valorReferencia;
+    return Math.floor(porcentaje * 100) / 100;
+  }
+
+
+  calculateCargaGanadera(numPiesHa: number, arbolesProductivos: number, superficieParcela: number, coefArboreo: number): number {
+
+    const valorReferencia = this.getValorReferencia(superficieParcela);
+
+
+    if (numPiesHa <= 0 || arbolesProductivos <= 0 || superficieParcela <= 0) {
+      return 0;
+    }
+
+    console.log('Calculed valorReferencia:', valorReferencia);
+    console.log('Calculed porcentaje:', arbolesProductivos / valorReferencia);
+    let porcentaje = arbolesProductivos / valorReferencia;
+    porcentaje = Math.floor(porcentaje * 100) / 100;
     console.log('Calculed porcentaje:', porcentaje);
     const cargaGanadera = (numPiesHa * (porcentaje) * superficieParcela) / 40;
     console.log('Calculated carga ganadera:', cargaGanadera);
     return Math.floor(cargaGanadera * 100) / 100;
   }
 
-descargarDocumento(): void {
-  const url = `${this.apiUrl}/api/documentos/generar-aforo-montanera-f16`;
-  const token = this.localStorageService.getItem('authToken');
+  descargarDocumento(): void {
+    const url = `${this.apiUrl}/api/documentos/generar-aforo-montanera-f16`;
+    const token = this.localStorageService.getItem('authToken');
 
-  if (!token) {
-    console.error('Authentication token is missing');
-    return;
-  }
+    if (!token) {
+      console.error('Authentication token is missing');
+      return;
+    }
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
 
-  });
+    });
 
     const tecnico = this.tecnicos.find(t => t.id === this.aforoMontanera.tecnicoId);
     const nombreTecnico = tecnico ? `${tecnico.nombre} ${tecnico.apellidos}` : '';
@@ -261,59 +261,59 @@ descargarDocumento(): void {
 
 
 
-  const payload = {
-        '${NOMBRETECNICO}': nombreTecnico,
-       '${FECHADOCUMENTO}': new Date(this.aforoMontanera.fecha).toLocaleDateString(),
-       '${HORADOCUMENTO}': this.aforoMontanera.hora ? new Date(`1970-01-01T${this.aforoMontanera.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }): '',
-        '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.nombre || '',
-        '${LOCALIDADEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.termino_municipal || '',
-        '${PROVINCIAEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.provincia || '',
-        '${REGISTRODOEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.numeroRegistroDO || '',
-        '${PROPIETARIOEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.ganadero || '',
-        '${PERSONAPRESENTEEXPLOTACION}': this.aforoMontanera.personaPresente || '',
-        '${NIFPERSONAPRESENTEEXPLOTACION}': this.aforoMontanera.nif || '',
-        '${REPRESENTANTEEXPLOTACION}': this.aforoMontanera.calidadDe || '',
-        '${HASEXPLOTACION}': this.aforoMontanera.superficieParcela || '',
-        '${NUMPIESHA}': this.aforoMontanera.numPiesHa || '',
-         '${ARBOLEST1}': valoresReferencia[0],
-         '${ARBOLEST2}': valoresReferencia[1],
-         '${ARBOLEST3}': valoresReferencia[2],
-         '${ARBOLEST4}': valoresReferencia[3],
-         '${ARBOLEST5}': valoresReferencia[4],
-        '${NUMCERCAS}': this.aforoMontanera.factorNumCercas || '',
-        '${MONTEBAJO}': this.aforoMontanera.factorMonteBajo || '',
-        '${ESPECIESILVESTRE}': this.aforoMontanera.factorEspeciesSivestres || '',
-        '${PODA}': this.aforoMontanera.factorPoda || '',
-        '${AGUA}': this.aforoMontanera.factorAgua || '',
-        '${ESTADOEDAD}': this.aforoMontanera.estadoEdad || '',
-        '${HIERBA}': this.aforoMontanera.factorHierba || '',
-        '${COEFARBOREO}': this.aforoMontanera.coefArboreo || '',
-        '${ARBOLESPRODUCTIVOSHA}': this.aforoMontanera.arbolesProductivosHA || '',
-        '${TOTALARBOLESPRODUCTIVOS}': this.aforoMontanera.arbolesProductivosTotal || '',
-        '${NUMCERDOSTOTALES}': this.aforoMontanera.cargaGanaderaTotal || '',
-        '${NUMCERDOSMODIFICADOS}': this.aforoMontanera.cargaGanaderaModificada || '',
+    const payload = {
+      '${NOMBRETECNICO}': nombreTecnico,
+      '${FECHADOCUMENTO}': new Date(this.aforoMontanera.fecha).toLocaleDateString(),
+      '${HORADOCUMENTO}': this.aforoMontanera.hora ? new Date(`1970-01-01T${this.aforoMontanera.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : '',
+      '${NOMBREEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.nombre || '',
+      '${LOCALIDADEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.termino_municipal || '',
+      '${PROVINCIAEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.provincia || '',
+      '${REGISTRODOEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.numeroRegistroDO || '',
+      '${PROPIETARIOEXPLOTACION}': this.fincas.find(f => f.id === this.aforoMontanera.fincaId)?.ganadero || '',
+      '${PERSONAPRESENTEEXPLOTACION}': this.aforoMontanera.personaPresente || '',
+      '${NIFPERSONAPRESENTEEXPLOTACION}': this.aforoMontanera.nif || '',
+      '${REPRESENTANTEEXPLOTACION}': this.aforoMontanera.calidadDe || '',
+      '${HASEXPLOTACION}': this.aforoMontanera.superficieParcela || '',
+      '${NUMPIESHA}': this.aforoMontanera.numPiesHa || '',
+      '${ARBOLEST1}': valoresReferencia[0],
+      '${ARBOLEST2}': valoresReferencia[1],
+      '${ARBOLEST3}': valoresReferencia[2],
+      '${ARBOLEST4}': valoresReferencia[3],
+      '${ARBOLEST5}': valoresReferencia[4],
+      '${NUMCERCAS}': this.aforoMontanera.factorNumCercas || '',
+      '${MONTEBAJO}': this.aforoMontanera.factorMonteBajo || '',
+      '${ESPECIESILVESTRE}': this.aforoMontanera.factorEspeciesSivestres || '',
+      '${PODA}': this.aforoMontanera.factorPoda || '',
+      '${AGUA}': this.aforoMontanera.factorAgua || '',
+      '${ESTADOEDAD}': this.aforoMontanera.factorQuerqus || '',
+      '${HIERBA}': this.aforoMontanera.factorHierba || '',
+      '${COEFARBOREO}': this.aforoMontanera.coefArboreo || '',
+      '${ARBOLESPRODUCTIVOSHA}': this.aforoMontanera.arbolesProductivosHA || '',
+      '${TOTALARBOLESPRODUCTIVOS}': this.aforoMontanera.arbolesProductivosTotal || '',
+      '${NUMCERDOSTOTALES}': this.aforoMontanera.cargaGanaderaTotal || '',
+      '${NUMCERDOSMODIFICADOS}': this.aforoMontanera.cargaGanaderaModificada || '',
 
 
 
 
 
-  };
+    };
 
-  this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
-    next: (response) => {
-      console.log('Documento generado:', response);
-      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'documento.docx';
-      link.click();
-      console.log('Documento descargado exitosamente');
-    },
-    error: (err) => {
-      console.error('Error al generar el documento:', err);
-    },
-  });
-}
+    this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
+      next: (response) => {
+        console.log('Documento generado:', response);
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'documento.docx';
+        link.click();
+        console.log('Documento descargado exitosamente');
+      },
+      error: (err) => {
+        console.error('Error al generar el documento:', err);
+      },
+    });
+  }
 
 }
 

@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
     selector: 'app-editar-acta-inspeccion-matadero',
     standalone: true,
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, SearchableDropdownComponent],
     templateUrl: './editar-acta-inspeccion-matadero.html',
     styleUrl: './editar-acta-inspeccion-matadero.scss'
 })
@@ -263,7 +264,10 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
             "${PALETASDESDEHASTA}": paletasStr,
             "${NUMJAMONES}": this.acta.numeroJamones || '',
             "${NUMPALETAS}": this.acta.numeroPaletas || '',
-            "${NUMCONFORMIDAD}": this.acta.txNoConformidad || ''
+            "${NUMCONFORMIDAD}": this.acta.txNoConformidad || '',
+            "${BALANCEPRECINTO}": this.acta.balancePrecinto ? 'X' : '',
+            "${NOCONFORMIDADNOAPLICA}": this.acta.noConfomidadNoAplica ? 'X' : '',
+            "${NOCONFORMIDADNOCONFORMIDAD}": this.acta.noConfomidadNoConformidad ? 'X' : ''
         };
 
         this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({

@@ -171,7 +171,22 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
     this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
   }
 
+  formatearFechaTexto(fechaStr: string): string {
+    if (!fechaStr) return '';
+    const date = new Date(fechaStr);
+    if (isNaN(date.getTime())) return '';
 
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+
+    const diaText = date.getDate();
+    const mesText = meses[date.getMonth()];
+    const yearText = date.getFullYear();
+
+    return `${diaText} de ${mesText} de ${yearText}`;
+  }
 
   descargarDocumento(): void {
     const url = `${this.apiUrl}/api/documentos/generar-acta-identificacion-montanera-AIM`;
@@ -207,7 +222,7 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
     const payload = {
 
       '${NOMBRETECNICO}': nombreTecnico,
-      '${FECHADOCUMENTO}': new Date(this.aforo.fecha).toLocaleDateString(),
+      '${FECHADOCUMENTO}': this.formatearFechaTexto(this.aforo.fecha),
       '${HORADOCUMENTO}': this.aforo.hora ? new Date(`1970-01-01T${this.aforo.hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : '',
       '${NOMBREREPRESENTANTE}': this.aforo.representante || '',
       '${NOMBREEXPLOTACION}': this.explotaciones.find(f => f.id == this.aforo.finca)?.nombre || '',
