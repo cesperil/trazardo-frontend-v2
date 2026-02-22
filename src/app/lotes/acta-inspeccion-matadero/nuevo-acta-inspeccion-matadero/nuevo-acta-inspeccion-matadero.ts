@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
     selector: 'app-nuevo-acta-inspeccion-matadero',
     standalone: true,
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, SearchableDropdownComponent],
     templateUrl: './nuevo-acta-inspeccion-matadero.html',
     styleUrl: './nuevo-acta-inspeccion-matadero.scss'
 })

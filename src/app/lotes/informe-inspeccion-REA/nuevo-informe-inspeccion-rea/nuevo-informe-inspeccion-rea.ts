@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
   selector: 'app-nuevo-informe-inspeccion-rea',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent],
   templateUrl: './nuevo-informe-inspeccion-rea.html',
   styleUrl: './nuevo-informe-inspeccion-rea.scss'
 })
@@ -75,11 +76,15 @@ export class NuevoInformeInspeccionReaComponent implements OnInit {
 
   loadMaestros(): void {
     this.maestrosService.getEstablecimientosActivos().subscribe({
-      next: (data) => this.establecimientos = data,
+      next: (data) => {
+        this.establecimientos = data;
+      },
       error: (e) => console.error('Error loading establecimientos', e)
     });
     this.maestrosService.getConsignatariasActivas().subscribe({
-      next: (data) => this.consignatarias = data,
+      next: (data) => {
+        this.consignatarias = data;
+      },
       error: (e) => console.error('Error loading consignatarias', e)
     });
   }

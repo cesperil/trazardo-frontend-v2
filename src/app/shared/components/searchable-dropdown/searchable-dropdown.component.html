@@ -1,0 +1,14 @@
+<div class="position-relative">
+    <input type="text" [id]="inputId" class="form-control" [placeholder]="placeholder" [value]="inputValue"
+        [disabled]="disabled" (input)="onInput($event)" (focus)="onFocus()" autocomplete="off" #inputElement />
+    <ul *ngIf="showDropdown && filteredOptions.length > 0" class="dropdown-menu show w-100 search-dropdown-list">
+        <li *ngFor="let opt of filteredOptions">
+            <button class="dropdown-item" type="button" (mousedown)="selectOption(opt)">
+                {{ isSimpleStringArray ? opt : opt[optionLabel] }}
+            </button>
+        </li>
+    </ul>
+    <ul *ngIf="showDropdown && filteredOptions.length === 0" class="dropdown-menu show w-100 search-dropdown-list">
+        <li class="dropdown-item disabled">No results found</li>
+    </ul>
+</div>

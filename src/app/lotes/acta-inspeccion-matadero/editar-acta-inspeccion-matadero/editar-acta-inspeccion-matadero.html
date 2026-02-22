@@ -28,12 +28,10 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="empresaConsignataria" class="form-label">Empresa Consignataria</label>
-                        <input type="text" class="form-control" id="empresaConsignataria"
-                            [(ngModel)]="acta.empresaConsignataria" name="empresaConsignataria"
-                            list="consignatariasList">
-                        <datalist id="consignatariasList">
-                            <option *ngFor="let c of consignatarias" [value]="c.nombre">{{c.nombre}}</option>
-                        </datalist>
+                        <app-searchable-dropdown inputId="empresaConsignataria" [options]="consignatarias"
+                            optionLabel="nombre" optionValue="nombre" [(ngModel)]="acta.empresaConsignataria"
+                            name="empresaConsignataria" placeholder="Seleccione una opción">
+                        </app-searchable-dropdown>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="ganadero" class="form-label">Ganadero</label>
@@ -90,11 +88,10 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="nombreMatadero" class="form-label">Nombre Matadero</label>
-                        <input type="text" class="form-control" id="nombreMatadero" [(ngModel)]="acta.nombreMatadero"
-                            name="nombreMatadero" list="mataderosList">
-                        <datalist id="mataderosList">
-                            <option *ngFor="let m of establecimientos" [value]="m.nombre">{{m.nombre}}</option>
-                        </datalist>
+                        <app-searchable-dropdown inputId="nombreMatadero" [options]="establecimientos"
+                            optionLabel="nombre" optionValue="nombre" [(ngModel)]="acta.nombreMatadero"
+                            name="nombreMatadero" placeholder="Seleccione una opción">
+                        </app-searchable-dropdown>
                     </div>
                 </div>
 

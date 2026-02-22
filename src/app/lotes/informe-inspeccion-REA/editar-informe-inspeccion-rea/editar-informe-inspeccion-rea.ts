@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
   selector: 'app-editar-informe-inspeccion-rea',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent],
   templateUrl: './editar-informe-inspeccion-rea.html',
   styleUrl: './editar-informe-inspeccion-rea.scss'
 })

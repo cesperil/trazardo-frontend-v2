@@ -265,9 +265,9 @@ export class EditarActaInspeccionMataderoComponent implements OnInit {
             "${NUMJAMONES}": this.acta.numeroJamones || '',
             "${NUMPALETAS}": this.acta.numeroPaletas || '',
             "${NUMCONFORMIDAD}": this.acta.txNoConformidad || '',
-            "${BALANCEPRECINTO}": this.acta.balancePrecinto ? 'X' : '',
-            "${NOCONFORMIDADNOAPLICA}": this.acta.noConfomidadNoAplica ? 'X' : '',
-            "${NOCONFORMIDADNOCONFORMIDAD}": this.acta.noConfomidadNoConformidad ? 'X' : ''
+            "${BP}": this.acta.balancePrecinto ? 'X' : '',
+            "${NCNA}": this.acta.noConfomidadNoAplica ? 'X' : '',
+            "${NCNC}": this.acta.noConfomidadNoConformidad ? 'X' : ''
         };
 
         this.http.post(url, payload, { headers, responseType: 'blob' }).subscribe({
