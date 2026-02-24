@@ -247,7 +247,7 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
 
       '${TITULARDESEALISTADODO}': this.aforo.titularDeseaListadoDO ? 'SI' : 'NO',
       '${TITULARAUTORIZACION}': this.aforo.titularAutorizacion ? 'SI' : 'NO',
-      '${COPIARESUMEN}': this.aforo.copiaResumen ? 'SI' : 'NO',
+      '${COPIARESUMEN}': this.aforo.copiaResumen ? 'C) He recibido copia del resumen de los acuerdos para el desarrollo de la Campaña 2024/2025. SI' : '',
       '${OTRASINDICACIONES}': this.aforo.otrasIndicaciones || '',
 
 
