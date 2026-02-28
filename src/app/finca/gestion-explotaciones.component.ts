@@ -20,43 +20,47 @@ export class GestionExplotacionesComponent implements OnInit {
   private apiUrl = environment.apiUrl;
 
   filters = {
-      nombreExplotacion: '',
-      nombreGanadero: '',
-      terminoMunicipal: ''
-    };
+    nombreExplotacion: '',
+    nombreGanadero: '',
+    terminoMunicipal: '',
+    estado: 'todos'
+  };
 
-    filteredExplotaciones = [...this.explotaciones];
+  filteredExplotaciones = [...this.explotaciones];
 
-  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.obtenerExplotaciones();
   }
 
   obtenerExplotaciones(): void {
-      const url = `${this.apiUrl}/api/explotaciones`;
-      const token = this.localStorageService.getItem('authToken'); // Retrieve the token from localStorage
-                const headers = new HttpHeaders({
-                  Authorization: `Bearer ${token}`, // Add the Bearer token
-                });
+    const url = `${this.apiUrl}/api/explotaciones`;
+    const token = this.localStorageService.getItem('authToken'); // Retrieve the token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Add the Bearer token
+    });
 
-      this.http.get<{ id: number;
-                                    nombre: string;
-                                    ganadero: string;
-                                    hectareas: number;
-                                    telefono: string;
-                                    rega: string;
-                                    termino_municipal: string; }[]>(url, { headers }).subscribe({
-        next: (data) => {
-          this.explotaciones = data;
-          console.error('Fincas obtenidas:', this.explotaciones);
-          this.filteredExplotaciones = [...this.explotaciones];
-        },
-        error: (err) => {
-          console.error('Error fetching fincas:', err);
-        },
-      });
-    }
+    this.http.get<{
+      id: number;
+      nombre: string;
+      ganadero: string;
+      hectareas: number;
+      telefono: string;
+      rega: string;
+      termino_municipal: string;
+      activo: boolean;
+    }[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.explotaciones = data;
+        console.error('Fincas obtenidas:', this.explotaciones);
+        this.filteredExplotaciones = [...this.explotaciones];
+      },
+      error: (err) => {
+        console.error('Error fetching fincas:', err);
+      },
+    });
+  }
 
 
   applyFilters(): void {
@@ -71,7 +75,11 @@ export class GestionExplotacionesComponent implements OnInit {
         ? explotacion.termino_municipal.toLowerCase().includes(this.filters.terminoMunicipal.toLowerCase())
         : true;
 
-      return matchesNombre && matchesGanadero && matchesTerminoMunicipal;
+      const matchesEstado = this.filters.estado === 'todos' ||
+        (this.filters.estado === 'activos' && explotacion.activo) ||
+        (this.filters.estado === 'inactivos' && !explotacion.activo);
+
+      return matchesNombre && matchesGanadero && matchesTerminoMunicipal && matchesEstado;
     });
   }
 

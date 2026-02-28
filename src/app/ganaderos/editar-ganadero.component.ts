@@ -27,6 +27,7 @@ export class EditarGanaderoComponent implements OnInit {
     correoElectronico: '',
     ibanCtaBancaria: '',
     titularCtraBancaria: '',
+    activo: true,
   };
 
   private apiUrl = environment.apiUrl;

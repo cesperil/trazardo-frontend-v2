@@ -19,12 +19,13 @@ export class GestionGanaderosComponent implements OnInit {
   ganaderos: any[] = [];
   filteredGanaderos: any[] = []; // Filtered list for display
   filters = {
-      apellidos: '',
-      nif: '',
+    apellidos: '',
+    nif: '',
+    estado: 'todos'
   };
 
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.obtenerGanaderos();
@@ -35,7 +36,12 @@ export class GestionGanaderosComponent implements OnInit {
     this.filteredGanaderos = this.ganaderos.filter(ganadero => {
       const matchesNif = this.filters.nif ? ganadero.nif.toLowerCase().includes(this.filters.nif.toLowerCase()) : true;
       const matchesNombre = this.filters.apellidos ? ganadero.apellidos.toLowerCase().includes(this.filters.apellidos.toLowerCase()) : true;
-      return matchesNif && matchesNombre;
+
+      const matchesEstado = this.filters.estado === 'todos' ||
+        (this.filters.estado === 'activos' && ganadero.activo) ||
+        (this.filters.estado === 'inactivos' && !ganadero.activo);
+
+      return matchesNif && matchesNombre && matchesEstado;
     });
   }
 
@@ -65,9 +71,9 @@ export class GestionGanaderosComponent implements OnInit {
 
   }
 
- editarGanadero(id: number): void {
-   this.router.navigate([`/editar-ganadero/${id}`]);
- }
+  editarGanadero(id: number): void {
+    this.router.navigate([`/editar-ganadero/${id}`]);
+  }
 
   eliminarGanadero(id: number): void {
     console.log('Eliminar ganadero con ID:', id);

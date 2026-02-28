@@ -26,6 +26,7 @@ export class CrearGanaderoComponent {
     correoElectronico: '',
     ibanCtaBancaria: '',
     titularCtraBancaria: '',
+    activo: true,
   };
 
   private apiUrl = environment.apiUrl;

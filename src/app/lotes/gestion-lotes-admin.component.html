@@ -8,11 +8,9 @@
       <div class="row mb-4">
         <div class="col-md-4">
           <label for="tecnicoFilter" class="form-label">Técnico</label>
-          <select id="tecnicoFilter" class="form-select" [(ngModel)]="filters.tecnico" (change)="applyFilters()">
-            <option value="">Todos</option>
-            <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}
-            </option>
-          </select>
+          <app-searchable-dropdown [(ngModel)]="filters.tecnico" [options]="tecnicos" optionLabel="nombreCompleto"
+            optionValue="id" placeholder="Todos" (selectionChange)="applyFilters()" inputId="tecnicoFilter">
+          </app-searchable-dropdown>
         </div>
         <div class="col-md-4">
           <label for="yearFilter" class="form-label">Año</label>
@@ -21,21 +19,28 @@
         </div>
         <div class="col-md-4">
           <label for="explotacionFilter" class="form-label">Explotacion</label>
-          <select id="explotacionFilter" class="form-select" [(ngModel)]="filters.explotacion"
-            (change)="applyFilters()">
-            <option value="">Todos</option>
-            <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}</option>
-          </select>
+          <app-searchable-dropdown [(ngModel)]="filters.explotacion" [options]="explotaciones" optionLabel="nombre"
+            optionValue="id" placeholder="Todos" (selectionChange)="applyFilters()" inputId="explotacionFilter">
+          </app-searchable-dropdown>
         </div>
       </div>
 
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Lote</th>
-            <th>Técnico</th>
-            <th>Explotacion</th>
-            <th>Año</th>
+            <th (click)="sortData('lote')" style="cursor: pointer;" class="user-select-none">
+              Lote <span *ngIf="sortColumn === 'lote'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortData('nombreTecnico')" style="cursor: pointer;" class="user-select-none">
+              Técnico <span *ngIf="sortColumn === 'nombreTecnico'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortData('nombreExplotacion')" style="cursor: pointer;" class="user-select-none">
+              Explotacion <span *ngIf="sortColumn === 'nombreExplotacion'">{{ sortDirection === 'asc' ? '▲' : '▼'
+                }}</span>
+            </th>
+            <th (click)="sortData('anio')" style="cursor: pointer;" class="user-select-none">
+              Año <span *ngIf="sortColumn === 'anio'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>

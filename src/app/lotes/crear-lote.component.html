@@ -16,37 +16,48 @@
         <div class="row mb-4" *ngIf="isAdmin">
           <div class="col-md-6">
             <label for="tecnico" class="form-label">Técnico</label>
-            <select id="tecnico" class="form-select" [(ngModel)]="selectedTecnicoId" name="tecnico"
-              (change)="onSelectionChange()">
-              <option [ngValue]="null">Seleccione un técnico</option>
-              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">
-                {{ tecnico.nombre }} {{ tecnico.apellidos }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="selectedTecnicoId" [options]="tecnicos" optionLabel="nombreCompleto"
+              optionValue="id" placeholder="Seleccione un técnico" (selectionChange)="onSelectionChange()"
+              inputId="tecnico">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6">
             <label for="explotacion" class="form-label">Explotación (Finca)</label>
-            <select id="explotacion" class="form-select" [(ngModel)]="selectedFincaId" name="explotacion"
-              (change)="onSelectionChange()">
-              <option [ngValue]="null">Seleccione una finca</option>
-              <option *ngFor="let fin of explotaciones" [value]="fin.id">
-                {{ fin.nombre }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="selectedFincaId" [options]="explotaciones" optionLabel="nombre"
+              optionValue="id" placeholder="Seleccione una finca" (selectionChange)="onSelectionChange()"
+              inputId="explotacion">
+            </app-searchable-dropdown>
           </div>
         </div>
 
-        <!-- Crotal Desde & Hasta -->
+        <!-- Series Crotales -->
         <div class="row mb-4">
-          <div class="col-md-6">
-            <label for="crotalDesde" class="form-label">Crotal desde</label>
-            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="crotalDesde" name="crotalDesde"
-              required />
-          </div>
-          <div class="col-md-6">
-            <label for="crotalHasta" class="form-label">Crotal hasta</label>
-            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="crotalHasta" name="crotalHasta"
-              required />
+          <div class="col-md-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              Series de Crotales
+              <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="seriesCrotales.push({crotalDesde: '', crotalHasta: ''})">
+                + Añadir Serie
+              </button>
+            </label>
+            <div class="card mb-2" *ngFor="let serie of seriesCrotales; let i = index">
+              <div class="card-body p-2 d-flex align-items-center gap-2">
+                <div class="flex-grow-1">
+                  <label [for]="'crotalDesde' + i" class="form-label mb-0 small">Crotal desde</label>
+                  <input type="text" [id]="'crotalDesde' + i" class="form-control form-control-sm"
+                    [(ngModel)]="serie.crotalDesde" [name]="'crotalDesde' + i" required />
+                </div>
+                <div class="flex-grow-1">
+                  <label [for]="'crotalHasta' + i" class="form-label mb-0 small">Crotal hasta</label>
+                  <input type="text" [id]="'crotalHasta' + i" class="form-control form-control-sm"
+                    [(ngModel)]="serie.crotalHasta" [name]="'crotalHasta' + i" required />
+                </div>
+                <button *ngIf="seriesCrotales.length > 1" type="button" class="btn btn-sm btn-outline-danger mt-4"
+                  (click)="seriesCrotales.splice(i, 1)" title="Eliminar Serie">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -75,12 +86,9 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <label for="ganadero" class="form-label">Ganadero</label>
-            <select id="ganadero" class="form-select" [(ngModel)]="ganaderoId" name="ganadero">
-              <option [ngValue]="null">Seleccione un ganadero</option>
-              <option *ngFor="let ganadero of ganaderos" [value]="ganadero.id">
-                {{ ganadero.nombre }} {{ ganadero.apellidos }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="ganaderoId" [options]="ganaderos" optionLabel="nombreCompleto"
+              optionValue="id" placeholder="Seleccione un ganadero" inputId="ganadero">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>

@@ -7,69 +7,31 @@
       <form (ngSubmit)="crearExplotacion()" #explotacionForm="ngForm">
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            class="form-control"
-            [(ngModel)]="explotacion.nombre"
-            name="nombre"
-            required
-          />
+          <input type="text" id="nombre" class="form-control" [(ngModel)]="explotacion.nombre" name="nombre" required />
         </div>
         <div class="mb-3">
           <label for="ganadero" class="form-label">Ganadero</label>
-          <input
-            type="text"
-            id="ganadero"
-            class="form-control"
-            [(ngModel)]="explotacion.ganadero"
-            name="ganadero"
-            required
-          />
+          <input type="text" id="ganadero" class="form-control" [(ngModel)]="explotacion.ganadero" name="ganadero"
+            required />
         </div>
         <div class="mb-3">
           <label for="hectareas" class="form-label">Hectáreas</label>
-          <input
-            type="number"
-            id="hectareas"
-            class="form-control"
-            [(ngModel)]="explotacion.hectareas"
-            name="hectareas"
-            required
-          />
+          <input type="number" id="hectareas" class="form-control" [(ngModel)]="explotacion.hectareas" name="hectareas"
+            required />
         </div>
         <div class="mb-3">
           <label for="telefono" class="form-label">Teléfono</label>
-          <input
-            type="text"
-            id="telefono"
-            class="form-control"
-            [(ngModel)]="explotacion.telefono"
-            name="telefono"
-            required
-          />
+          <input type="text" id="telefono" class="form-control" [(ngModel)]="explotacion.telefono" name="telefono"
+            required />
         </div>
         <div class="mb-3">
           <label for="rega" class="form-label">Rega</label>
-          <input
-            type="text"
-            id="rega"
-            class="form-control"
-            [(ngModel)]="explotacion.rega"
-            name="rega"
-            required
-          />
+          <input type="text" id="rega" class="form-control" [(ngModel)]="explotacion.rega" name="rega" required />
         </div>
         <div class="mb-3">
           <label for="termino_municipal" class="form-label">Término Municipal</label>
-          <input
-            type="text"
-            id="termino_municipal"
-            class="form-control"
-            [(ngModel)]="explotacion.termino_municipal"
-            name="termino_municipal"
-            required
-          />
+          <input type="text" id="termino_municipal" class="form-control" [(ngModel)]="explotacion.termino_municipal"
+            name="termino_municipal" required />
         </div>
 
         <div class="mb-3">
@@ -80,14 +42,13 @@
         </div>
         <div class="mb-3">
           <label for="numeroRegistroDO" class="form-label">Nº Registro DO</label>
-          <input
-            type="text"
-            id="numeroRegistroDO"
-            class="form-control"
-            [(ngModel)]="explotacion.numeroRegistroDO"
-            name="numeroRegistroDO"
-            required
-          />
+          <input type="text" id="numeroRegistroDO" class="form-control" [(ngModel)]="explotacion.numeroRegistroDO"
+            name="numeroRegistroDO" required />
+        </div>
+        <div class="mb-3 form-check d-flex align-items-center">
+          <input type="checkbox" class="form-check-input mt-0 me-2" id="activo" [(ngModel)]="explotacion.activo"
+            name="activo">
+          <label class="form-check-label" for="activo">Activo</label>
         </div>
         <button type="submit" class="btn btn-primary">Crear Explotación</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>

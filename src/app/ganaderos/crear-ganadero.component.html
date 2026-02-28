@@ -63,6 +63,11 @@
               name="titularCtraBancaria" />
           </div>
         </div>
+        <div class="mb-3 form-check d-flex align-items-center">
+          <input type="checkbox" class="form-check-input mt-0 me-2" id="activo" [(ngModel)]="ganadero.activo"
+            name="activo">
+          <label class="form-check-label" for="activo">Activo</label>
+        </div>
         <button type="submit" class="btn btn-success">Guardar</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>
       </form>

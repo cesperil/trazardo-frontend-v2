@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, HostListener, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, HostListener, ElementRef, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
         }
     ]
 })
-export class SearchableDropdownComponent implements ControlValueAccessor {
+export class SearchableDropdownComponent implements ControlValueAccessor, OnChanges {
     @Input() options: any[] = [];
     @Input() placeholder: string = 'Select an option';
     @Input() inputId: string = '';
@@ -48,8 +48,17 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['options'] && this.options && this.options.length > 0) {
+            // Re-evaluate the input value now that options are available
+            this.setInputValue(this.value);
+        }
+    }
+
     writeValue(value: any): void {
         this.value = value;
+        // Even if options aren't loaded yet, try to set input if possible.
+        // If not, ngOnChanges will catch it when options do load.
         this.setInputValue(value);
     }
 
@@ -66,7 +75,7 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
     }
 
     setInputValue(value: any) {
-        if (value) {
+        if (value != null && value !== '') {
             if (this.isSimpleStringArray) {
                 this.inputValue = value;
             } else {
@@ -74,20 +83,28 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
                 // If optionValue is provided, we expect value to be that property.
                 // If optionValue is NOT provided or empty, we expect value to be the object itself, but here we usually store primitive IDs or strings in forms.
                 // Let's assume typical usage: value is a string/ID, options are objects.
-                const selectedOption = this.options.find(opt => {
-                    // If optionValue is specified, compare property
-                    // e.g. optionValue="id", value=1. opt.id === 1
-                    if (this.optionValue && opt[this.optionValue] !== undefined) {
-                        return opt[this.optionValue] === value;
-                    }
-                    // Fallback: compare whole object or simple string
-                    return opt === value;
-                });
+                if (this.options && this.options.length > 0) {
+                    const selectedOption = this.options.find(opt => {
+                        // If optionValue is specified, compare property
+                        // e.g. optionValue="id", value=1. opt.id === 1
+                        if (this.optionValue && opt[this.optionValue] !== undefined) {
+                            return value != null && String(opt[this.optionValue]) === String(value);
+                        }
+                        // Fallback: compare whole object or simple string
+                        return opt === value;
+                    });
 
-                if (selectedOption) {
-                    this.inputValue = selectedOption[this.optionLabel];
+                    if (selectedOption) {
+                        this.inputValue = selectedOption[this.optionLabel];
+                    } else if (typeof value === 'string') {
+                        // Case where value might be just the string name itself (like in our Consignataria case where we use the name as value)
+                        this.inputValue = value;
+                    } else {
+                        // We have options but didn't find a match, but we don't clear the visual until they interact or parent clears
+                        // this.inputValue = ''; 
+                    }
                 } else if (typeof value === 'string') {
-                    // Case where value might be just the string name itself (like in our Consignataria case where we use the name as value)
+                    // Options aren't loaded yet, but we got a string value
                     this.inputValue = value;
                 }
             }

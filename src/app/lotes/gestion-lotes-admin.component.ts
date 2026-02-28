@@ -7,10 +7,12 @@ import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { OnInit } from '@angular/core';
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-gestion-lotes-admin',
   standalone: true,
-    imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SearchableDropdownComponent],
   templateUrl: './gestion-lotes-admin.component.html',
   styleUrls: ['./gestion-lotes-admin.component.scss']
 })
@@ -24,10 +26,12 @@ export class GestionLotesAdminComponent implements OnInit {
     anio: '',
     explotacion: ''
   };
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router) {}
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -60,22 +64,25 @@ export class GestionLotesAdminComponent implements OnInit {
     });
 
     this.http.get<any[]>(urlExplotaciones, { headers }).subscribe({
-        next: (data) => {
-          this.explotaciones = data;
-        },
-        error: (err) => {
-          console.error('Error fetching explotaciones:', err);
-        },
-      });
+      next: (data) => {
+        this.explotaciones = data;
+      },
+      error: (err) => {
+        console.error('Error fetching explotaciones:', err);
+      },
+    });
 
     this.http.get<any[]>(urlTecnicos, { headers }).subscribe({
-          next: (data) => {
-            this.tecnicos = data;
-          },
-          error: (err) => {
-            console.error('Error fetching técnicos:', err);
-          },
-        });
+      next: (data) => {
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching técnicos:', err);
+      },
+    });
   }
 
   applyFilters(): void {
@@ -86,6 +93,42 @@ export class GestionLotesAdminComponent implements OnInit {
       const matchesExplotacion = this.filters.explotacion ? lote.explotacionId == this.filters.explotacion : true;
       const matchesAnio = this.filters.anio ? lote.anio === +this.filters.anio : true;
       return matchesTecnico && matchesExplotacion && matchesAnio;
+    });
+
+    if (this.sortColumn) {
+      this.performSort();
+    }
+  }
+
+  sortData(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.performSort();
+  }
+
+  performSort(): void {
+    const column = this.sortColumn;
+    this.filteredLotes.sort((a, b) => {
+      let valA = a[column];
+      let valB = b[column];
+
+      if (valA == null) valA = '';
+      if (valB == null) valB = '';
+
+      if (typeof valA === 'string') valA = valA.toLowerCase();
+      if (typeof valB === 'string') valB = valB.toLowerCase();
+
+      if (valA < valB) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      }
+      if (valA > valB) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      }
+      return 0;
     });
   }
 
@@ -99,7 +142,7 @@ export class GestionLotesAdminComponent implements OnInit {
   verDetalleLote(lote: any): void {
     console.log('Ver detalle del lote:', lote);
     var loteId = lote.id;
-        this.router.navigate(['/detalle-lote'], { queryParams: { loteId } });
+    this.router.navigate(['/detalle-lote'], { queryParams: { loteId } });
 
   }
 

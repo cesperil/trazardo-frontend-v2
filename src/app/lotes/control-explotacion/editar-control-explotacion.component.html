@@ -8,74 +8,75 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="lote" class="form-label">Lote</label>
-            <input type="text" id="lote" class="form-control" [(ngModel)]="controlExplotacion.lote" name="lote" required />
+            <input type="text" id="lote" class="form-control" [(ngModel)]="controlExplotacion.lote" name="lote"
+              required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="tecnico" class="form-label">Técnico</label>
-            <select id="tecnico" class="form-control" [(ngModel)]="controlExplotacion.tecnico" name="tecnico" required>
-              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="controlExplotacion.tecnico" [options]="tecnicos"
+              optionLabel="nombreCompleto" optionValue="id" placeholder="Seleccione un técnico" inputId="tecnico">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6 mb-3">
             <label for="representante" class="form-label">Representante</label>
-            <input type="text" id="representante" class="form-control" [(ngModel)]="controlExplotacion.representante" name="representante" />
+            <input type="text" id="representante" class="form-control" [(ngModel)]="controlExplotacion.representante"
+              name="representante" />
           </div>
           <div class="col-md-6 mb-3">
             <label for="finca" class="form-label">Explotación</label>
-            <select
-              id="finca"
-              class="form-select"
-              [(ngModel)]="controlExplotacion.fincaId"
-              name="finca"
-            >
-              <option *ngFor="let finca of fincas" [value]="finca.id">
-                {{ finca.nombre }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="controlExplotacion.fincaId" [options]="fincas" optionLabel="nombre"
+              optionValue="id" placeholder="Seleccione una finca" inputId="finca">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6 mb-3">
             <label for="titularExplotacion" class="form-label">Titular Explotación</label>
-            <input type="text" id="titularExplotacion" class="form-control" [(ngModel)]="controlExplotacion.titularExplotacion" name="titularExplotacion" />
+            <input type="text" id="titularExplotacion" class="form-control"
+              [(ngModel)]="controlExplotacion.titularExplotacion" name="titularExplotacion" />
           </div>
           <div class="col-md-6 mb-3">
             <label for="numeroRegistroDO" class="form-label">Registro Explotación</label>
-            <input type="text" id="numeroRegistroDO" class="form-control" [(ngModel)]="controlExplotacion.numeroRegistroDO" name="numeroRegistroDO" />
+            <input type="text" id="numeroRegistroDO" class="form-control"
+              [(ngModel)]="controlExplotacion.numeroRegistroDO" name="numeroRegistroDO" />
           </div>
           <div class="col-md-6 mb-3">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" id="fecha" class="form-control" [(ngModel)]="controlExplotacion.fecha" name="fecha" required />
+            <input type="date" id="fecha" class="form-control" [(ngModel)]="controlExplotacion.fecha" name="fecha"
+              required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="horaInicioVisita" class="form-label">Hora Inicio Visita</label>
-            <input type="time" id="horaInicioVisita" class="form-control" [(ngModel)]="controlExplotacion.horaInicioVisita" name="horaInicioVisita" required />
+            <input type="time" id="horaInicioVisita" class="form-control"
+              [(ngModel)]="controlExplotacion.horaInicioVisita" name="horaInicioVisita" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="horaFinVisita" class="form-label">Hora Fin Visita</label>
-            <input type="time" id="horaFinVisita" class="form-control" [(ngModel)]="controlExplotacion.horaFinVisita" name="horaFinVisita" required />
+            <input type="time" id="horaFinVisita" class="form-control" [(ngModel)]="controlExplotacion.horaFinVisita"
+              name="horaFinVisita" required />
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="crotalDesde" class="form-label">Crotal Desde</label>
-            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="controlExplotacion.crotalDesde" name="crotalDesde" />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="crotalHasta" class="form-label">Crotal Hasta</label>
-            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="controlExplotacion.crotalHasta" name="crotalHasta" />
+          <div class="col-md-12 mb-3">
+            <label for="descripcionCrotales" class="form-label">Series de Crotales</label>
+            <input type="text" id="descripcionCrotales" class="form-control"
+              [(ngModel)]="controlExplotacion.descripcionCrotales" name="descripcionCrotales" readonly />
           </div>
           <div class="col-md-6 mb-3">
             <label for="numCerdos" class="form-label">Número de Cerdos</label>
-            <input type="number" id="numCerdos" class="form-control" [(ngModel)]="controlExplotacion.numCerdos" name="numCerdos" min="0" />
+            <input type="number" id="numCerdos" class="form-control" [(ngModel)]="controlExplotacion.numCerdos"
+              name="numCerdos" min="0" />
           </div>
           <div class="col-md-12 mb-3">
             <label for="alimentacionManejo" class="form-label">Alimentacion y Manejo</label>
-            <textarea id="alimentacionManejo" class="form-control" [(ngModel)]="controlExplotacion.alimentacionManejo" name="alimentacionManejo"></textarea>
+            <textarea id="alimentacionManejo" class="form-control" [(ngModel)]="controlExplotacion.alimentacionManejo"
+              name="alimentacionManejo"></textarea>
           </div>
           <div class="col-md-12 mb-3">
             <label for="manifestacionCompareciente" class="form-label">Manifiesto Compareciente</label>
-            <textarea id="manifestacionCompareciente" class="form-control" [(ngModel)]="controlExplotacion.manifestacionCompareciente" name="manifestacionCompareciente"></textarea>
+            <textarea id="manifestacionCompareciente" class="form-control"
+              [(ngModel)]="controlExplotacion.manifestacionCompareciente" name="manifestacionCompareciente"></textarea>
           </div>
           <div class="col-md-12 mb-3">
             <label for="otrasIndicaciones" class="form-label">Otras indicaciones</label>
-            <textarea id="otrasIndicaciones" class="form-control" [(ngModel)]="controlExplotacion.otrasIndicaciones" name="otrasIndicaciones"></textarea>
+            <textarea id="otrasIndicaciones" class="form-control" [(ngModel)]="controlExplotacion.otrasIndicaciones"
+              name="otrasIndicaciones"></textarea>
           </div>
         </div>
         <div class="text-center mt-4">

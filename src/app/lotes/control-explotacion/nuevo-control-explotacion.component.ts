@@ -8,11 +8,13 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-nuevo-control-explotacion',
   templateUrl: './nuevo-control-explotacion.component.html',
   styleUrls: ['./nuevo-control-explotacion.component.scss'],
-  imports: [FormsModule, CommonModule], // Add FormsModule to imports
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent], // Add FormsModule to imports
   standalone: true,
 })
 export class NuevoControlExplotacionComponent implements OnInit {
@@ -26,38 +28,37 @@ export class NuevoControlExplotacionComponent implements OnInit {
   private apiUrl = environment.apiUrl;
 
   controlExplotacion: any = {
-      tecnico: null,
-      representante: '',
-      explotacion: null,
-      terminoMunicipal: '',
-      titularExplotacion: '',
-      fecha: '',
-      horaInicioVisita: '',
-      horaFinVisita: '',
-      numCerdos: 0,
-      crotalDesde: '',
-      crotalHasta: '',
-      localizacion: '',
-      otrasIndicaciones: '',
-      alimentacionManejo: '',
-      manifestacionCompareciente: '',
-      localizacionCrotal: '',
-    };
+    tecnico: null,
+    representante: '',
+    explotacion: null,
+    terminoMunicipal: '',
+    titularExplotacion: '',
+    fecha: '',
+    horaInicioVisita: '',
+    horaFinVisita: '',
+    numCerdos: 0,
+    descripcionCrotales: '',
+    localizacion: '',
+    otrasIndicaciones: '',
+    alimentacionManejo: '',
+    manifestacionCompareciente: '',
+    localizacionCrotal: '',
+  };
 
 
   constructor(private http: HttpClient, private router: Router,
-      private route: ActivatedRoute,
-          @Inject(LocalStorageService) private localStorageService: LocalStorageService
- ) {}
+    private route: ActivatedRoute,
+    @Inject(LocalStorageService) private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
 
     this.route.queryParams.subscribe((params) => {
-          this.controlExplotacion.tecnico = params['tecnicoId'] || null;
-          this.controlExplotacion.fincaId = params['fincaId'] || null;
-          this.loteId = params['loteId'] || null;
-          this.controlExplotacion.loteId = params['loteId'] || null;
-          this.numActa = params['numActa'] || null;
+      this.controlExplotacion.tecnico = params['tecnicoId'] || null;
+      this.controlExplotacion.fincaId = params['fincaId'] || null;
+      this.loteId = params['loteId'] || null;
+      this.controlExplotacion.loteId = params['loteId'] || null;
+      this.numActa = params['numActa'] || null;
     });
     this.fetchTecnicos();
     this.fetchFincas();
@@ -70,22 +71,27 @@ export class NuevoControlExplotacionComponent implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http.get<any[]>(url, { headers }).subscribe({
-      next: (data) => (this.tecnicos = data),
+      next: (data) => {
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+      },
       error: (err) => console.error('Error fetching técnicos:', err),
     });
   }
 
- fetchFincas(): void {
+  fetchFincas(): void {
 
-      const url = `${this.apiUrl}/api/explotaciones`; // Replace with your API endpoint
-      const token = this.localStorageService.getItem('authToken');
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      this.http.get<any[]>(url,{ headers }).subscribe({
-        next: (data) => (this.fincas = data),
-        error: (err) => console.error('Error fetching fincas:', err),
-      });
-      console.log('Fincas cargadas:', this.fincas);
- }
+    const url = `${this.apiUrl}/api/explotaciones`; // Replace with your API endpoint
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => (this.fincas = data),
+      error: (err) => console.error('Error fetching fincas:', err),
+    });
+    console.log('Fincas cargadas:', this.fincas);
+  }
 
   guardar(): void {
     const url = `${this.apiUrl}/api/acta-control-explotacion/create/${this.loteId}/${this.numActa}`;
@@ -95,7 +101,7 @@ export class NuevoControlExplotacionComponent implements OnInit {
       Authorization: `Bearer ${token}`,
     });
 
-  console.log('Datos a guardar:', this.controlExplotacion);
+    console.log('Datos a guardar:', this.controlExplotacion);
 
     this.http.post(url, this.controlExplotacion, { headers }).subscribe({
       next: () => {
@@ -107,43 +113,42 @@ export class NuevoControlExplotacionComponent implements OnInit {
   }
 
   cancelar(): void {
-    this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId} });
+    this.router.navigate(['/detalle-lote'], { queryParams: { loteId: this.loteId } });
   }
 
 
-    loadInitialData(): void {
-      const url = `${this.apiUrl}/api/acta-control-explotacion/datos-iniciales-acta/${this.loteId}`;
-      const token = this.localStorageService.getItem('authToken');
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      });
+  loadInitialData(): void {
+    const url = `${this.apiUrl}/api/acta-control-explotacion/datos-iniciales-acta/${this.loteId}`;
+    const token = this.localStorageService.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
 
-      this.http.get<any>(url, { headers }).subscribe({
-        next: (data) => {
-          // Map the response data to the form fields
-          //this.aforo.tecnico = data.tecnico?.id || null;
-          this.controlExplotacion.lote = data.lote?.lote || null;
-          this.controlExplotacion.tecnico = this.controlExplotacion.tecnico || null;
-          this.controlExplotacion.representante = data.representante || '';
-          this.controlExplotacion.explotacion = this.controlExplotacion.fincaId || null;
-          this.controlExplotacion.terminoMunicipal = data.explotacion?.termino_municipal || '';
-          this.controlExplotacion.provincia = data.explotacion?.provincia || '';
-          this.controlExplotacion.titularExplotacion = data.titularExplotacion || '';
-          this.controlExplotacion.numeroRegistroDO = data.numeroRegistroDO || '';
-          this.controlExplotacion.fecha = data.fecha || '';
-          this.controlExplotacion.hora = data.hora || '';
-          this.controlExplotacion.numCerdos = data.numCerdos || 0;
-          this.controlExplotacion.crotalDesde = data.crotalDesde || '';
-          this.controlExplotacion.crotalHasta = data.crotalHasta || '';
-          this.controlExplotacion.observaciones = data.observaciones || '';
-          this.controlExplotacion.declaracion = data.declaracion || '';
-        },
-        error: (err) => {
-          console.error('Error loading initial data:', err);
-        },
-      });
-    }
+    this.http.get<any>(url, { headers }).subscribe({
+      next: (data) => {
+        // Map the response data to the form fields
+        //this.aforo.tecnico = data.tecnico?.id || null;
+        this.controlExplotacion.lote = data.lote?.lote || null;
+        this.controlExplotacion.tecnico = this.controlExplotacion.tecnico || null;
+        this.controlExplotacion.representante = data.representante || '';
+        this.controlExplotacion.explotacion = this.controlExplotacion.fincaId || null;
+        this.controlExplotacion.terminoMunicipal = data.explotacion?.termino_municipal || '';
+        this.controlExplotacion.provincia = data.explotacion?.provincia || '';
+        this.controlExplotacion.titularExplotacion = data.titularExplotacion || '';
+        this.controlExplotacion.numeroRegistroDO = data.numeroRegistroDO || '';
+        this.controlExplotacion.fecha = data.fecha || '';
+        this.controlExplotacion.hora = data.hora || '';
+        this.controlExplotacion.numCerdos = data.numCerdos || 0;
+        this.controlExplotacion.descripcionCrotales = data.descripcionCrotales || '';
+        this.controlExplotacion.observaciones = data.observaciones || '';
+        this.controlExplotacion.declaracion = data.declaracion || '';
+      },
+      error: (err) => {
+        console.error('Error loading initial data:', err);
+      },
+    });
+  }
 
 
 }

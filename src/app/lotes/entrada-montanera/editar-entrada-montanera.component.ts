@@ -9,11 +9,13 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-editar-entrada-montanera',
   templateUrl: './editar-entrada-montanera.component.html',
   styleUrls: ['./editar-entrada-montanera.component.scss'],
-  imports: [FormsModule, CommonModule], // Add FormsModule to imports
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent], // Add FormsModule to imports
   standalone: true,
 })
 export class EditarEntradaMontaneraComponent implements OnInit {
@@ -34,8 +36,7 @@ export class EditarEntradaMontaneraComponent implements OnInit {
     numCerdos: 0,
     raza: '',
     pesoMedio: 0,
-    crotalDesde: '',
-    crotalHasta: '',
+    descripcionCrotales: '',
     localizacion: '',
     observaciones: '',
     manifestacionCompareciente: '',
@@ -61,17 +62,18 @@ export class EditarEntradaMontaneraComponent implements OnInit {
     private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe((params) => {
-      this.entradaMontanera.tecnico = params['tecnicoId'] || null;
-      this.entradaMontanera.fincaId = params['fincaId'] || null;
-      this.loteId = params['loteId'] || null;
-      this.entradaMontanera.loteId = params['loteId'] || null;
+      this.entradaMontanera.tecnico = params['tecnicoId'] ? Number(params['tecnicoId']) : null;
+      this.entradaMontanera.fincaId = params['fincaId'] ? Number(params['fincaId']) : null;
+      this.loteId = params['loteId'] ? Number(params['loteId']) : null;
+      this.entradaMontanera.loteId = this.loteId;
+
+      this.fetchTecnicos();
+      this.fetchFincas();
+      if (this.loteId) {
+        this.loadAllData();
+      }
     });
-    this.fetchTecnicos();
-    this.fetchFincas();
-    //this.loadInitialData();
-    this.loadAllData();
   }
 
   fetchTecnicos(): void {
@@ -80,7 +82,12 @@ export class EditarEntradaMontaneraComponent implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http.get<any[]>(url, { headers }).subscribe({
-      next: (data) => (this.tecnicos = data),
+      next: (data) => {
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+      },
       error: (err) => console.error('Error fetching técnicos:', err),
     });
   }
@@ -131,11 +138,15 @@ export class EditarEntradaMontaneraComponent implements OnInit {
     this.http.get<any>(url, { headers }).subscribe({
       next: (data) => {
         // Map the response data to the form fields
-        //this.aforo.tecnico = data.tecnico?.id || null;
         this.entradaMontanera.lote = data.lote?.lote || null;
-        this.entradaMontanera.tecnico = this.entradaMontanera.tecnico || null;
+
+        // Asignar el técnico de la BD si existe, si no mantener el del query param
+        this.entradaMontanera.tecnico = data.tecnico?.id || this.entradaMontanera.tecnico;
         this.entradaMontanera.representante = data.representante || '';
-        this.entradaMontanera.explotacion = this.entradaMontanera.fincaId || null;
+
+        // Asignar Finca
+        this.entradaMontanera.fincaId = data.explotacion?.id || this.entradaMontanera.fincaId;
+        this.entradaMontanera.explotacion = this.entradaMontanera.fincaId;
         this.entradaMontanera.terminoMunicipal = data.explotacion?.termino_municipal || '';
         this.entradaMontanera.provincia = data.explotacion?.provincia || '';
         this.entradaMontanera.titularExplotacion = data.titularExplotacion || '';
@@ -145,8 +156,7 @@ export class EditarEntradaMontaneraComponent implements OnInit {
         this.entradaMontanera.numCerdos = data.numCerdos || 0;
         this.entradaMontanera.raza = data.raza || '';
         this.entradaMontanera.pesoMedio = data.pesoMedio || 0;
-        this.entradaMontanera.crotalDesde = data.crotalDesde || '';
-        this.entradaMontanera.crotalHasta = data.crotalHasta || '';
+        this.entradaMontanera.descripcionCrotales = data.descripcionCrotales || '';
         this.entradaMontanera.localizacionCrotal = data.localizacionCrotal || '';
         this.entradaMontanera.observaciones = data.observaciones || '';
         this.entradaMontanera.declaracion = data.declaracion || '';
@@ -224,8 +234,8 @@ export class EditarEntradaMontaneraComponent implements OnInit {
       '${NUMCERDOS}': this.entradaMontanera.numCerdos || '',
       '${RAZACERDO}': this.entradaMontanera.raza || '',
       '${PESOMEDIO}': this.entradaMontanera.pesoMedio || '',
-      '${CROTALDESDE}': this.entradaMontanera.crotalDesde || '',
-      '${CROTALHASTA}': this.entradaMontanera.crotalHasta || '',
+      '${CROTALDESDE}': this.entradaMontanera.descripcionCrotales || '',
+      '${CROTALHASTA}': '',
 
       '${LOCALIZACIONCROTAL}': this.entradaMontanera.localizacionCrotal || '',
       '${OBSERVACIONES}': this.entradaMontanera.observaciones || '',

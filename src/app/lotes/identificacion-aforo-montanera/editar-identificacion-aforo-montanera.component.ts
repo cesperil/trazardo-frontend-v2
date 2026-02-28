@@ -9,12 +9,14 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-editar-identificacion-aforo-montanera',
   templateUrl: './editar-identificacion-aforo-montanera.component.html',
   styleUrls: ['./editar-identificacion-aforo-montanera.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent],
 })
 export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
   aforo: any = {
@@ -29,8 +31,7 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
     numCerdos: 0,
     raza: 'NO_DETERMINADA', // Default value
     pesoMedio: 0,
-    crotalDesde: '',
-    crotalHasta: '',
+    descripcionCrotales: '',
     edad: null,
     marcaTipoAlimento: '',
     calidadAlimento: '',
@@ -59,24 +60,21 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
     private route: ActivatedRoute, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe((params) => {
-      this.aforo.tecnico = params['tecnicoId'] || null;
-      this.aforo.finca = params['fincaId'] || null;
-      this.aforo.loteId = params['loteId'] || null;
+      this.aforo.tecnico = params['tecnicoId'] ? Number(params['tecnicoId']) : null;
+      this.aforo.finca = params['fincaId'] ? Number(params['fincaId']) : null;
+      this.loteId = params['loteId'] ? Number(params['loteId']) : null;
+      this.aforo.loteId = this.loteId;
+
+      this.loadTecnicos();
+      this.loadExplotaciones();
+      if (this.loteId) {
+        this.loadAllData();
+      }
     });
-
-    this.loteId = this.aforo.loteId;
-
-
-    this.loadTecnicos();
-    this.loadExplotaciones();
-    this.loadAllData();
   }
 
   loadAllData(): void {
-
-
     const url = `${this.apiUrl}/api/acta-identificacion-montanera/all-datos-acta-by-lote/${this.loteId}`;
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({
@@ -86,11 +84,14 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
 
     this.http.get<any>(url, { headers }).subscribe({
       next: (data) => {
-        // Map the response data to the form fields
-        //this.aforo.tecnico = data.tecnico?.id || null;
-        this.aforo.tecnico = this.aforo.tecnico || null;
+        // Asignar el técnico de la BD si existe, si no mantener el del query param
+        this.aforo.tecnico = data.tecnico?.id || this.aforo.tecnico;
         this.aforo.representante = data.representante || '';
-        this.aforo.explotacion = this.aforo.fincaId || null;
+
+        // La finca puede venir en data.explotacion o similar.
+        this.aforo.finca = data.explotacion?.id || this.aforo.finca;
+        this.aforo.explotacion = this.aforo.finca; // Por si algo más usa explotacion.
+
         this.aforo.terminoMunicipal = data.explotacion?.termino_municipal || '';
         this.aforo.provincia = data.explotacion?.provincia || '';
         this.aforo.titularExplotacion = data.titularExplotacion || '';
@@ -99,8 +100,7 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
         this.aforo.numCerdos = data.numCerdos || 0;
         this.aforo.raza = data.raza || '';
         this.aforo.pesoMedio = data.pesoMedio || 0;
-        this.aforo.crotalDesde = data.numCrotalDesde || '';
-        this.aforo.crotalHasta = data.numCrotalHasta || '';
+        this.aforo.descripcionCrotales = data.descripcionCrotales || '';
         this.aforo.edad = data.edad || null;
         this.aforo.marcaTipoAlimento = data.marcaTipoAlimento || '';
         this.aforo.calidadAlimento = data.calidadAlimento || '';
@@ -126,8 +126,11 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        console.log('Técnicos cargados:', data); // Verifica los datos obtenidos
-        this.tecnicos = data;
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+        console.log('Técnicos cargados:', this.tecnicos); // Verifica los datos obtenidos
       },
       error: (err) => console.error('Error loading técnicos:', err),
     });
@@ -233,8 +236,8 @@ export class EditarIdentificacionAforoMontaneraComponent implements OnInit {
       '${NUMCERDOS}': this.aforo.numCerdos || '',
       '${RAZACERDO}': this.razaOptions.find(r => r.value === this.aforo.raza)?.label || '',
       '${PESOMEDIO}': this.aforo.pesoMedio || '',
-      '${CROTALDESDE}': this.aforo.crotalDesde || '',
-      '${CROTALHASTA}': this.aforo.crotalHasta || '',
+      '${CROTALDESDE}': this.aforo.descripcionCrotales || '',
+      '${CROTALHASTA}': '',
 
       '${MUESTRAPIENSO}': this.aforo.muestraPienso ? 'SI' : 'NO',
       '${DECLARACIONCOMPARECIENTE}': this.aforo.declaracion || '',

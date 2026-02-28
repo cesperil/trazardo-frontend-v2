@@ -24,6 +24,7 @@ export class EditarExplotacionComponent implements OnInit {
     termino_municipal: '',
     numeroRegistroDO: '',
     provincia: '',
+    activo: true,
   };
 
   provincias: string[] = [
@@ -37,7 +38,7 @@ export class EditarExplotacionComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     @Inject(LocalStorageService) private localStorageService: LocalStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];

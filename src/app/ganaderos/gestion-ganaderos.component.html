@@ -7,31 +7,47 @@
       <div class="row mb-4">
         <div class="col-md-4">
           <label for="apellidosFilter" class="form-label">Nombre</label>
-          <input type="text" id="apellidosFilter" class="form-control" [(ngModel)]="filters.apellidos" (input)="buscarGanaderos()" placeholder="Buscar por nombre" />
+          <input type="text" id="apellidosFilter" class="form-control" [(ngModel)]="filters.apellidos"
+            (input)="buscarGanaderos()" placeholder="Buscar por nombre" />
         </div>
         <div class="col-md-4">
           <label for="nifFilter" class="form-label">NIF</label>
-          <input type="text" id="nifFilter" class="form-control" [(ngModel)]="filters.nif" (input)="buscarGanaderos()" placeholder="Buscar por nif" />
+          <input type="text" id="nifFilter" class="form-control" [(ngModel)]="filters.nif" (input)="buscarGanaderos()"
+            placeholder="Buscar por nif" />
+        </div>
+        <div class="col-md-4">
+          <label for="estadoFilter" class="form-label">Estado</label>
+          <select id="estadoFilter" class="form-select" [(ngModel)]="filters.estado" (change)="buscarGanaderos()">
+            <option value="todos">Todos</option>
+            <option value="activos">Activos</option>
+            <option value="inactivos">Inactivos</option>
+          </select>
         </div>
       </div>
       <table class="table table-striped">
         <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>DNI</th>
-          <th>Acciones</th>
-        </tr>
+          <tr>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let ganadero of filteredGanaderos">
-          <td>{{ ganadero.apellidos }}</td>
-          <td>{{ ganadero.nif }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="editarGanadero(ganadero.id)">
-              Editar
-            </button>
-          </td>
-        </tr>
+          <tr *ngFor="let ganadero of filteredGanaderos">
+            <td>{{ ganadero.apellidos }}</td>
+            <td>{{ ganadero.nif }}</td>
+            <td>
+              <span class="badge" [ngClass]="ganadero.activo ? 'bg-success' : 'bg-danger'">
+                {{ ganadero.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="editarGanadero(ganadero.id)">
+                Editar
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
       <button class="btn btn-success mt-3" (click)="crearGanadero()">Crear Nuevo Ganadero</button>

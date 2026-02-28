@@ -7,10 +7,12 @@ import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-crear-lote',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SearchableDropdownComponent],
   templateUrl: './crear-lote.component.html',
   styleUrls: ['./crear-lote.component.scss'],
 })
@@ -18,8 +20,7 @@ export class CrearLoteComponent {
   loteId: string = '';
   fincaId: number | null = null;
   lotes: any[] = [];
-  crotalDesde: string = '';
-  crotalHasta: string = '';
+  seriesCrotales: { crotalDesde: string, crotalHasta: string }[] = [{ crotalDesde: '', crotalHasta: '' }];
   localizacionCrotal: string = 'NO_DETERMINADA'; // Default value
   raza: string = 'NO_DETERMINADA'; // Default value
   ganaderos: any[] = [];
@@ -119,8 +120,11 @@ export class CrearLoteComponent {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        this.ganaderos = data;
-        console.log('Ganaderos fetched:', data);
+        this.ganaderos = data.map(g => ({
+          ...g,
+          nombreCompleto: `${g.nombre} ${g.apellidos}`
+        }));
+        console.log('Ganaderos fetched:', this.ganaderos);
       },
       error: (err) => console.error('Error fetching ganaderos:', err),
     });
@@ -133,8 +137,11 @@ export class CrearLoteComponent {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        this.tecnicos = data;
-        console.log('Tecnicos fetched:', data);
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+        console.log('Tecnicos fetched:', this.tecnicos);
       },
       error: (err) => console.error('Error fetching tecnicos:', err),
     });
@@ -189,7 +196,8 @@ export class CrearLoteComponent {
     if (this.selectedFincaId) this.fincaId = this.selectedFincaId;
 
 
-    if (!this.fincaId || !this.crotalDesde || !this.crotalHasta) {
+    const validSeries = this.seriesCrotales.filter(s => s.crotalDesde && s.crotalHasta);
+    if (!this.fincaId || validSeries.length === 0) {
       console.error('All fields are required');
       return;
     }
@@ -219,8 +227,10 @@ export class CrearLoteComponent {
       lote: this.loteId,
       anio: new Date().getFullYear(),
       finca: this.fincaId,
-      crotalDesde: this.crotalDesde,
-      crotalHasta: this.crotalHasta,
+      seriesCrotales: this.seriesCrotales.filter(s => s.crotalDesde && s.crotalHasta).map(s => ({
+        crotalDesde: parseInt(s.crotalDesde, 10),
+        crotalHasta: parseInt(s.crotalHasta, 10)
+      })),
       localizacionCrotal: this.localizacionCrotal,
       raza: this.raza,
       tecnico: tecnicoData,

@@ -8,15 +8,18 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { EnumDisplayPipe } from '../enums/enum-display.pipe';
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-editar-lote',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, EnumDisplayPipe],
+  imports: [CommonModule, FormsModule, RouterModule, EnumDisplayPipe, SearchableDropdownComponent],
   templateUrl: './editar-lote.component.html',
   styleUrls: ['./editar-lote.component.scss']
 })
 export class EditarLoteComponent implements OnInit {
   lote: any = {}; // Object to hold lote data
+  seriesCrotales: { crotalDesde: string, crotalHasta: string }[] = [{ crotalDesde: '', crotalHasta: '' }];
   private apiUrl = environment.apiUrl;
 
   constructor(
@@ -66,6 +69,14 @@ export class EditarLoteComponent implements OnInit {
       this.http.get(url, { headers }).subscribe({
         next: (data) => {
           this.lote = data;
+          if (this.lote.seriesCrotales && this.lote.seriesCrotales.length > 0) {
+            this.seriesCrotales = this.lote.seriesCrotales.map((s: any) => ({
+              crotalDesde: s.crotalDesde?.toString() || '',
+              crotalHasta: s.crotalHasta?.toString() || ''
+            }));
+          } else {
+            this.seriesCrotales = [{ crotalDesde: '', crotalHasta: '' }];
+          }
           console.log('Lote cargado2:', this.lote);
           if (callback) {
             callback(); // Ejecuta el callback después de cargar el lote
@@ -94,7 +105,12 @@ export class EditarLoteComponent implements OnInit {
     const token = this.localStorageService.getItem('authToken');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     this.http.get<any[]>(url, { headers }).subscribe({
-      next: (data) => (this.tecnicos = data),
+      next: (data) => {
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+      },
       error: (err) => console.error('Error fetching técnicos:', err),
     });
   }
@@ -106,7 +122,10 @@ export class EditarLoteComponent implements OnInit {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        this.ganaderos = data;
+        this.ganaderos = data.map(g => ({
+          ...g,
+          nombreCompleto: `${g.nombre} ${g.apellidos}`
+        }));
       },
       error: (err) => console.error('Error fetching ganaderos:', err),
     });
@@ -123,6 +142,13 @@ export class EditarLoteComponent implements OnInit {
     this.lote.tecnico = this.tecnicoId ? { id: this.tecnicoId } : null;
     this.lote.explotacion = this.explotacionId ? { id: this.explotacionId } : null;
     this.lote.ganadero = this.ganaderoId ? { id: this.ganaderoId } : null;
+
+    this.lote.seriesCrotales = this.seriesCrotales
+      .filter(s => s.crotalDesde && s.crotalHasta)
+      .map(s => ({
+        crotalDesde: parseInt(s.crotalDesde, 10),
+        crotalHasta: parseInt(s.crotalHasta, 10)
+      }));
 
     this.http.put(url, this.lote, { headers }).subscribe({
       next: () => {

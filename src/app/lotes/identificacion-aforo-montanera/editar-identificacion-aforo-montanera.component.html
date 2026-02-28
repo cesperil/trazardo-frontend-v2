@@ -1,17 +1,16 @@
 <div class="container mt-5">
   <div class="card shadow">
     <div class="card-header">
-      <h3>Editar Identificación Aforo de Montanera</h3>
+      <h3>Editar Identificación de Montanera</h3>
     </div>
     <div class="card-body">
       <form (ngSubmit)="onSubmit()" #aforoForm="ngForm">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="tecnico">Técnico</label>
-            <select id="tecnico" class="form-control" [(ngModel)]="aforo.tecnico" name="tecnico" required>
-              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="aforo.tecnico" [options]="tecnicos" optionLabel="nombreCompleto"
+              optionValue="id" placeholder="Seleccione un técnico" inputId="tecnico" name="tecnico">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6 mb-3">
             <label for="representante">Representante</label>
@@ -20,10 +19,9 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="explotacion">Explotación</label>
-            <select id="explotacion" class="form-control" [(ngModel)]="aforo.finca" name="explotacion" required>
-              <option *ngFor="let explotacion of explotaciones" [value]="explotacion.id">{{ explotacion.nombre }}
-              </option>
-            </select>
+            <app-searchable-dropdown [(ngModel)]="aforo.finca" [options]="explotaciones" optionLabel="nombre"
+              optionValue="id" placeholder="Seleccione la explotación" inputId="explotacion" name="finca">
+            </app-searchable-dropdown>
           </div>
           <div class="col-md-6 mb-3">
             <label for="terminoMunicipal">Término Municipal</label>
@@ -66,15 +64,10 @@
             <input type="number" id="pesoMedio" class="form-control" [(ngModel)]="aforo.pesoMedio" name="pesoMedio"
               min="0" step="0.01" required />
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="crotalDesde">Crotal Desde</label>
-            <input type="text" id="crotalDesde" class="form-control" [(ngModel)]="aforo.crotalDesde" name="crotalDesde"
-              required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="crotalHasta">Crotal Hasta</label>
-            <input type="text" id="crotalHasta" class="form-control" [(ngModel)]="aforo.crotalHasta" name="crotalHasta"
-              required />
+          <div class="col-md-12 mb-3">
+            <label for="descripcionCrotales">Series de Crotales</label>
+            <input type="text" id="descripcionCrotales" class="form-control" [(ngModel)]="aforo.descripcionCrotales"
+              name="descripcionCrotales" readonly />
           </div>
           <div class="col-md-6 mb-3">
             <label for="edad">Edad</label>

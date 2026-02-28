@@ -23,15 +23,16 @@ export class CrearExplotacionComponent {
     termino_municipal: '',
     numeroRegistroDO: '',
     provincia: '',
+    activo: true,
   };
 
   provincias: string[] = [
-      'BADAJOZ', 'CACERES',
+    'BADAJOZ', 'CACERES',
   ];
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private router: Router, @Inject(LocalStorageService) private localStorageService: LocalStorageService) { }
 
   crearExplotacion(): void {
     const url = `${this.apiUrl}/api/explotaciones`;

@@ -7,12 +7,14 @@ import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
+import { SearchableDropdownComponent } from 'src/app/shared/components/searchable-dropdown/searchable-dropdown.component';
+
 @Component({
   selector: 'app-nuevo-identificacion-aforo-montanera',
   templateUrl: './nuevo-identificacion-aforo-montanera.component.html',
   styleUrls: ['./nuevo-identificacion-aforo-montanera.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SearchableDropdownComponent],
 })
 export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
   aforo: any = {
@@ -27,8 +29,7 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
     numCerdos: 0,
     raza: 'NO_DETERMINADA', // Default value
     pesoMedio: 0,
-    crotalDesde: '',
-    crotalHasta: '',
+    descripcionCrotales: '',
     edad: null,
     marcaTipoAlimento: '',
     calidadAlimento: '',
@@ -98,8 +99,7 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
         this.aforo.numCerdos = data.numCerdos || 0;
         this.aforo.raza = data.raza || '';
         this.aforo.pesoMedio = data.pesoMedio || 0;
-        this.aforo.crotalDesde = data.numCrotalDesde || '';
-        this.aforo.crotalHasta = data.numCrotalHasta || '';
+        this.aforo.descripcionCrotales = data.descripcionCrotales || '';
         this.aforo.edad = data.edad || null;
         this.aforo.marcaTipoAlimento = data.marcaTipoAlimento || '';
         this.aforo.calidadAlimento = data.calidadAlimento || '';
@@ -125,8 +125,11 @@ export class NuevoIdentificacionAforoMontaneraComponent implements OnInit {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        console.log('Técnicos cargados:', data); // Verifica los datos obtenidos
-        this.tecnicos = data;
+        this.tecnicos = data.map(t => ({
+          ...t,
+          nombreCompleto: `${t.nombre} ${t.apellidos}`
+        }));
+        console.log('Técnicos cargados:', this.tecnicos); // Verifica los datos obtenidos
       },
       error: (err) => console.error('Error loading técnicos:', err),
     });
